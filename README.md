@@ -6,15 +6,15 @@ Created using lua with LÖVE
 Developers:
 
 Script & Mechanics:
-Evo Pasculado (Yonichi)
+- Evo Pasculado (Yonichi)
 
 Art:
-Evo Pasculado (Yonichi)
-Josiah Garilio
+- Evo Pasculado (Yonichi)
+- Josiah Garilio
 
 Audio:
-Evo Pasculado (Yonichi)
-Luis Panambo
+- Evo Pasculado (Yonichi)
+- Luis Panambo
 
 **Acknowledgement**
 * Group 1 Research of A07-12 STEM-S2-3
