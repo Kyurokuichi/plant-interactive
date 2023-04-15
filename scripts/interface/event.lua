@@ -32,7 +32,11 @@ function event.new(...)
 end
 -- Emit specified event callback
 function event:emit(name, ...)
-    self.callbacks[name]:emit(...)
+    local callback = self.callbacks[name]
+
+    if callback then
+        callback:emit(...)
+    end
 end
 -- Get the specified event callback
 function event:get(name)

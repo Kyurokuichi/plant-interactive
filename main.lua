@@ -5,12 +5,6 @@
 local screen
 local assets
 
-function example()
-    
-end
-
-print(tostring(example):gsub('function: ', ''))
-
 function love.load(arg, unfilteredArg)
     local desiredWidth, desiredHeight = 144, 256
 
