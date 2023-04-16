@@ -15,7 +15,7 @@ end
 -- Connect function to signal
 function signal:connect(func)
     assert(type(func) == 'function', 'Not a function')
-    self.slots[self.slots+1] = func
+    self.slots[#self.slots+1] = func
 end
 -- Remove function from signal
 function signal:remove(x)

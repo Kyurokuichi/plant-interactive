@@ -13,7 +13,7 @@ local function checkEnum(object)
     if not enumType then return nil end                 -- Check if that interface type value exists on enums type table
 
     if object.__INTFKIND and enums[enumType] then       -- Check if an object have interface kind of type and if it exists on enums
-        enumKind = enums[object.__INTFKIND]
+        enumKind = enums[enumType][object.__INTFKIND]
     end
 
     return enumType, enumKind

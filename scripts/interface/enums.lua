@@ -9,8 +9,8 @@ local enums = {
     },
 
     element = {
-        [1] = 'drawables',
-        [2] = 'interactables'
+        [1] = 'drawable',
+        [2] = 'interactable'
     },
 
     signal = {
@@ -33,7 +33,7 @@ local enums = {
 }
 
 -- Turn index into keys by swapping the value
-for _, enum in ipairs(enums) do
+for _, enum in pairs(enums) do
     if type(enum) == 'table' then
         for index, value in ipairs(enum) do
             enum[value] = index

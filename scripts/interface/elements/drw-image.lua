@@ -1,4 +1,7 @@
+local enums = require('scripts.interface.enums')
+
 local drwImage = {}
+drwImage.__index = drwImage
 
 function drwImage.new(image, x, y, width, height)
     local newObject = {
@@ -7,7 +10,10 @@ function drwImage.new(image, x, y, width, height)
         y = y or 0,
         width = width or image:getWidth(),
         height = height or image:getHeight(),
-        isVisible = true
+        isVisible = true,
+
+        __INTFTYPE = enums.type.element,
+        __INTFKIND = enums.element.drawable
     }
 
     return setmetatable(newObject, drwImage)
@@ -22,8 +28,8 @@ function drwImage:draw()
         self.x,
         self.y,
         0,
-        self.image:getWidth()/self.width,
-        self.image:getHeight()/self.height
+        self.width/self.image:getWidth(),
+        self.height/self.image:getHeight()
     )
 end
 

@@ -1,9 +1,14 @@
--- Interactable type rectangle
+--[[
+--  I know what you're thinking its not what it is lmao
+--  ntr is shorthand for "interactable". You see it sounds like een-teer. Now u know XD
+--]]
+
 local enums = require('scripts.interface.enums')
 
-local intrect = {}
--- Creates new interactable rectangle (intrect) object
-function intrect.new(x, y, width, height)
+local ntrRect = {}
+ntrRect.__index = ntrRect
+
+function ntrRect.new(x, y, width, height)
     local newObject = {
         x = x or 0,
         y = y or 0,
@@ -14,18 +19,24 @@ function intrect.new(x, y, width, height)
         isHoldingClick = false,
         isCursorHovering = false,
 
-        group = nil,
-        _fromInterface = true,
-        _type = enums.element.interactable
+        isLocked = false,
+
+        __INTFTYPE = enums.type.element,
+        __INTFKIND = enums.element.interactable
     }
-    return setmetatable(newObject, intrect)
+
+    return setmetatable(newObject, ntrRect)
 end
--- Check if a point has intersected
-function intrect:checkIntersect(x, y)
-    return x >= self.x and x <= (self.x + self.width) and y >= self.y and x <= (self.y + self.height)
+
+function ntrRect:checkIntersect(x, y)
+    if self.isLocked then return end
+
+    return x >= self.x and x <= (self.x + self.width) and y >= self.y and y <= (self.y + self.height)
 end
--- Callback function event for mousepressed
-function intrect:mousepressed(x, y, button, isTouch, presses)
+
+function ntrRect:mousepressed(x, y, button, isTouch, presses)
+    if self.isLocked then return end
+
     local intersect = self:checkIntersect(x, y)
 
     if button == 1 then
@@ -34,8 +45,10 @@ function intrect:mousepressed(x, y, button, isTouch, presses)
         end
     end
 end
--- Callback function event for mousereleased
-function intrect:mousereleased(x, y, button, isTouch, presses)
+
+function ntrRect:mousereleased(x, y, button, isTouch, presses)
+    if self.isLocked then return end
+
     local intersect = self:checkIntersect(x, y)
 
     if button == 1 then
@@ -46,13 +59,15 @@ function intrect:mousereleased(x, y, button, isTouch, presses)
         end
     end
 end
--- Callback function event for mousemoved
-function intrect:mousemoved(x, y, dx, dy, isTouch)
+
+function ntrRect:mousemoved(x, y, dx, dy, isTouch)
+    if self.isLocked then return end
+
     local intersect = self:checkIntersect(x, y)
     self.isCursorHovering = intersect
 end
--- Callback function event for reset
-function intrect:reset()
+
+function ntrRect:reset()
     if self.isClicked then
         self.isClicked = false
     end
@@ -67,4 +82,8 @@ function intrect:reset()
     end
 end
 
-return intrect
+function ntrRect:setLock(bool)
+    self.isLocked = bool
+end
+
+return ntrRect

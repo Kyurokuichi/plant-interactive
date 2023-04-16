@@ -12,7 +12,7 @@ function event.new(...)
     local args = {...}
 
     -- Format : {name, function, function, function...}
-    if args > 0 then
+    if #args > 0 then
         for _, callback in ipairs(args) do
             if #callback then
                 local funcs = {}

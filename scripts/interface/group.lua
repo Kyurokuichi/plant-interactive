@@ -19,7 +19,10 @@ function group.new(isVisible, isLocked)
         isVisible = isVisible == nil and true or isVisible,
         isLocked = isLocked == nil and false or isLocked,
         contents = {},
-        event = event.new()
+        event = event.new(),
+
+        __INTFTYPE = enums.type.group,
+        __INTFKIND = nil,
     }
 
     return setmetatable(newObject, group)
@@ -45,7 +48,7 @@ function group:emit(name, ...)
     -- For drawables
     if name == 'draw' then
         -- Return if the group visibility is disabled
-        if self.isVisible then return end
+        if not self.isVisible then return end
 
         love.graphics.push()
         love.graphics.translate(self.offsetX, self.offsetY)
@@ -66,20 +69,20 @@ function group:emit(name, ...)
         -- Return if the group is locked but don't return when the callback name is 'reset'
         if self.isLocked and name ~= 'reset' then return end
 
-        -- Emit a signal for specific event callbacl
-        self.event:emit(name, self, ...)
-        
+        self.event:emit(name, ...)
+
+        -- Emit a signal for specific event callback
         for _, member in ipairs(self.contents) do
             local enumType, enumKind = check(member)
-
             -- If member is an element and an interactable
-            if enumType == enums.type.element and enumKind == enums.element.interactables then
+            if enumType == enums.type[3] and enumKind == enums.element[2] then
                 local callback = member[name]
+
                 if callback then
                     callback(member, ...)
                 end
             -- IF member is a group
-            elseif enumType == enums.type.group then
+            elseif enumType == enums.type[2] then
                 member:emit(name, ...)
             end
         end

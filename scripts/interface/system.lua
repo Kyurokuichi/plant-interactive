@@ -8,12 +8,18 @@ local enums = require('scripts.interface.enums')
 local event = require('scripts.interface.event')
 
 local system = {}
+system.__index = system
 
 function system.new()
     local newObject = {
         groups = {},
-        event = event.new()
+        event = event.new(),
+
+        __INTFTYPE = enums.type.system,
+        __INTFKIND = nil
     }
+
+    return setmetatable(newObject, system)
 end
 
 function system:emit(name, ...)
@@ -24,13 +30,13 @@ end
 
 -- Shorthand function
 function system:reset()
-    system:emit('reset')
+    self:emit('reset')
 end
 
 function system:connect(group)
     local enumType, enumKind = check(group)
 
-    assert(enumType == enums.type.group, 'No value passed / Not a group type')
+    assert(enumType == enums.type[enums.type.group], 'No value passed / Not a group type')
 
     self.groups[#self.groups+1] = group
 end
