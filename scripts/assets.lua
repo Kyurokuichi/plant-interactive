@@ -7,6 +7,10 @@ function assets.initialize()
 
     assets.image = {}
     assets.image.room           = love.graphics.newImage('assets/room.png')
+    assets.image.pot            = love.graphics.newImage('assets/pot.png')
+
+    -- UIs
+    assets.image.waterMeter     = love.graphics.newImage('assets/water-meter.png')
 
     -- Frames
     assets.image.frameButton    = love.graphics.newImage('assets/frame-button.png')

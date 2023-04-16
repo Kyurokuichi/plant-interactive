@@ -29,6 +29,9 @@ local ntrButtonPotsMenu     = ntrRect.new(23, 216, 22, 22)
 local ntrButtonMusicMenu    = ntrRect.new(61, 216, 22, 22)
 local ntrButtonMoreMenu     = ntrRect.new(99, 216, 22, 22)
 
+local waterMeter            = drwImage.new(assets.image.waterMeter, 32, 189)
+local pot                   = drwImage.new(assets.image.pot, 40, 108)
+
 main:connect(innerBackground)
 
 main:connect(frameButtonStart)
@@ -45,6 +48,9 @@ main:connect(ntrButtonStart)
 main:connect(ntrButtonPotsMenu)
 main:connect(ntrButtonMusicMenu)
 main:connect(ntrButtonMoreMenu)
+
+main:connect(waterMeter)
+main:connect(pot)
 
 main.event:add('update', function (dt)
     if ntrButtonStart.isClicked then
@@ -76,10 +82,12 @@ end)
 main.event:add('draw', function ()
     innerBackground:draw()
 
+    pot:draw()
+
     love.graphics.setFont(assets.font.normal)
     color.condition(ntrButtonStart.isCursorHovering, {0.5, 0.5, 0.5}, {1, 1, 1})
     frameButtonStart:draw()
-    color.condition(ntrButtonStart.isCursorHovering, {99/255/2, 171/255/2, 63/255/2}, {99/255, 171/255, 63/255})
+    color.condition(ntrButtonStart.isCursorHovering, {60/255/2, 163/255/2, 112/255/2}, {60/255, 163/255, 112/255})
     iconButtonStart:draw()
 
     color.condition(ntrButtonPotsMenu.isCursorHovering, {0.5, 0.5, 0.5}, {1, 1, 1})
@@ -94,9 +102,12 @@ main.event:add('draw', function ()
     frameButtonMoreMenu:draw()
     iconButtonMoreMenu:draw()
 
-
     love.graphics.setFont(assets.font.small)
+
     love.graphics.setColor(1, 1, 1)
+
+    waterMeter:draw()
+
     watermarkText:draw()
 
     love.graphics.setColor(1, 1, 1)
