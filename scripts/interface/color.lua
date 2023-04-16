@@ -1,10 +1,12 @@
 local color = {}
 
-function color.colorIfTrue(condition, color_true, color_false)
+function color.condition(condition, colorA, colorB)
     if condition then
-        love.graphics.setColor(color_true)
+        love.graphics.setColor(colorA)
     else
-        love.graphics.setColor(color_false)
+        if colorB then
+            love.graphics.setColor(colorB)
+        end
     end
 end
 

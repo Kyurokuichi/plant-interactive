@@ -77,4 +77,8 @@ function system:swap(a, b)
     self.groups[a], self.groups[b] = self.groups[b], self.groups[a]
 end
 
+function system:getGroup(index)
+    return self.groups[index]
+end
+
 return system

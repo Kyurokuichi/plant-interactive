@@ -1,12 +1,16 @@
 -- Event handler for group object
-
+local enums = require('scripts.interface.enums')
 local signal = require('scripts.interface.signal')
 
 local event = {}
 event.__index = event
 -- Creates new event object
 function event.new(...)
-    local newObject = {callbacks = {}}
+    local newObject = {
+        callbacks = {},
+        __INTFTYPE = enums.type.group,
+        __INTFKIND = nil,
+    }
     setmetatable(newObject, event)
 
     local args = {...}

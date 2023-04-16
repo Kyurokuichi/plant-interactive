@@ -19,7 +19,10 @@ function love.load(arg, unfilteredArg)
     assets.initialize()
 
     sysintf = require('scripts.sysintf')
-    sysintf:connect(require('scripts.uis.main'))
+    sysintf:connect(require('scripts.uis.main'))        -- 1
+    sysintf:connect(require('scripts.uis.pots-menu'))   -- 2
+    sysintf:connect(require('scripts.uis.music-menu'))  -- 3
+    sysintf:connect(require('scripts.uis.more-menu'))   -- 4
 end
 
 function love.update(dt)
@@ -34,7 +37,7 @@ function love.draw()
     sysintf:emit('draw')
 
     local x, y = screen.translatePosition(love.mouse.getPosition())
-    love.graphics.circle('fill', x, y, 16)
+    love.graphics.circle('fill', x, y, 2)
 
     screen.pop()
 

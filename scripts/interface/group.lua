@@ -40,6 +40,8 @@ function group:connect(element)
         error('No value passed or wrong kind of element')
     end
 
+    element.group = self
+
     self.contents[#self.contents+1] = element
 end
 

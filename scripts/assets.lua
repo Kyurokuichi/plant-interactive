@@ -6,9 +6,12 @@ function assets.initialize()
     assets.initialize = nil
 
     assets.image = {}
-    assets.image.room = love.graphics.newImage('assets/room.png')
-    assets.image.frameButton = love.graphics.newImage('assets/frame-button.png')
-    assets.image.frameStart = love.graphics.newImage('assets/frame-start.png')
+    assets.image.room           = love.graphics.newImage('assets/room.png')
+
+    -- Frames
+    assets.image.frameButton    = love.graphics.newImage('assets/frame-button.png')
+    assets.image.frameStart     = love.graphics.newImage('assets/frame-start.png')
+    assets.image.frameWindow    = love.graphics.newImage('assets/frame-window.png')
 
     -- Icons
     assets.image.iconPotsMenu   = love.graphics.newImage('assets/icon-potsmenu.png')
