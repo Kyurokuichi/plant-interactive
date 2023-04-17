@@ -12,6 +12,8 @@ local window    = drwFrame.new(assets.image.frameWindow, 26, 26, 92, 204)
 
 local musicMenu = require('scripts.interface.group').new(false, true)
 
+local backButton = drwImage.new(assets.image.iconBack)
+
 musicMenu:connect(window)
 
 musicMenu.event:add('update', function (dt)

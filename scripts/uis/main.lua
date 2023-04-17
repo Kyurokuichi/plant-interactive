@@ -15,9 +15,9 @@ local watermarkText = drwText.new('Made by A07-12 STEM-S2-3 Grp 1', 0, 246, 144,
 local innerBackground = drwImage.new(assets.image.room)
 
 local frameButtonStart      = drwFrame.new(assets.image.frameStart , 45, 158, 54, 22)
-local frameButtonPotsMenu   = drwFrame.new(assets.image.frameButton, 23, 216, 22, 22)
-local frameButtonMusicMenu  = drwFrame.new(assets.image.frameButton, 61, 216, 22, 22)
-local frameButtonMoreMenu   = drwFrame.new(assets.image.frameButton, 99, 216, 22, 22)
+local frameButtonPotsMenu   = drwFrame.new(assets.image.frameButton1, 23, 216, 22, 22)
+local frameButtonMusicMenu  = drwFrame.new(assets.image.frameButton1, 61, 216, 22, 22)
+local frameButtonMoreMenu   = drwFrame.new(assets.image.frameButton1, 99, 216, 22, 22)
 
 local iconButtonStart       = drwText.new('Start', 45, 158, 54, 22)
 local iconButtonPotsMenu    = drwImage.new(assets.image.iconPotsMenu , 23, 216)
@@ -31,6 +31,8 @@ local ntrButtonMoreMenu     = ntrRect.new(99, 216, 22, 22)
 
 local waterMeter            = drwImage.new(assets.image.waterMeter, 32, 189)
 local pot                   = drwImage.new(assets.image.pot, 40, 108)
+local leftSpeaker           = drwImage.new(assets.image.leftSpeaker, 0, 63)
+local rightSpeaker          = drwImage.new(assets.image.rightSpeaker, 101, 63)
 
 main:connect(innerBackground)
 
@@ -51,6 +53,8 @@ main:connect(ntrButtonMoreMenu)
 
 main:connect(waterMeter)
 main:connect(pot)
+main:connect(leftSpeaker)
+main:connect(rightSpeaker)
 
 main.event:add('update', function (dt)
     if ntrButtonStart.isClicked then
@@ -107,6 +111,8 @@ main.event:add('draw', function ()
     love.graphics.setColor(1, 1, 1)
 
     waterMeter:draw()
+    leftSpeaker:draw()
+    rightSpeaker:draw()
 
     watermarkText:draw()
 

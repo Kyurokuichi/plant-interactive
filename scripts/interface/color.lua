@@ -10,4 +10,12 @@ function color.condition(condition, colorA, colorB)
     end
 end
 
+function color.rgb(r, g, b, a)
+    return r/255, g/255, b/255
+end
+
+function color.rgba(r, g, b, a)
+    return r/255, g/255, b/255, a/55
+end
+
 return color

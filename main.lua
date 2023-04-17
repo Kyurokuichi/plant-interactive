@@ -23,7 +23,11 @@ function love.load(arg, unfilteredArg)
     sysintf:connect(require('scripts.uis.pots-menu'))   -- 2
     sysintf:connect(require('scripts.uis.music-menu'))  -- 3
     sysintf:connect(require('scripts.uis.more-menu'))   -- 4
+
+    require('scripts.special')
 end
+
+
 
 function love.update(dt)
     sysintf:emit('update', dt)
@@ -70,4 +74,7 @@ function love.mousemoved(x, y, dx, dy, isTouch)
     sysintf:emit('mousemoved', x, y, dx, dy, isTouch)
 
     lastDX, lastDY = dx, dy
+end
+
+function love.keypressed(key)
 end
