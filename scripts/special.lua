@@ -45,6 +45,37 @@ local special = {
                     self.activated = false
                 end
             end
+        },
+
+        {
+            pattern = {'up', 'up', 'up', 'up'},
+            activated = false,
+            funcActivated = function (self)
+                assets.video.konami:play()
+            end,
+            funcUpdate = function (self, dt)
+
+            end,
+            funcDraw = function (self)
+                if assets.video.konami:isPlaying() then
+                    love.graphics.setColor(1, 1, 1, 1)
+
+                    local video = assets.video.konami
+
+                    love.graphics.draw(
+                        video,
+                        screen.width/2,
+                        screen.height/2,
+                        0,
+                        screen.width/video:getWidth(),
+                        screen.height/video:getHeight(),
+                        video:getWidth()/2,
+                        video:getHeight()/2
+                    )
+                else
+                    self.activated = false
+                end
+            end
         }
     },
 

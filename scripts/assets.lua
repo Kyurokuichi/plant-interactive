@@ -42,6 +42,8 @@ function assets.initialize()
 
     -- Musics
 
+    assets.video = {}
+    assets.video.konami         = love.graphics.newVideo('assets/konami.ogv')
 
 end
 
