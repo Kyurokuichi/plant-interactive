@@ -7,6 +7,7 @@ local drwImage  = require('scripts.interface.elements.drw-image')
 local drwFrame  = require('scripts.interface.elements.drw-frame')
 local drwText   = require('scripts.interface.elements.drw-text')
 local ntrRect   = require('scripts.interface.elements.ntr-rect')
+local drwTextScroll = require('scripts.interface.elements.drw-textscroll')
 
 local main = require('scripts.interface.group').new()
 
@@ -55,6 +56,10 @@ main:connect(waterMeter)
 main:connect(pot)
 main:connect(leftSpeaker)
 main:connect(rightSpeaker)
+
+local testText = drwTextScroll.new('Hello world this is a long text dadsahdsakjdashkdj', 32, 32, 64, 2, 2, true)
+
+main:connect(testText)
 
 main.event:add('update', function (dt)
     if ntrButtonStart.isClicked then
@@ -115,6 +120,8 @@ main.event:add('draw', function ()
     rightSpeaker:draw()
 
     watermarkText:draw()
+
+    testText:draw()
 
     love.graphics.setColor(1, 1, 1)
 end)

@@ -35,7 +35,7 @@ function screen.setDimension(width, height)
 end
 -- Push drawables into the screen
 function screen.push(noClear)
-    love.graphics.setCanvas(screen.canvas)
+    love.graphics.setCanvas({screen.canvas, stencil = true})
     if not noClear then love.graphics.clear() end
 end
 -- Pop drawables out from screen

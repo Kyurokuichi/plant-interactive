@@ -48,7 +48,7 @@ local special = {
         },
 
         {
-            pattern = {'up', 'up', 'up', 'up'},
+            pattern = {'up', 'up', 'up', 'up', 'down', 'down', 'down', 'down'},
             activated = false,
             funcActivated = function (self)
                 assets.video.konami:play()
@@ -85,6 +85,9 @@ local special = {
         down = ntrRect.new(screen.width*1/3, screen.height*2/3, screen.width*1/3, screen.height*1/3),
         right = ntrRect.new(screen.width*2/3, screen.height*1/3, screen.width*1/3, screen.height*1/3)
     },
+
+    lastPress = 0,
+    timeLimit = 2,
 
     pointer = 1
 }
@@ -175,11 +178,15 @@ sysintf:getGroup(1).event:get('mousereleased'):connect(function (x, y, button, i
             end
         end
 
-        if increment then
+        if increment and (love.timer.getTime() - special.lastPress) <= special.timeLimit then
             special.pointer = special.pointer + 1
         else
             special.pointer = 1
         end
+
+        special.lastPress = love.timer.getTime()
+
+        print(special.pointer)
     else
         special.pointer = 1
     end
@@ -200,9 +207,11 @@ sysintf:getGroup(1).event:get('keypressed'):connect(function (key)
         end
     end
 
-    if increment then
+    if increment and (love.timer.getTime() - special.lastPress) <= special.timeLimit then
         special.pointer = special.pointer + 1
     else
         special.pointer = 1
     end
+
+    special.lastPress = love.timer.getTime()
 end)

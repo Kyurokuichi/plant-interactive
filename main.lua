@@ -25,6 +25,9 @@ function love.load(arg, unfilteredArg)
     sysintf:connect(require('scripts.uis.more-menu'))   -- 4
 
     require('scripts.special')
+
+    -- To load music
+    local music = require 'scripts.music'
 end
 
 
