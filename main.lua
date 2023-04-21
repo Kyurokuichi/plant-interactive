@@ -4,6 +4,7 @@
 
 local screen
 local assets
+local player
 local sysintf
 
 function love.load(arg, unfilteredArg)
@@ -26,11 +27,12 @@ function love.load(arg, unfilteredArg)
 
     require('scripts.special')
 
+    player = require('scripts.player')
+    player:initialize()
+
     -- To load music
-    local music = require 'scripts.music'
+    local music = require 'scripts.musics'
 end
-
-
 
 function love.update(dt)
     sysintf:emit('update', dt)

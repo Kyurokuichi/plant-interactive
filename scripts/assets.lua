@@ -19,6 +19,7 @@ function assets.initialize()
     -- Frames
     assets.image.frameButton1   = love.graphics.newImage('assets/frame-button1.png')
     assets.image.frameButton2   = love.graphics.newImage('assets/frame-button2.png')
+    assets.image.frameButton3   = love.graphics.newImage('assets/frame-button3.png')
     assets.image.frameStart     = love.graphics.newImage('assets/frame-start.png')
     assets.image.frameWindow    = love.graphics.newImage('assets/frame-window.png')
 
@@ -30,6 +31,11 @@ function assets.initialize()
     assets.image.iconRemove     = love.graphics.newImage('assets/icon-remove.png')
     assets.image.iconLeftArrow  = love.graphics.newImage('assets/icon-leftarrow.png')
     assets.image.iconRightArrow = love.graphics.newImage('assets/icon-rightarrow.png')
+    assets.image.iconPot        = love.graphics.newImage('assets/icon-pot.png')
+    assets.image.iconAdd        = love.graphics.newImage('assets/icon-add.png')
+    assets.image.iconClose      = love.graphics.newImage('assets/icon-close.png')
+    assets.image.iconLeftSmall  = love.graphics.newImage('assets/icon-leftsmall.png')
+    assets.image.iconRightSmall = love.graphics.newImage('assets/icon-rightsmall.png')
 
     assets.font = {}
 

@@ -45,6 +45,19 @@ function group:connect(element)
     self.contents[#self.contents+1] = element
 end
 
+function group:remove(element)
+    if type(element) == 'table' then
+        for index, value in ipairs(self.contents) do
+            -- Table reference matching
+            if element == value then
+                element = index
+            end
+        end
+    end
+
+    table.remove(self.contents, element)
+end
+
 -- Emits specified callback to contents and group itself
 function group:emit(name, ...)
     -- For drawables

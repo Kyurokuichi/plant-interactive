@@ -3,18 +3,19 @@ local enums = require('scripts.interface.enums')
 local drwTextScroll = {}
 drwTextScroll.__index = drwTextScroll
 
-function drwTextScroll.new(text, x, y, width, scrollTime, haltTime, scroll)
+function drwTextScroll.new(text, x, y, width, height, scrollTime, haltTime, scroll)
     local newObject = {
         text = text,
         x = x or x,
         y = y or y,
         width = width,
+        height = height,
 
-        scroll = scroll,
+        scroll = scroll ~= nil and scroll or true,
 
         time = {
-            halt = scrollTime or 0,
-            scroll = haltTime or 0,
+            halt = haltTime or 1,
+            scroll = scrollTime or 2,
         },
 
         timer = {
@@ -36,7 +37,7 @@ function drwTextScroll:draw()
     local textWidth     = love.graphics.getFont():getWidth(self.text)
     local textHeight    = love.graphics.getFont():getHeight()
 
-    if self.scroll then
+    if self.scroll and textWidth > self.width then
         if self.timer.invert and self.timer.scroll > 0 or (not self.timer.invert and self.timer.scroll < self.time.scroll) then
             if not self.timer.invert then
                 self.timer.scroll = math.min(self.timer.scroll + love.timer.getDelta(), self.time.scroll)

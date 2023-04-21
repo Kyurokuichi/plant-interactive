@@ -46,7 +46,8 @@ Audio:
 - [ ] Image Assets (UIs, objects, background, etc.)
 - [x] Music Assets (rock, ballad, classical)
 - [ ] SFX Assets (click, pop, warn, etc. sounds)
-- [ ] UI implementation
+- [x] UI system implementation
+- [ ] Implementation of functional UI based from concept
 - [ ] Game mechanics implementation
 
 # Version history

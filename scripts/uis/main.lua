@@ -57,10 +57,6 @@ main:connect(pot)
 main:connect(leftSpeaker)
 main:connect(rightSpeaker)
 
-local testText = drwTextScroll.new('Hello world this is a long text dadsahdsakjdashkdj', 32, 32, 64, 2, 2, true)
-
-main:connect(testText)
-
 main.event:add('update', function (dt)
     if ntrButtonStart.isClicked then
         main.isLocked = true
@@ -120,8 +116,6 @@ main.event:add('draw', function ()
     rightSpeaker:draw()
 
     watermarkText:draw()
-
-    testText:draw()
 
     love.graphics.setColor(1, 1, 1)
 end)
