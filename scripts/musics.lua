@@ -39,24 +39,24 @@ local music = {
 
 
         {
-            name = 'The Blue Danube Waltz',
-            artist = 'Johann Strauss II',
+            name = 'Erika',
+            artist = 'Herms Niel',
             audio = assets.audio.classical5,
             path = 'assets/classical/Herms Niel - Erika.ogg'
         },
 
 
         {
-            name = 'Eine Kleine Nachtmusik',
-            artist = 'Wolfgang Amadeus Mozart',
+            name = 'The Blue Danube Waltz',
+            artist = 'Johann Strauss II',
             audio = assets.audio.classical6,
             path = 'assets/classical/Johann Strauss II - The Blue Danube Waltz.ogg'
         },
 
 
         {
-            name = 'Erika',
-            artist = 'Herms Niel',
+            name = 'Eine Kleine Nachtmusik',
+            artist = 'Wolfgang Amadeus Mozart',
             audio = assets.audio.classical7,
             path = 'assets/classical/Mozart - Eine Kleine Nachtmusik.ogg'
         },

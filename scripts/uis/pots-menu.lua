@@ -130,7 +130,7 @@ potsMenu.event:add('update', function (dt)
                 t.frame  = nil
                 t.icon   = nil
                 t.name   = nil
-                t.info = nil
+                t.info   = nil
                 t.ntr    = nil
 
                 table.remove(list, index)

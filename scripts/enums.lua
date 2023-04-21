@@ -11,6 +11,12 @@ local enums = {
         'Healthy',
         'Wilting'
     },
+
+    genre = {
+        'classical',
+        'ballad',
+        'rock',
+    }
 }
 
 return enums

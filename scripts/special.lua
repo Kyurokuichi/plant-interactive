@@ -185,8 +185,6 @@ sysintf:getGroup(1).event:get('mousereleased'):connect(function (x, y, button, i
         end
 
         special.lastPress = love.timer.getTime()
-
-        print(special.pointer)
     else
         special.pointer = 1
     end

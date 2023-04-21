@@ -15,7 +15,7 @@ function love.load(arg, unfilteredArg)
     screen = require('scripts.screen')
     screen.initialize(desiredWidth, desiredHeight)
 
-    love.graphics.setDefaultFilter('nearest', 'nearest') -- Prevent lowres images blurry
+    love.graphics.setDefaultFilter('linear', 'nearest') -- Prevent lowres images blurry
     assets = require('scripts.assets')
     assets.initialize()
 

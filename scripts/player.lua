@@ -6,9 +6,17 @@ local player = {
     pots = nil,
     selected = {
         potIndex = nil,
+        page = nil,
+        genre = nil,
+        musicIndex = nil,
+        previewIndex = nil
     },
 
-    potsHistory = nil
+    settings = {
+        masterVolume = 1,
+        musicVolume = 1,
+        SFXVolume = 1
+    }
 }
 
 function player:initialize()
@@ -18,7 +26,8 @@ function player:initialize()
     }
 
     self.selected.potIndex = 1
-    self.potsHistory = {}
+    self.selected.page     = 1
+    self.selected.genre    = 1
 end
 
 function player:initializeSimulation()

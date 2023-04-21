@@ -30,6 +30,9 @@ function pot:initialize()
         music.audio:setLooping(true)
     end
 
+    -- Load sound data
+    self.music.data = love.sound.newSoundData(music.path)
+
     -- Play music upon initialized
     music.audio:play()
 end
@@ -43,7 +46,6 @@ function pot:setMusic(music)
     self.music.artist = music.artist
     self.music.audio  = music.audio
     self.music.path   = music.path
-    self.music.data   = love.sound.newSoundData(music.data)
 
     for key, genre in pairs(musics) do
         for _, value in ipairs(genre) do
