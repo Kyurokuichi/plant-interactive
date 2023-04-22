@@ -11,7 +11,6 @@ local drwText   = require('scripts.interface.elements.drw-text')
 local drwTextScroll = require('scripts.interface.elements.drw-textscroll')
 local ntrRect   = require('scripts.interface.elements.ntr-rect')
 
-
 local potsMenu = require('scripts.interface.group').new(false, true)
 
 local window    = drwFrame.new(assets.image.frameWindow, 26, 26, 92, 204)
