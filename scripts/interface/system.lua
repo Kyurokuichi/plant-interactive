@@ -15,7 +15,7 @@ function system.new()
         groups = {},
         event = event.new(),
 
-        __INTFTYPE = enums.type.system,
+        __INTFTYPE = enums.key[enums.index.type.system],
         __INTFKIND = nil
     }
 
@@ -34,9 +34,9 @@ function system:reset()
 end
 
 function system:connect(group)
-    local enumType, enumKind = check(group)
+    local enumType, enumKind = check.enum(group)
 
-    assert(enumType == enums.type[enums.type.group], 'No value passed / Not a group type')
+    assert(enumType == enums.index.type.group, 'No value passed / Not a group type')
 
     self.groups[#self.groups+1] = group
 end

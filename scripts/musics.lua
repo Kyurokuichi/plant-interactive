@@ -160,14 +160,14 @@ local music = {
             name = 'Livin On A Prayer',
             artist = 'Bon Jovi',
             audio = assets.audio.rock1,
-            path = 'assets/rock/Bon Jovi - Livin On A Prayer Official Music Video.ogg'
+            path = 'assets/rock/Bon Jovi - Livin On A Prayer.ogg'
         },
 
         {
             name = 'You Spin Me Round (Like a Record)',
             artist = 'Dead Or Alive',
             audio = assets.audio.rock2,
-            path = 'assets/rock/Dead Or Alive - You Spin Me Round Like a Record Official Video.ogg'
+            path = 'assets/rock/Dead Or Alive - You Spin Me Round Like a Record.ogg'
         },
 
         {
@@ -188,7 +188,7 @@ local music = {
             name = 'In The End',
             artist = 'Linkin Park',
             audio = assets.audio.rock5,
-            path = 'assets/rock/Linkin Park - In The End Official.ogg'
+            path = 'assets/rock/Linkin Park - In The End.ogg'
         },
 
         {

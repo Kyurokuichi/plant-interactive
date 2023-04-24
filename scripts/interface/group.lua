@@ -3,7 +3,6 @@
 --  Like tables, group contains interface elements (drawables, interactables), and another group
 --]]
 
-
 local event = require('scripts.interface.event')    -- Event class
 local check = require('scripts.interface.check')    -- For checking enums of an interface object type and its kind
 local enums = require('scripts.interface.enums')    -- Enums of interface type and kinds 
@@ -11,7 +10,6 @@ local enums = require('scripts.interface.enums')    -- Enums of interface type a
 local group = {}
 group.__index = group
 
--- Creates group object
 function group.new(isVisible, isLocked)
     local newObject = {
         offsetX = 0,
@@ -21,28 +19,51 @@ function group.new(isVisible, isLocked)
         contents = {},
         event = event.new(),
 
-        __INTFTYPE = enums.type.group,
-        __INTFKIND = nil,
+        __NTFTYPE = enums.key.type[enums.index.type.group],
+        __NTFKIND = nil,
     }
 
     return setmetatable(newObject, group)
 end
 
 -- Connects an element/group to the group
-function group:connect(element)
+function group:connect(value)
     -- Type check
-    local enumType, enumKind = check(element)
+    local enumType, _ = check.enum(value)
 
-    local isElement = enumType == enums.type[3] and (enumKind == enums.element[1] or enumKind == enums.element[2])
-    local isGroup   = enumType == enums.type[2]
+    local function add(element)
+        -- Type check
+        local enumType, _ = check.enum(element)
 
-    if not (isElement or isGroup) then
-        error('No value passed or wrong kind of element')
+        local isElement = enumType == enums.index.type.element
+        local isGroup   = enumType == enums.index.type.group
+
+        if (isElement or isGroup) then
+             -- Add table reference to element or group
+            element.group = self
+
+            self.contents[#self.contents+1] = element
+        else
+            print('Warning on group:connect() : No value passed or wrong kind of element')
+        end
     end
 
-    element.group = self
+    if enumType then
+        add(value)
+    else
+        if type(value) == 'table' then
+            -- Find possible elements on indices and keys
+            for _, element in ipairs(value) do
+                add(element)
+            end
 
-    self.contents[#self.contents+1] = element
+            for key, element in pairs(value) do
+                if type(key) == 'string' then
+                    add(element)
+                end
+            end
+        end
+    end
 end
 
 function group:remove(element)
@@ -73,8 +94,8 @@ function group:emit(name, ...)
 
         -- Then rest of the groups inside foremost group's content draws
         for _, member in ipairs(self.contents) do
-            local enumType, _ = check(member)
-            if enumType == enums.type.group then
+            local enumType, _ = check.enum(member)
+            if enumType == enums.index.type.group then
                 member:emit(name, ...)
             end
         end
@@ -88,16 +109,20 @@ function group:emit(name, ...)
 
         -- Emit a signal for specific event callback
         for _, member in ipairs(self.contents) do
-            local enumType, enumKind = check(member)
+            local enumType, enumKind = check.enum(member)
             -- If member is an element and an interactable
-            if enumType == enums.type[3] and enumKind == enums.element[2] then
-                local callback = member[name]
+            if enumType == enums.index.type.element then
 
-                if callback then
-                    callback(member, ...)
+                if enumKind == enums.index.element.interactable or name == 'update' then
+                    local callback = member[name]
+
+                    if callback then
+                        callback(member, ...)
+                    end
                 end
-            -- IF member is a group
-            elseif enumType == enums.type[2] then
+
+            -- If member is a group
+            elseif enumType == enums.index.type.group then
                 member:emit(name, ...)
             end
         end
@@ -108,6 +133,15 @@ end
 function group:setOffset(x, y)
     self.offsetX = x
     self.offsetY = y
+end
+
+function group:toggleLockOnly()
+    self.isLocked = not self.isLocked
+end
+
+function group:toggle()
+    self.isVisible = not self.isVisible
+    self.isLocked = not self.isLocked
 end
 
 return group

@@ -1,85 +1,100 @@
 --[[
-    Plant interactive
+    Project Growth
+
+    An interactive plant simulator game for our APEC Digital Science Knowledge Fair 2023 & Science Expo 2023
+
+    Created by: Research Project (3rd Quarter course) Group 1 of A07-12 STEM-S2-3
+    
+    Developers of this interactive:
+
+    Evo Pasculado aka Yonichi4161 (Lead developer, Scripter, Graphics)
+    Josiah Garillo (Sound, Graphics)
+    Luis Panambo (Sound)
 --]]
 
-local screen
-local assets
-local player
-local sysintf
+local
+    screen,
+    assets,
+    player,
+    sysNtf,
+    perlin
 
 function love.load(arg, unfilteredArg)
-    local desiredWidth, desiredHeight = 144, 256
+    love.graphics.setDefaultFilter('linear', 'nearest')
 
-    love.graphics.setDefaultFilter('nearest', 'nearest')
+    local desiredWidth, desiredHeight = 144, 256 -- 144x256
 
-    screen = require('scripts.screen')
-    screen.initialize(desiredWidth, desiredHeight)
+    screen = require 'scripts.screen'
+    screen:initialize(desiredWidth, desiredHeight)
 
-    love.graphics.setDefaultFilter('linear', 'nearest') -- Prevent lowres images blurry
-    assets = require('scripts.assets')
-    assets.initialize()
-
-    sysintf = require('scripts.sysintf')
-    sysintf:connect(require('scripts.uis.main'))        -- 1
-    sysintf:connect(require('scripts.uis.pots-menu'))   -- 2
-    sysintf:connect(require('scripts.uis.music-menu'))  -- 3
-    sysintf:connect(require('scripts.uis.more-menu'))   -- 4
-
-    require('scripts.special')
-
-    player = require('scripts.player')
-    player:initialize()
-
-    -- To load music
-    local music = require 'scripts.musics'
-end
-
-function love.update(dt)
-    sysintf:emit('update', dt)
-end
-
-function love.draw()
-    screen.push()
+    assets = require 'scripts.assets'
+    assets:initialize()
 
     love.graphics.setFont(assets.font.small)
 
-    sysintf:emit('draw')
+    player = require 'scripts.player'
+    player:initialize()
 
-    local x, y = screen.translatePosition(love.mouse.getPosition())
-    love.graphics.circle('fill', x, y, 2)
+    sysNtf = require 'scripts.sysntf'
+    sysNtf:connect( require 'scripts.interfaces.main' )         -- 1
+    sysNtf:connect( require 'scripts.interfaces.menu-pots' )    -- 2
+    sysNtf:connect( require 'scripts.interfaces.menu-musics' )  -- 3
+    sysNtf:connect( require 'scripts.interfaces.menu-more' )    -- 4
+    sysNtf:connect( require 'scripts.interfaces.menu-start')    -- 5
 
-    screen.pop()
+    perlin = require 'scripts.perlin'
 
-    screen.draw()
-
-    love.graphics.setColor(1, 1, 1)
-    sysintf:reset()
+    math.randomseed(os.time())
+    perlin.generate()
 end
 
-function love.resize(width, height)
-    screen.resize(width, height)
+function love.keypressed()
+    
+end
+
+function love.keyreleased()
+    
 end
 
 function love.mousepressed(x, y, button, isTouch, presses)
-    x, y = screen.translatePosition(x, y)
-    sysintf:emit('mousepressed', x, y, button, isTouch, presses)
+    x, y = screen:translate(x, y)
+    sysNtf:emit('mousepressed', x, y, button, isTouch, presses)
 end
 
 function love.mousereleased(x, y, button, isTouch, presses)
-    x, y = screen.translatePosition(x, y)
-    sysintf:emit('mousereleased', x, y, button, isTouch, presses)
+    x, y = screen:translate(x, y)
+    sysNtf:emit('mousereleased', x, y, button, isTouch, presses)
 end
 
 local lastDX, lastDY = 0, 0
 function love.mousemoved(x, y, dx, dy, isTouch)
-    x, y = screen.translatePosition(x, y)
+    x, y = screen:translate(x, y)
     dx = dx - lastDX
     dy = dy - lastDY
 
-    sysintf:emit('mousemoved', x, y, dx, dy, isTouch)
-
-    lastDX, lastDY = dx, dy
+    sysNtf:emit('mousemoved', x, y, dx, dy, isTouch)
 end
 
-function love.keypressed(key)
+function love.resize(width, height)
+    screen:resize(width, height)
+end
+
+function love.update(dt)
+    player:update(dt)
+    sysNtf:emit('update', dt)
+end
+
+function love.draw()
+    screen:push()
+
+    sysNtf:emit('draw')
+
+    local mx, my = screen:translate(love.mouse.getPosition())
+    love.graphics.circle('fill', mx, my, 4)
+
+    screen:pop()
+
+    screen:draw()
+
+    sysNtf:emit('reset')
 end

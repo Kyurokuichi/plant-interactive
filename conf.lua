@@ -1,12 +1,19 @@
-function love.conf(set)
-    set.version = '11.4'
-    set.console = true
+function love.conf(configuration)
+    --[[
+        The game specifically runs at version 11.3 of LOVE2d
+        But you can possibly run in on newer or older version as long as it doesn't get errors or bugs
+    --]]
+    configuration.version = '11.3'
 
-    set.window.title = 'Plant interactive re-dev 1.0 by A07-12 STEM-S2-3'
-    set.window.icon = nil
-    set.window.width = 288
-    set.window.height = 512
-    set.window.resizable = true
-    set.window.minwidth = set.window.width
-    set.window.minheight = set.window.height
+    configuration.console = true -- For debugging (will disable when release)
+
+    configuration.window.title = 'Project Growth'
+    configuration.window.icon = 'assets/icon-game.png'
+
+    configuration.window.width = 288
+    configuration.window.height = 512
+    configuration.window.minwidth = configuration.window.width
+    configuration.window.minheight = configuration.window.height
+
+    configuration.window.resizable = true
 end

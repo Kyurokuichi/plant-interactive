@@ -7,79 +7,104 @@ local screen = {
     offsetY = 0
 }
 
--- Initialize screen (run only once on load)
-function screen.initialize(width, height)
-    screen.setDimension(width, height)
-    screen.resize(love.graphics.getDimensions())
+-- Initializes screen
+function screen:initialize(width, height)
+    self:setDimensions(width, height)
+    self:resize(love.graphics.getDimensions())
 end
--- Resizes the screen on given dimension
-function screen.resize(width, height)
-    screen.scale = math.min(
-        width / screen.width,
-        height / screen.height
+
+-- Resizes the screen using specified window dimensions
+function screen:resize(width, height)
+    self.scale = math.min(
+        width / self.width,
+        height / self.height
     )
 
-    screen.offsetX = (width - screen.width * screen.scale) * 0.5
-    screen.offsetY = (height - screen.height * screen.scale) * 0.5
+    self.offsetX = (width - self.width * self.scale) / 2
+    self.offsetY = (height - self.height * self.scale) / 2
 end
--- Reset screen dimension
-function screen.setDimension(width, height)
-    screen.width = width
-    screen.height = height
 
-    if screen.canvas then
-        screen.canvas:release()
+-- Sets new desired dimensions to screen
+function screen:setDimensions(width, height)
+    self.width = width
+    self.height = height
+
+    if self.canvas then
+        self.canvas:release()
     end
 
-    screen.canvas = love.graphics.newCanvas(width, height)
+    self.canvas = love.graphics.newCanvas(self.width, self.height)
 end
--- Push drawables into the screen
-function screen.push(noClear)
+
+-- Makes the drawables draw on the screen
+function screen:push(noclear)
     love.graphics.setCanvas({screen.canvas, stencil = true})
-    if not noClear then love.graphics.clear() end
+    if not noclear then love.graphics.clear() end
 end
--- Pop drawables out from screen
-function screen.pop()
+
+-- Makes the drawables don't draw on the screen (NOTE: call this function if it's done drawing all drawables intended for screen)
+function screen:pop()
     love.graphics.setCanvas(nil)
 end
--- Draw the screen
-function screen.draw()
+
+-- Draws the screen
+function screen:draw()
     love.graphics.push()
 
-    love.graphics.translate(screen.offsetX, screen.offsetY)
-    love.graphics.scale(screen.scale)
+    love.graphics.translate(self.offsetX, self.offsetY)
+    love.graphics.scale(self.scale)
 
-    love.graphics.draw(screen.canvas)
+    love.graphics.draw(self.canvas)
 
     love.graphics.pop()
 end
--- Translate position into relative coordinate of the screen
-function screen.translatePosition(x, y)
-    x = x - screen.offsetX
-    y = y - screen.offsetY
 
-    x = x / (love.graphics.getWidth() - screen.offsetX * 2)
-    y = y / (love.graphics.getHeight() - screen.offsetY * 2)
+-- Translates normal coordinates into relative to screen coordinates
+function screen:translate(x, y)
+    if x ~= nil then
+        x = x - self.offsetX
+        x = x / (love.graphics.getWidth() - self.offsetX * 2)
+        x = x * self.width
+    end
 
-    x = x * screen.width
-    y = y * screen.height
+    if y ~= nil then
+        y = y - self.offsetY
+        y = y / (love.graphics.getHeight() - self.offsetY * 2)
+        y = y * self.height
+    end
 
-    return x, y
+    if x ~= nil and y ~= nil then
+        return x, y
+    elseif x ~= nil then
+        return x
+    else
+        return y
+    end
 end
--- Untranslate position into normal coordinate
-function screen.inverseTranslatePosition(x, y)
+
+-- Inverse function of translate. Basically untranslates back to normal coordinates
+function screen:inverseTranslate(x, y)
     local ux, uy
-    
-    ux = screen.offsetX * screen.width - 2 * screen.offsetX * x
-    uy = screen.offsetY * screen.height - 2 * screen.offsetY * y
 
-    ux = ux + love.graphics.getWidth() * x
-    uy = uy + love.graphics.getHeight() * y
+    if x ~= nil then
+        ux = self.offsetX * screen.width - 2 * screen.offsetX * x
+        ux = ux + love.graphics.getWidth() * x
+        ux = ux / self.width
+    end
 
-    ux = ux / screen.width
-    uy = uy / screen.height
+    if y ~= nil then
+        uy = self.offsetY * screen.height - 2 * screen.offsetY * y
+        uy = uy + love.graphics.getHeight() * y
+        uy = uy / self.height
+    end
 
-    return ux, uy
+    if x ~= nil and y ~= nil then
+        return ux, uy
+    elseif x ~= nil then
+        return ux
+    else
+        return uy
+    end
 end
 
 return screen

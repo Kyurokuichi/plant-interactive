@@ -16,8 +16,8 @@ function drwFrame.new(image, x, y, width, height)
 
         isVisible = true,
 
-        __INTFTYPE = enums.type.element,
-        __INTFKIND = enums.element.drawable
+        __NTFTYPE = enums.key.type[enums.index.type.element],
+        __NTFKIND = enums.key.element[enums.index.element.drawable]
     }
 
     setmetatable(newObject, drwFrame)

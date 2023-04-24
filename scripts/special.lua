@@ -1,8 +1,20 @@
 local assets = require('scripts.assets')
 local screen = require('scripts.screen')
 
-local sysintf = require('scripts.sysintf')
+local sysntf = require('scripts.sysntf')
 local ntrRect = require('scripts.interface.elements.ntr-rect')
+
+assets.image.nahida = love.graphics.newImage('assets/nahida.png')
+
+assets.font.impact = love.graphics.newFont('assets/impact.ttf')
+
+assets.audio.nahida = love.audio.newSource('assets/nahida.ogg', 'stream')
+
+if not assets.video then
+    assets.video = {}
+end
+
+assets.video.grrawajg = love.graphics.newVideo('assets/grrawajg.ogv')
 
 local special = {
     sequences = {
@@ -10,13 +22,13 @@ local special = {
             pattern = {'up', 'up', 'down', 'down', 'left', 'right', 'left', 'right'},
             activated = false,
             funcActivated = function (self)
-                assets.audio.konami:play()
+                assets.audio.nahida:play()
             end,
             funcUpdate = function (self, dt)
 
             end,
             funcDraw = function (self)
-                if assets.audio.konami:isPlaying() then
+                if assets.audio.nahida:isPlaying() then
                     love.graphics.setColor(1, 1, 1, 1)
 
                     local image = assets.image.nahida
@@ -51,16 +63,16 @@ local special = {
             pattern = {'up', 'up', 'up', 'up', 'down', 'down', 'down', 'down'},
             activated = false,
             funcActivated = function (self)
-                assets.video.konami:play()
+                assets.video.grrawajg:play()
             end,
             funcUpdate = function (self, dt)
 
             end,
             funcDraw = function (self)
-                if assets.video.konami:isPlaying() then
+                if assets.video.grrawajg:isPlaying() then
                     love.graphics.setColor(1, 1, 1, 1)
 
-                    local video = assets.video.konami
+                    local video = assets.video.grrawajg
 
                     love.graphics.draw(
                         video,
@@ -94,28 +106,28 @@ local special = {
 
 -- Secretly bind to main interface heheheheh
 
-sysintf:getGroup(1):connect(special.buttons.up)
-sysintf:getGroup(1):connect(special.buttons.down)
-sysintf:getGroup(1):connect(special.buttons.left)
-sysintf:getGroup(1):connect(special.buttons.right)
+sysntf:getGroup(1):connect(special.buttons.up)
+sysntf:getGroup(1):connect(special.buttons.down)
+sysntf:getGroup(1):connect(special.buttons.left)
+sysntf:getGroup(1):connect(special.buttons.right)
 
-if not sysintf:getGroup(1).event:get('update') then
-    sysintf:getGroup(1).event:add('update')
+if not sysntf:getGroup(1).event:get('update') then
+    sysntf:getGroup(1).event:add('update')
 end
 
-if not sysintf:getGroup(1).event:get('draw') then
-    sysintf:getGroup(1).event:add('draw')
+if not sysntf:getGroup(1).event:get('draw') then
+    sysntf:getGroup(1).event:add('draw')
 end
 
-if not sysintf:getGroup(1).event:get('mousereleased') then
-    sysintf:getGroup(1).event:add('mousereleased')
+if not sysntf:getGroup(1).event:get('mousereleased') then
+    sysntf:getGroup(1).event:add('mousereleased')
 end
 
-if not sysintf:getGroup(1).event:get('keypressed') then
-    sysintf:getGroup(1).event:add('keypressed')
+if not sysntf:getGroup(1).event:get('keypressed') then
+    sysntf:getGroup(1).event:add('keypressed')
 end
 
-sysintf:getGroup(1).event:get('update'):connect(function (dt)
+sysntf:getGroup(1).event:get('update'):connect(function (dt)
     for _, sequence in ipairs(special.sequences) do
         if sequence.activated then
             local func = sequence.funcUpdate
@@ -127,7 +139,7 @@ sysintf:getGroup(1).event:get('update'):connect(function (dt)
     end
 end)
 
-sysintf:getGroup(1).event:get('draw'):connect(function ()
+sysntf:getGroup(1).event:get('draw'):connect(function ()
     for _, sequence in ipairs(special.sequences) do
         if sequence.activated then
             local func = sequence.funcDraw
@@ -145,7 +157,7 @@ sysintf:getGroup(1).event:get('draw'):connect(function ()
     --]]
 end)
 
-sysintf:getGroup(1).event:get('mousereleased'):connect(function (x, y, button, isTouch, presses)
+sysntf:getGroup(1).event:get('mousereleased'):connect(function (x, y, button, isTouch, presses)
     local enums = {
         [1] = 'up',
         [2] = 'down',
@@ -190,7 +202,7 @@ sysintf:getGroup(1).event:get('mousereleased'):connect(function (x, y, button, i
     end
 end)
 
-sysintf:getGroup(1).event:get('keypressed'):connect(function (key)
+sysntf:getGroup(1).event:get('keypressed'):connect(function (key)
     local increment = false
 
     for _, sequence in ipairs(special.sequences) do

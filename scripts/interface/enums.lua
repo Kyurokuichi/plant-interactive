@@ -1,44 +1,45 @@
 local enums = {
-    -- interface hierarchy highest to lowest
-    type = {
-        [1] = 'system',
-        [2] = 'group',
-        [3] = 'element',
-        [4] = 'event',
-        [5] = 'signal',
+    index = {
+        type = {
+            system = 1,
+            group = 2,
+            element = 3,
+            event = 4,
+            signal = 5
+        },
+
+        element = {
+            drawable = 1,
+            interactable = 2
+        },
     },
 
-    element = {
-        [1] = 'drawable',
-        [2] = 'interactable'
-    },
+    key = {
+        type = {
+            'system',
+            'group',
+            'element',
+            'event',
+            'signal'
+        },
 
-    signal = {
-        [1] = 'slot'
-    },
+        element = {
+            'drawable',
+            'interactable'
+        },
 
-    drwFrame = {
-        quad = {
-            [1] = 'top-left',
-            [2] = 'top',
-            [3] = 'top-right',
-            [4] = 'left',
-            [5] = 'center',
-            [6] = 'right',
-            [7] = 'bottom-left',
-            [8] = 'bottom',
-            [9] = 'bottom-right'
+        drwFrameQuad = {
+            'top left',
+            'top',
+            'top right',
+            'left',
+            'center',
+            'right',
+            'bottom left',
+            'bottom',
+            'bottom right'
         }
-    }
+    },
 }
-
--- Turn index into keys by swapping the value
-for _, enum in pairs(enums) do
-    if type(enum) == 'table' then
-        for index, value in ipairs(enum) do
-            enum[value] = index
-        end
-    end
-end
 
 return enums

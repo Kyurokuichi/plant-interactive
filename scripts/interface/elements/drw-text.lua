@@ -15,8 +15,8 @@ function drwText.new(text, x, y, width, height, align)
 
         isVisible = true,
 
-        __INTFTYPE = enums.type.element,
-        __INTFKIND = enums.element.drawable
+        __NTFTYPE = enums.key.type[enums.index.type.element],
+        __NTFKIND = enums.key.element[enums.index.element.drawable]
     }
 
     return setmetatable(newObject, drwText)

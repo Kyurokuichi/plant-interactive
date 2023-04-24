@@ -4,13 +4,15 @@ local signal = require('scripts.interface.signal')
 
 local event = {}
 event.__index = event
--- Creates new event object
+
 function event.new(...)
     local newObject = {
         callbacks = {},
-        __INTFTYPE = enums.type.group,
+
+        __INTFTYPE = enums.key.type[enums.index.type.event],
         __INTFKIND = nil,
     }
+
     setmetatable(newObject, event)
 
     local args = {...}
@@ -34,6 +36,7 @@ function event.new(...)
 
     return newObject
 end
+
 -- Emit specified event callback
 function event:emit(name, ...)
     local callback = self.callbacks[name]
@@ -42,10 +45,12 @@ function event:emit(name, ...)
         callback:emit(...)
     end
 end
+
 -- Get the specified event callback
 function event:get(name)
     return self.callbacks[name]
 end
+
 -- Add event callback with optional list of functions
 function event:add(name, ...)
     if self.callbacks[name] then
@@ -63,6 +68,7 @@ function event:add(name, ...)
         end
     end
 end
+
 -- Remove event callback
 function event:remove(name)
     if not self.callbacks[name] then
@@ -71,6 +77,7 @@ function event:remove(name)
 
     self.callbacks[name] = nil
 end
+
 -- Remove all event callbacks
 function event:removeAll()
     for name, callback in pairs(self.callbacks) do

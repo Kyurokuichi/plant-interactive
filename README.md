@@ -40,13 +40,13 @@ Audio:
 
 # Need to finish
 
-- [x] Some basic stuffs
-- [x] Growth algorithm
-- [ ] Algorithm testing
+- [/] Some basic stuffs
+- [/] Growth algorithm
+- [/] Algorithm testing
 - [ ] Image Assets (UIs, objects, background, etc.)
-- [x] Music Assets (rock, ballad, classical)
+- [/] Music Assets (rock, ballad, classical)
 - [ ] SFX Assets (click, pop, warn, etc. sounds)
-- [x] UI system implementation
+- [/] UI system implementation
 - [ ] Implementation of functional UI based from concept
 - [ ] Game mechanics implementation
 

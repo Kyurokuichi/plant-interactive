@@ -1,75 +1,107 @@
 local enums = require 'scripts.enums'
 local musics = require 'scripts.musics'
+
 local plant = require 'scripts.classes.plant'
 
 local pot = {}
 pot.__index = pot
 
-local index = 1
+local index = 1 -- For naming
 
-function pot.new()
+function pot.new(name)
     local newObject = {
-        name  = index,
+        name = name or index,
         plant = nil,
         music = nil,
-        waterLevel = 1,
+        waterLevel = 1
     }
+
+    setmetatable(newObject, pot)
 
     newObject.plant = plant.new(newObject)
 
-    index = index + 1
+    if newObject.name == index then
+        index = index + 1
+    end
 
-    return setmetatable(newObject, pot)
+    return newObject
 end
 
+function pot:update(dt)
+    self.plant:update(dt)
+end
+
+function pot:draw()
+    self.plant:draw()
+end
+
+-- Initializes the pot before starting the simulation
 function pot:initialize()
     local music = self.music
 
-    -- Loop music when its duration is less than 7 mins
+    -- Set loop when the selected music is less than 7 mins (which is the intended simulation time)
     if music.audio:getDuration('seconds') < (7*60) then
         music.audio:setLooping(true)
     end
 
-    -- Load sound data
+    -- Load the sound data for use of algorithm
     self.music.data = love.sound.newSoundData(music.path)
-
-    -- Play music upon initialized
-    music.audio:play()
 end
 
-function pot:setMusic(music)
+function pot:playMusic()
+    -- Plays the music
+    self.music.audio:play()
+end
+
+function pot:setMusic(music, indexGenre, indexMusic)
     if self.music == nil then
         self.music = {}
     end
 
-    self.music.name   = music.name
-    self.music.artist = music.artist
-    self.music.audio  = music.audio
-    self.music.path   = music.path
+    -- Set the music table values of pot
 
-    for key, genre in pairs(musics) do
-        for _, value in ipairs(genre) do
-            -- Table reference matching
-            if music == value then
-                self.name = key
+    self.music.name       = music.name
+    self.music.artist     = music.artist
+    self.music.audio      = music.audio
+    self.music.path       = music.path
+    self.music.genreIndex = indexGenre
+    self.music.musicIndex = indexMusic
+
+    -- Set the name of the pot based on specified genre
+
+    for genre, list in pairs(musics) do
+        for _, table in ipairs(list) do
+            -- Finding the same table specified using table reference for comparisons
+            if music == table then
+                self.name = tostring(genre):gsub('^%l', string.upper)
                 return
             end
         end
     end
 
-    -- If not found
+    -- If the specified music hasn't found (out of bounds from identified genre or just wrong input)
     error('Specified music not found')
 end
 
---[[
-    Returns:
-
-    pot name,
-    plant health,
-    water level
---]]
-function pot:getInfo()
-    return (self.name or 'No genre'), (self.plant:checkHealth()), (self.waterLevel * 100 .. '%')
+function pot:hasMusic()
+    return self.music
 end
+
+-- Returns name of the pot, health of the pot, and water level of the pot
+function pot:getInfo()
+    local waterLevel = self.waterLevel
+    waterLevel = waterLevel * 100
+
+    if waterLevel >= 200 then
+        waterLevel = '+200%'
+    elseif waterLevel <= 0 then
+        waterLevel = '-0%'
+    else
+        waterLevel = waterLevel .. '%'
+    end
+
+    return (self.name or 'No genre'), self.plant:getHealth(), waterLevel
+end
+
 
 return pot

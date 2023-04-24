@@ -21,8 +21,8 @@ function ntrRect.new(x, y, width, height)
 
         isLocked = false,
 
-        __INTFTYPE = enums.type.element,
-        __INTFKIND = enums.element.interactable
+        __NTFTYPE = enums.key.type[enums.index.type.element],
+        __NTFKIND = enums.key.element[enums.index.element.interactable]
     }
 
     return setmetatable(newObject, ntrRect)
@@ -72,7 +72,7 @@ function ntrRect:reset()
         self.isClicked = false
     end
 
-    if self.group.isLocked then
+    if self.group.isLocked or self.isLocked then
         if self.isHoldingClick then
             self.isHoldingClick = false
         end
