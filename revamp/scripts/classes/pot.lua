@@ -43,17 +43,19 @@ function pot:initialize()
     music.audio:play()
 end
 
-function pot:setMusic(music)
+function pot:setMusic(music, indexGenre, indexMusic)
     if self.music == nil then
         self.music = {}
     end
 
     -- Set the music table values of pot
 
-    self.music.name = music.name
-    self.music.artist = music.artist
-    self.music.audio = music.audio
-    self.music.path = music.path
+    self.music.name       = music.name
+    self.music.artist     = music.artist
+    self.music.audio      = music.audio
+    self.music.path       = music.path
+    self.music.genreIndex = indexGenre
+    self.music.musicIndex = indexMusic
 
     -- Set the name of the pot based on specified genre
 
@@ -61,7 +63,8 @@ function pot:setMusic(music)
         for _, table in ipairs(list) do
             -- Finding the same table specified using table reference for comparisons
             if music == table then
-                self.name = genre
+                self.name = tostring(genre):gsub('^%l', string.upper)
+                print(self.name)
                 return
             end
         end

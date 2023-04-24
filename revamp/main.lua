@@ -29,6 +29,8 @@ function love.load(arg, unfilteredArg)
     assets = require 'scripts.assets'
     assets:initialize()
 
+    love.graphics.setFont(assets.font.small)
+
     player = require 'scripts.player'
     player:initialize()
 
@@ -37,6 +39,7 @@ function love.load(arg, unfilteredArg)
     sysNtf:connect( require 'scripts.interfaces.menu-pots' )    -- 2
     sysNtf:connect( require 'scripts.interfaces.menu-musics' )  -- 3
     sysNtf:connect( require 'scripts.interfaces.menu-more' )    -- 4
+    sysNtf:connect( require 'scripts.interfaces.menu-start')    -- 5
 end
 
 function love.keypressed()
@@ -80,7 +83,7 @@ function love.draw()
     sysNtf:emit('draw')
 
     local mx, my = screen:translate(love.mouse.getPosition())
-    love.graphics.circle('fill', mx, my, 16)
+    love.graphics.circle('fill', mx, my, 4)
 
     screen:pop()
 

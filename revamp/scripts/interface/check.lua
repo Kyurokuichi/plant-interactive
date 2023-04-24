@@ -3,7 +3,7 @@ local enums = require 'scripts.interface.enums'
 local check = {}
 
 function check.enum(object)
-    if not type(object) == 'table' then
+    if type(object) ~= 'table' then
         return nil
     end
 

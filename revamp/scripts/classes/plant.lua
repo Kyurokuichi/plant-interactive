@@ -28,7 +28,7 @@ function plant:newPetiole()
     
 end
 
-function plant:checkHealth()
+function plant:getHealth()
     local waterLevel = self.pot.waterLevel
 
     if waterLevel < (1-0.3) or waterLevel > (1+0.3) then

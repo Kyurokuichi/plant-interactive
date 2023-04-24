@@ -15,6 +15,11 @@ local enums = {
             classical = 1,
             ballad    = 2,
             rock      = 3
+        },
+
+        semiphase = {
+            countdown  = 1,
+            simulation = 2
         }
     },
 
@@ -34,6 +39,11 @@ local enums = {
             'classical',
             'ballad',
             'rock'
+        },
+
+        semiphase = {
+            'countdown',
+            'simulation'
         }
     },
 }

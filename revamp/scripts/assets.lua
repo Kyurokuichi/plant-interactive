@@ -10,6 +10,7 @@ function assets:initialize()
     self.image.pot              = love.graphics.newImage('assets/pot.png')
     self.image.leftSpeaker      = love.graphics.newImage('assets/speaker_left.png')
     self.image.rightSpeaker     = love.graphics.newImage('assets/speaker_right.png')
+    self.image.clock            = love.graphics.newImage('assets/clock.png')
     self.image.waterLevel       = love.graphics.newImage('assets/water_meter.png')
 
     -- Overlays (Design)
@@ -23,6 +24,7 @@ function assets:initialize()
     self.image.frameButton3         = love.graphics.newImage('assets/frame-button_3.png')
     self.image.frameButton4         = love.graphics.newImage('assets/frame-button_4.png')
     self.image.frameButton5         = love.graphics.newImage('assets/frame-button_5.png')
+    self.image.frameButton6         = love.graphics.newImage('assets/frame-button_6.png')
     self.image.frameWindow1         = love.graphics.newImage('assets/frame-window_1.png')
 
     -- Icons
@@ -41,6 +43,9 @@ function assets:initialize()
     self.image.iconRemove           = love.graphics.newImage('assets/icon-remove.png')
     self.image.iconRightArrowSmall  = love.graphics.newImage('assets/icon-right_arrow_small.png')
     self.image.iconRightArrow       = love.graphics.newImage('assets/icon-right_arrow.png')
+    self.image.iconWaterMeter       = love.graphics.newImage('assets/icon-water_meter.png')
+    self.image.iconWatering         = love.graphics.newImage('assets/icon-watering.png')
+    self.image.iconCheck            = love.graphics.newImage('assets/icon-check.png')
 
     self.font = {}
 

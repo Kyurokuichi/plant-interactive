@@ -72,7 +72,7 @@ function ntrRect:reset()
         self.isClicked = false
     end
 
-    if self.group.isLocked then
+    if self.group.isLocked or self.isLocked then
         if self.isHoldingClick then
             self.isHoldingClick = false
         end
