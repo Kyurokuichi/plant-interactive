@@ -16,7 +16,7 @@ local ntrRect       = require 'scripts.interface.elements.ntr-rect'
 local menuPots = require('scripts.interface.group').new(false, true)
 
 local window = drwFrame.new(assets.image.frameWindow1, 26, 26, 92, 204)
-local overlay = drwImage.new(assets.image.overlayHealthy, -2, -2)
+local overlay = require 'scripts.overlay'
 local title = drwText.new('Pots Selection', 26, 26, 92, 8)
 menuPots:connect(window)
 menuPots:connect(overlay)

@@ -26,6 +26,14 @@ local player = {
         masterVolume = nil,
         musicVolume = nil,
         SFXVolume = nil
+    },
+
+    watering = {
+        speed = 5,
+        time = 0,
+        x = 0,
+        waterLevel = 0,
+        activated = false,
     }
 }
 
@@ -55,8 +63,6 @@ function player:loadSimulation()
     end
 
     self.phase = enums.index.phase.peri
-    self.semiphase = enums.index.semiphase.countdown
-    self.clock:setup(3)
 
     for _, pot in ipairs(self.pots) do
         pot:initialize()
@@ -67,6 +73,8 @@ end
 
 function player:update(dt)
     if self.phase == enums.index.phase.peri then
+        self:updateWaterMechanic(dt)
+
         self.clock:update(dt)
 
         if self.semiphase == enums.index.semiphase.countdown then
@@ -88,8 +96,36 @@ function player:update(dt)
             for _, pot in ipairs(self.pots) do
                 pot:update(dt)
             end
+        else
+            self.semiphase = enums.index.semiphase.countdown
+            self.clock:setup(3)
         end
     end
+end
+
+function player:enableWaterMechanic(bool)
+    self.watering.activated = bool
+end
+
+function player:updateWaterMechanic(dt)
+    if not self.watering.activated then return end
+
+    local pot = self:getPot(self.selected.potIndex)
+
+    local watering = self.watering
+
+    watering.time = watering.time + dt
+
+    local area = (2 - pot.waterLevel) / 2
+
+    watering.x = pot.waterLevel + area + area * math.cos(watering.time * watering.speed)
+end
+
+function player:stopWaterMechanic()
+    local watering = self.watering
+    local pot = self:getPot(self.selected.potIndex)
+    pot.waterLevel = watering.x
+    watering.activated = false
 end
 
 function player:draw()
@@ -107,6 +143,10 @@ end
 
 function player:reset()
     
+end
+
+function player:getSelectedPot()
+    return self.pots[self.selected.potIndex]
 end
 
 return player

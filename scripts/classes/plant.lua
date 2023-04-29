@@ -232,6 +232,8 @@ function plant:update(dt)
 
     if self._time > 1 then
 
+        pot.waterLevel = pot.waterLevel - 0.01
+
         local average = self._sampleSum / self._sampleCount * 10
 
         -- Growth Algorithm 

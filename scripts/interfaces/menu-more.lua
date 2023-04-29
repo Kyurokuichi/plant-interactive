@@ -4,6 +4,7 @@ local color  = require 'scripts.interface.color'
 local sysntf = require 'scripts.sysntf'
 local screen = require 'scripts.screen'
 local player = require 'scripts.player'
+local musics = require 'scripts.musics'
 local sfx    = require 'scripts.sfx'
 
 -- Classes
@@ -99,7 +100,7 @@ menuMore.event:add('update', function (dt)
     player.settings.musicVolume = updateVolume(musicVolume) or player.settings.musicVolume
 
     if player.settings.musicVolume ~= oldMusicVolume then
-        
+        musics:setVolume(player.settings.musicVolume)
     end
 
     local oldSFXValue = player.settings.SFXVolume

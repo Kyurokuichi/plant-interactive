@@ -13,7 +13,7 @@ end
 function clock:tellTime()
     local time = self.time
 
-    local seconds = math.ceil(self.time % 60)
+    local seconds = math.floor(self.time % 60)
     local minutes = math.floor(self.time / 60)
 
     seconds = string.format('%02d', seconds)

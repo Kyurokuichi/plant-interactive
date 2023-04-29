@@ -28,13 +28,19 @@ main:connect(rightSpeaker)
 -- Functionals
 local waterLevel = {
     meter = drwImage.new(assets.image.waterLevel, 32, 189),
+    indicator = drwImage.new(assets.image.meterIndicator, 78, 187),
     icon  = drwImage.new(assets.image.iconWaterMeter, 18, 187)
+}
+local wateringLevel = {
+    meter = drwImage.new(assets.image.wateringLevel, 16, 168),
+    indicator = drwImage.new(assets.image.meterIndicatorLong, 69, 166),
 }
 local clock = {
     image = drwImage.new(assets.image.clock, 48, 0),
     time  = drwText.new('T- 00:00', 53, 10, 38, 8)
 }
 main:connect(waterLevel)
+main:connect(wateringLevel)
 main:connect(clock)
 
 -- Watermark
@@ -67,13 +73,66 @@ local waterButton = {
     icon  = drwImage.new(assets.image.iconWatering, 61, 216),
     ntr   = ntrRect.new(61, 216, 22, 22)
 }
+local wateringButton = {
+    frame = drwFrame.new(assets.image.frameButton6, 61, 216, 22, 22),
+    icon  = drwImage.new(assets.image.iconWatering, 61, 216),
+    ntr   = ntrRect.new(61, 216, 22, 22)
+}
+local cancelWaterButton = {
+    frame = drwFrame.new(assets.image.frameButton1, 99, 216, 22, 22),
+    icon  = drwImage.new(assets.image.iconClose, 99, 216),
+    ntr   = ntrRect.new(99, 216, 22, 22)
+}
 main:connect(startButton)
 main:connect(menuPotsButton)
 main:connect(menuMusicsButton)
 main:connect(menuMoreButton)
 main:connect(waterButton)
+main:connect(wateringButton)
+main:connect(cancelWaterButton)
 
 local currentPhase = nil
+
+local function updateWaterLevel()
+    local pot = player:getPot(player.selected.potIndex)
+    local percent = pot.waterLevel / 2
+    local x = waterLevel.meter.x + waterLevel.meter.width * percent
+
+    waterLevel.indicator.x = x
+    waterLevel.indicator.x = x - waterLevel.indicator.width / 2
+end
+
+local function enabledWaterMode(bool)
+    menuPotsButton.frame.isVisible = not bool
+    menuPotsButton.icon.isVisible = not bool
+    menuPotsButton.ntr.isLocked = bool
+
+    menuMoreButton.frame.isVisible = not bool
+    menuMoreButton.icon.isVisible = not bool
+    menuMoreButton.ntr.isLocked = bool
+
+    wateringButton.frame.isVisible = bool
+    wateringButton.icon.isVisible = bool
+    wateringButton.ntr.isLocked = not bool
+
+    cancelWaterButton.frame.isVisible = bool
+    cancelWaterButton.icon.isVisible = bool
+    cancelWaterButton.ntr.isLocked = not bool
+
+    wateringLevel.meter.isVisible = bool
+    wateringLevel.indicator.isVisible = bool
+
+    player:enableWaterMechanic(bool)
+end
+
+local function updateWateringLevel()
+    if not player.watering.activated then return end
+
+    local x = wateringLevel.meter.x + 4
+    local width = wateringLevel.meter.width - 4
+
+    wateringLevel.indicator.x = x + (player.watering.x/2) * width - wateringLevel.indicator.width / 2
+end
 
 local function phaseSet()
     if currentPhase ~= player.phase then
@@ -89,6 +148,17 @@ local function phaseSet()
             waterButton.frame.isVisible = false
             waterButton.icon.isVisible = false
             waterButton.ntr.isLocked = true
+
+            wateringButton.frame.isVisible = false
+            wateringButton.icon.isVisible = false
+            wateringButton.ntr.isLocked = true
+
+            wateringLevel.meter.isVisible = false
+            wateringLevel.indicator.isVisible = false
+
+            cancelWaterButton.frame.isVisible = false
+            cancelWaterButton.icon.isVisible = false
+            cancelWaterButton.ntr.isLocked = true
 
             require 'scripts.special'
         elseif player.phase == enums.index.phase.peri then
@@ -120,6 +190,8 @@ end
 
 main.event:add('update', function (dt)
     phaseSet()
+    updateWaterLevel()
+    updateWateringLevel()
 
     clock.time.text = player.clock:tellTime()
 
@@ -147,6 +219,18 @@ main.event:add('update', function (dt)
         sysntf:getGroup(5):toggle()
         sfx:emitSound('click')
     end
+
+    if waterButton.ntr.isClicked then
+        enabledWaterMode(true)
+    end
+
+    if wateringButton.ntr.isClicked then
+        player:stopWaterMechanic()
+    end
+
+    if cancelWaterButton.ntr.isClicked then
+        enabledWaterMode(false)
+    end
 end)
 
 main.event:add('draw', function ()
@@ -159,6 +243,10 @@ main.event:add('draw', function ()
 
     waterLevel.meter:draw()
     waterLevel.icon:draw()
+    waterLevel.indicator:draw()
+
+    wateringLevel.meter:draw()
+    wateringLevel.indicator:draw()
 
     clock.image:draw()
 
@@ -189,6 +277,14 @@ main.event:add('draw', function ()
     color.conditionRGB(waterButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
     waterButton.frame:draw()
     waterButton.icon:draw()
+
+    color.conditionRGB(wateringButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    wateringButton.frame:draw()
+    wateringButton.icon:draw()
+
+    color.conditionRGB(cancelWaterButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    cancelWaterButton.frame:draw()
+    cancelWaterButton.icon:draw()
 
     love.graphics.setColor(1, 1, 1)
 

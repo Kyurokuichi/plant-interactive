@@ -70,11 +70,13 @@ function pot:setMusic(music, indexGenre, indexMusic)
     -- Set the name of the pot based on specified genre
 
     for genre, list in pairs(musics) do
-        for _, table in ipairs(list) do
-            -- Finding the same table specified using table reference for comparisons
-            if music == table then
-                self.name = tostring(genre):gsub('^%l', string.upper)
-                return
+        if type(list) == 'table' then
+            for _, table in ipairs(list) do
+                -- Finding the same table specified using table reference for comparisons
+                if music == table then
+                    self.name = tostring(genre):gsub('^%l', string.upper)
+                    return
+                end
             end
         end
     end

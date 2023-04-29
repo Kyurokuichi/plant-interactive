@@ -20,6 +20,12 @@ local enums = {
         semiphase = {
             countdown  = 1,
             simulation = 2
+        },
+
+        overlay = {
+            dry = 1,
+            healthy = 2,
+            swamped = 3
         }
     },
 

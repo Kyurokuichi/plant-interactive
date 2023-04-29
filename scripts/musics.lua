@@ -6,7 +6,7 @@
 
 local assets = require('scripts.assets')
 
-local music = {
+local musics = {
     classical = {
         {
             name = 'Fur Elise',
@@ -234,4 +234,14 @@ local music = {
     custom = {}
 }
 
-return music
+function musics:setVolume(volume)
+    for genre, value in pairs(self) do
+        if type(value) == 'table' then
+            for index, music in ipairs(value) do
+                music.audio:setVolume(volume)
+            end
+        end
+    end
+end
+
+return musics
