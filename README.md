@@ -40,17 +40,22 @@ Audio:
 
 # Need to finish
 
-- [/] Some basic stuffs
-- [/] Growth algorithm
-- [/] Algorithm testing
-- [/] Image Assets (UIs, objects, background, etc.)
-- [/] Music Assets (rock, ballad, classical)
+- [x] Some basic stuffs
+- [x] Growth algorithm
+- [x] Algorithm testing
+- [x] Image Assets (UIs, objects, background, etc.)
+- [x] Music Assets (rock, ballad, classical)
 - [ ] SFX Assets (click, pop, warn, etc. sounds)
-- [/] UI system implementation
+- [x] UI system implementation
 - [ ] Implementation of functional UI based from concept
-- [/] Game mechanics implementation
+- [x] Game mechanics implementation
 
-# Version history
+# Version history (currently)
+* version 1.0 (current)
+* version 1.5 (expected: patch update & testing)
+* version 2.0 (final)
+
+# Version history (supposed)
 * version 1.0 (current)
     - Rewritten all the codes from old scrapped version
 * version 1.3 (1/4 minor update) (expected: patch update & testing)
