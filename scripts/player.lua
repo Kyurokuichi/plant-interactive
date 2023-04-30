@@ -85,8 +85,6 @@ function player.loadSimulation()
 end
 
 function player.update(dt)
-    print(player.getSelectedPot().plant.height)
-
     if player.phase == enums.index.phase.peri then
         player.clock.update(dt)
 

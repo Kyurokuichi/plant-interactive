@@ -34,7 +34,8 @@ function drwTextScroll.new(text, x, y, width, height, timeScroll, timeHalt, enab
 
     setmetatable(newObject, drwTextScroll)
 
-    drwTextScroll:setDimensions(width, height)
+    newObject:setDimensions(width, height)
+    newObject:setText(text)
 
     return newObject
 end

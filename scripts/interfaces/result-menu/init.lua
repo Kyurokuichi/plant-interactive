@@ -62,7 +62,14 @@ local previousButton = {
 local retxitMenu = require 'scripts.interfaces.result-menu.retxit-menu'
 
 local topInfo = {
-    
+    title = drwText.new('Top pot', 36, 69, 72, 8, 'center'),
+    name = drwText.new(nil, 36, 81, 72, 8, 'center'),
+    height = drwText.new(nil, 36, 97, 72, 8, 'center')
+}
+
+local leaderboardInfo = {
+    title = drwText.new('Leaderboard', 36, 69, 72, 8, 'center'),
+    rank = {}
 }
 
 resultMenu:connect(window)
@@ -79,8 +86,113 @@ resultMenu:connect(previousButton)
 
 resultMenu:connect(retxitMenu)
 
+local isOpened = false
+
+local potRank = {}
+
+local function drawTopInfo()
+    topInfo.title:draw()
+    topInfo.name:draw()
+    topInfo.height:draw()
+end
+
+local function updateLeaderboardInfo(dt)
+    for index, text in ipairs(leaderboardInfo.rank) do
+        text:update(dt)
+    end
+end
+
+local function drawLeaderboardInfo()
+    leaderboardInfo.title:draw()
+
+    for index, text in ipairs(leaderboardInfo.rank) do
+        text:draw()
+    end
+end
+
+local info = {
+    {
+        update = nil,
+        draw = drawTopInfo
+    },
+    {
+        update = updateLeaderboardInfo,
+        draw = drawLeaderboardInfo
+    }
+}
+local infoIndex = 1
+
+local function changeInfoIndex(next)
+    if not next then
+        infoIndex = (infoIndex-1-1) % #info + 1
+    else
+        infoIndex = (infoIndex-1+1) % #info + 1
+    end
+end
+
+local function updateInfo(dt)
+    local update = info[infoIndex].update
+
+    if update then
+        update(dt)
+    end
+end
+
+local function drawInfo()
+    local draw = info[infoIndex].draw
+
+    if draw then
+        draw()
+    end
+end
+
+local function rankPot()
+    for index, pot in ipairs(player.pots) do
+        potRank[index] = index
+    end
+
+    table.sort(potRank, function (a, b)
+        local potA = player.getPot(a)
+        local potB = player.getPot(b)
+
+        print(potA.plant:getHeight(), potB.plant:getHeight(), potA.plant:getHeight() > potB.plant:getHeight())
+
+        return potA.plant:getHeight() > potB.plant:getHeight()
+    end)
+
+    topInfo.name.text = player.getPot(potRank[1]).name
+    topInfo.height.text = 'Height: ' .. math.floor(player.getPot(potRank[1]).plant.height)
+
+    local ox = 36
+    local oy = 82
+
+    for index, no in ipairs(potRank) do
+        local pot = player.getPot(no)
+        print(index, no, pot.plant.height)
+
+        local x = ox
+        local y = oy + 12 * (index-1)
+
+        leaderboardInfo.rank[#leaderboardInfo.rank+1] = drwTextScroll.new(
+            '#' .. index .. ' "' .. pot.name .. '" ; Height: ' .. math.floor(pot.plant:getHeight()),
+            x,
+            y,
+            72,
+            8,
+            1,
+            1,
+            true
+        )
+    end
+end
+
 -- Events
 resultMenu.event:add('update', function (dt)
+    if not isOpened then
+        rankPot()
+        isOpened = true
+    end
+
     if not retxitMenu.isLocked then
         return
     end
@@ -90,13 +202,15 @@ resultMenu.event:add('update', function (dt)
         sfx.play('click')
     end
 
-    if switchPreviousMenu.ntr.isClicked then
+    if switchNextMenu.ntr.isClicked then
+        changeInfoIndex(true)
+        sfx.play('click')
+    elseif switchPreviousMenu.ntr.isClicked then
+        changeInfoIndex(false)
         sfx.play('click')
     end
 
-    if switchNextMenu.ntr.isClicked then
-        sfx.play('click')
-    end
+    updateInfo(dt)
 
     if nextButton.ntr.isClicked then
         sfx.play('click')
@@ -120,6 +234,8 @@ resultMenu.event:add('draw', function ()
     TV.screen:draw()
     TV.radio:draw()
     TV.stand:draw()
+
+    drawInfo()
 
     color.conditionRGB(switchNextMenu.ntr.isCursorHovering and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
     switchNextMenu.frame:draw()
