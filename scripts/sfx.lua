@@ -1,25 +1,33 @@
 local assets = require 'scripts.assets'
 
 local sfx = {
-    audios = {
-        click = assets.audio.sfxClick,
-    }
+    effects = {}
 }
 
-function sfx:updateVolume(volume)
-    for key, value in pairs(self.audios) do
-        value:setVolume(volume)
+function sfx.initialize()
+    local effects = sfx.effects
+
+    effects['click'] = assets.getAudio('sfxClick')
+    effects['warning'] = assets.getAudio('sfxWarning')
+    effects['waterProduction'] = assets.getAudio('sfxWatering')
+end
+
+function sfx.setVolume(volume)
+    for _, effect in pairs(sfx.effects) do
+        effect:setVolume(volume)
     end
 end
 
-function sfx:emitSound(name)
-    local audio = self.audios[name]
-    
-    if audio:isPlaying() then
-        audio:stop()
-    end
+function sfx.play(name)
+    local effect = sfx.effects[name]
 
-    audio:play()
+    if effect then
+        if effect:isPlaying() then
+            effect:stop()
+        end
+
+        effect:play()
+    end
 end
 
 return sfx

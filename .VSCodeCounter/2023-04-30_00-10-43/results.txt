@@ -1,0 +1,70 @@
+Date : 2023-04-30 00:10:43
+Directory : c:\Users\Administrator\Documents\Works\plant-interactive final revision
+Total : 37 files,  3364 codes, 159 comments, 913 blanks, all 4436 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Lua      |         37 |      3,364 |        159 |        913 |      4,436 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                  | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                     |         37 |      3,364 |        159 |        913 |      4,436 |
+| . (Files)                                                                                                             |          2 |        109 |          4 |         29 |        142 |
+| scripts                                                                                                               |         35 |      3,255 |        155 |        884 |      4,294 |
+| scripts (Files)                                                                                                       |         15 |      1,147 |         53 |        280 |      1,480 |
+| scripts\classes                                                                                                       |          2 |        341 |         20 |         97 |        458 |
+| scripts\interface                                                                                                     |         11 |        637 |         60 |        203 |        900 |
+| scripts\interface (Files)                                                                                             |          6 |        325 |         42 |         93 |        460 |
+| scripts\interface\elements                                                                                            |          5 |        312 |         18 |        110 |        440 |
+| scripts\interfaces                                                                                                    |          5 |        971 |         19 |        258 |      1,248 |
+| scripts\states                                                                                                        |          2 |        159 |          3 |         46 |        208 |
++-----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                              | language | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\conf.lua                                      | Lua      |         13 |          2 |          4 |         19 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\main.lua                                      | Lua      |         96 |          2 |         25 |        123 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\assets.lua                            | Lua      |        121 |         11 |         22 |        154 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\classes\plant.lua                     | Lua      |        271 |          7 |         71 |        349 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\classes\pot.lua                       | Lua      |         70 |         13 |         26 |        109 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\clock.lua                             | Lua      |         19 |          0 |          8 |         27 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\color.lua                             | Lua      |         99 |          7 |         19 |        125 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\cursor.lua                            | Lua      |         64 |          0 |         14 |         78 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\enums.lua                             | Lua      |         53 |          0 |         10 |         63 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\check.lua                   | Lua      |         25 |          4 |         14 |         43 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-frame.lua      | Lua      |         83 |         11 |         31 |        125 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-image.lua      | Lua      |         34 |          1 |          9 |         44 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-text.lua       | Lua      |         36 |          0 |         14 |         50 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-textscroll.lua | Lua      |         96 |          2 |         34 |        132 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\ntr-rect.lua       | Lua      |         63 |          4 |         22 |         89 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\enums.lua                   | Lua      |         40 |          0 |          5 |         45 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\event.lua                   | Lua      |         61 |          7 |         20 |         88 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\group.lua                   | Lua      |         99 |         21 |         27 |        147 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\signal.lua                  | Lua      |         39 |          4 |         10 |         53 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\system.lua                  | Lua      |         61 |          6 |         17 |         84 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\main.lua                   | Lua      |        221 |          6 |         57 |        284 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\more-menu.lua              | Lua      |        134 |          4 |         38 |        176 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\music-menu.lua             | Lua      |        283 |          4 |         72 |        359 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\pots-menu.lua              | Lua      |        266 |          3 |         73 |        342 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\start-menu.lua             | Lua      |         67 |          2 |         18 |         87 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\musics.lua                            | Lua      |        204 |          3 |         40 |        247 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\overlay.lua                           | Lua      |         44 |          0 |         11 |         55 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\perlin.lua                            | Lua      |         84 |         17 |         22 |        123 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\player.lua                            | Lua      |        118 |          3 |         37 |        158 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\screen.lua                            | Lua      |         86 |          2 |         24 |        112 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\sfx.lua                               | Lua      |         24 |          0 |          8 |         32 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\special.lua                           | Lua      |        171 |          5 |         44 |        220 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\state.lua                             | Lua      |         47 |          2 |         14 |         63 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\states\game.lua                       | Lua      |         49 |          1 |         15 |         65 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\states\intro.lua                      | Lua      |        110 |          2 |         31 |        143 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\sysntf.lua                            | Lua      |          2 |          1 |          0 |          3 |
+| c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\watering.lua                          | Lua      |         11 |          2 |          7 |         20 |
+| Total                                                                                                                 |          |      3,364 |        159 |        913 |      4,436 |
++-----------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

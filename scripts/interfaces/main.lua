@@ -1,149 +1,115 @@
--- Modules
-local assets = require 'scripts.assets'
-local color  = require 'scripts.interface.color'
+-- General
+local assets  = require 'scripts.assets'
+local screen = require 'scripts.screen'
 local sysntf = require 'scripts.sysntf'
 local player = require 'scripts.player'
-local enums  = require 'scripts.enums'
-local sfx    = require 'scripts.sfx'
+local enums = require 'scripts.enums'
+local color = require 'scripts.color'
+local sfx = require 'scripts.sfx'
 
--- Classes
+local watering = require 'scripts.watering'
+
+-- Interface classes
 local drwImage = require 'scripts.interface.elements.drw-image'
 local drwFrame = require 'scripts.interface.elements.drw-frame'
-local drwText  = require 'scripts.interface.elements.drw-text'
-local ntrRect  = require 'scripts.interface.elements.ntr-rect'
+local drwText = require 'scripts.interface.elements.drw-text'
+local ntrRect = require 'scripts.interface.elements.ntr-rect'
 
 local main = require('scripts.interface.group').new(true, false)
 
--- Room background
+local background = {
+    city = drwImage.new(assets.getImage('backgroundCity'), 0, 0),
+    town = drwImage.new(assets.getImage('backgroundTown'), 0, 0),
+    powerLines = drwImage.new(assets.getImage('backgroundPowerLines'), 0, 0),
+    leavesInner = drwImage.new(assets.getImage('backgroundLeavesInner'), 0 ,0),
+    leavesInner2 = drwImage.new(assets.getImage('backgroundLeavesInner2'), 0, 0),
+    leavesOuter = drwImage.new(assets.getImage('backgroundLeavesOuter'), 0, 0)
+}
 
-local room          = drwImage.new(assets.image.backgroundRoom, 0, 0)
-local pot           = drwImage.new(assets.image.pot, 40, 108)
-local leftSpeaker   = drwImage.new(assets.image.leftSpeaker, 0, 63)
-local rightSpeaker  = drwImage.new(assets.image.rightSpeaker, 101, 63)
-main:connect(room)
-main:connect(pot)
-main:connect(leftSpeaker)
-main:connect(rightSpeaker)
+local room = drwImage.new(assets.getImage('backgroundRoom'), 0, 0)
+local pot = drwImage.new(assets.getImage('pot'), 40, 108)
+local leftSpeaker = drwImage.new(assets.getImage('leftSpeaker'), 0, 63)
+local rightSpeaker = drwImage.new(assets.getImage('rightSpeaker'), 101, 63)
+local clock = {
+    image = drwImage.new(assets.image.clock, 48, 0),
+    time  = drwText.new('T- 00:00', 53, 10, 38, 8)
+}
 
--- Functionals
 local waterLevel = {
     meter = drwImage.new(assets.image.waterLevel, 32, 189),
     indicator = drwImage.new(assets.image.meterIndicator, 78, 187),
     icon  = drwImage.new(assets.image.iconWaterMeter, 18, 187)
 }
-local wateringLevel = {
-    meter = drwImage.new(assets.image.wateringLevel, 16, 168),
-    indicator = drwImage.new(assets.image.meterIndicatorLong, 69, 166),
-}
-local clock = {
-    image = drwImage.new(assets.image.clock, 48, 0),
-    time  = drwText.new('T- 00:00', 53, 10, 38, 8)
-}
-main:connect(waterLevel)
-main:connect(wateringLevel)
-main:connect(clock)
-
--- Watermark
-local watermark = drwText.new('Made by A07-12 STEM-S2-3 Grp 1', 0, 246, 144, 8)
-main:connect(watermark)
 
 -- Buttons
 local startButton = {
-    frame = drwFrame.new(assets.image.frameButton2, 45, 158, 54, 22),
+    frame = drwFrame.new(assets.getImage('frameButton2'), 45, 158, 54, 22),
     title = drwText.new('Start', 45, 158, 54, 22),
-    ntr   = ntrRect.new(45, 158, 54, 22)
+    ntr = ntrRect.new(45, 158, 54, 22)
 }
-local menuPotsButton = {
-    frame = drwFrame.new(assets.image.frameButton1, 23, 216, 22, 22),
-    icon  = drwImage.new(assets.image.iconMenuPots, 23, 216),
-    ntr   = ntrRect.new(23, 216, 22, 22)
+local potsMenuButton = {
+    frame = drwFrame.new(assets.getImage('frameButton1'), 23, 216, 22, 22),
+    icon = drwImage.new(assets.getImage('iconMenuPots'), 23, 216),
+    ntr = ntrRect.new(23, 216, 22, 22)
 }
-local menuMusicsButton = {
-    frame = drwFrame.new(assets.image.frameButton1, 61, 216, 22, 22),
-    icon  = drwImage.new(assets.image.iconMenuMusics, 61, 216),
-    ntr   = ntrRect.new(61, 216, 22, 22)
+local musicMenuButton = {
+    frame = drwFrame.new(assets.getImage('frameButton1'), 61, 216, 22, 22),
+    icon = drwImage.new(assets.getImage('iconMenuMusics'), 61, 216),
+    ntr = ntrRect.new(61, 216, 22, 22)
 }
-local menuMoreButton = {
-    frame = drwFrame.new(assets.image.frameButton1, 99, 216, 22, 22),
-    icon  = drwImage.new(assets.image.iconMenuMore, 99, 216),
+local moreMenuButton = {
+    frame = drwFrame.new(assets.getImage('frameButton1'), 99, 216, 22, 22),
+    icon  = drwImage.new(assets.getImage('iconMenuMore'), 99, 216),
     ntr   = ntrRect.new(99, 216, 22, 22)
 }
+
+-- Peri phase buttons
 local waterButton = {
-    frame = drwFrame.new(assets.image.frameButton6, 61, 216, 22, 22),
-    icon  = drwImage.new(assets.image.iconWatering, 61, 216),
+    frame = drwFrame.new(assets.getImage('frameButton6'), 61, 216, 22, 22),
+    icon  = drwImage.new(assets.getImage('iconWatering'), 61, 216),
     ntr   = ntrRect.new(61, 216, 22, 22)
 }
 local wateringButton = {
-    frame = drwFrame.new(assets.image.frameButton6, 61, 216, 22, 22),
-    icon  = drwImage.new(assets.image.iconWatering, 61, 216),
-    ntr   = ntrRect.new(61, 216, 22, 22)
+    frame = drwFrame.new(assets.getImage('frameButton6'), 37, 216, 22, 22),
+    icon  = drwImage.new(assets.getImage('iconWatering'), 37, 216),
+    ntr   = ntrRect.new(37, 216, 22, 22)
 }
 local cancelWaterButton = {
-    frame = drwFrame.new(assets.image.frameButton1, 99, 216, 22, 22),
-    icon  = drwImage.new(assets.image.iconClose, 99, 216),
-    ntr   = ntrRect.new(99, 216, 22, 22)
+    frame = drwFrame.new(assets.getImage('frameButton1'), 85, 216, 22, 22),
+    icon  = drwImage.new(assets.getImage('iconClose'), 85, 216),
+    ntr   = ntrRect.new(85, 216, 22, 22)
 }
+
+main:connect(background)
+main:connect(room)
+main:connect(pot)
+main:connect(leftSpeaker)
+main:connect(rightSpeaker)
+main:connect(clock)
+
+main:connect(waterLevel)
+
 main:connect(startButton)
-main:connect(menuPotsButton)
-main:connect(menuMusicsButton)
-main:connect(menuMoreButton)
+main:connect(potsMenuButton)
+main:connect(moreMenuButton)
+main:connect(musicMenuButton)
+
 main:connect(waterButton)
 main:connect(wateringButton)
 main:connect(cancelWaterButton)
 
 local currentPhase = nil
 
-local function updateWaterLevel()
-    local pot = player:getPot(player.selected.potIndex)
-    local percent = pot.waterLevel / 2
-    local x = waterLevel.meter.x + waterLevel.meter.width * percent
-
-    waterLevel.indicator.x = x
-    waterLevel.indicator.x = x - waterLevel.indicator.width / 2
-end
-
-local function enabledWaterMode(bool)
-    menuPotsButton.frame.isVisible = not bool
-    menuPotsButton.icon.isVisible = not bool
-    menuPotsButton.ntr.isLocked = bool
-
-    menuMoreButton.frame.isVisible = not bool
-    menuMoreButton.icon.isVisible = not bool
-    menuMoreButton.ntr.isLocked = bool
-
-    wateringButton.frame.isVisible = bool
-    wateringButton.icon.isVisible = bool
-    wateringButton.ntr.isLocked = not bool
-
-    cancelWaterButton.frame.isVisible = bool
-    cancelWaterButton.icon.isVisible = bool
-    cancelWaterButton.ntr.isLocked = not bool
-
-    wateringLevel.meter.isVisible = bool
-    wateringLevel.indicator.isVisible = bool
-
-    player:enableWaterMechanic(bool)
-end
-
-local function updateWateringLevel()
-    if not player.watering.activated then return end
-
-    local x = wateringLevel.meter.x + 4
-    local width = wateringLevel.meter.width - 4
-
-    wateringLevel.indicator.x = x + (player.watering.x/2) * width - wateringLevel.indicator.width / 2
-end
-
-local function phaseSet()
+local function rectifyFromPhase()
     if currentPhase ~= player.phase then
         if player.phase == enums.index.phase.pre then
             startButton.frame.isVisible = true
             startButton.title.isVisible = true
             startButton.ntr.isLocked = false
 
-            menuMusicsButton.frame.isVisible = true
-            menuMusicsButton.icon.isVisible = true
-            menuMusicsButton.ntr.isLocked = false
+            musicMenuButton.frame.isVisible = true
+            musicMenuButton.icon.isVisible = true
+            musicMenuButton.ntr.isLocked = false
 
             waterButton.frame.isVisible = false
             waterButton.icon.isVisible = false
@@ -153,8 +119,8 @@ local function phaseSet()
             wateringButton.icon.isVisible = false
             wateringButton.ntr.isLocked = true
 
-            wateringLevel.meter.isVisible = false
-            wateringLevel.indicator.isVisible = false
+            --wateringLevel.meter.isVisible = false
+            --wateringLevel.indicator.isVisible = false
 
             cancelWaterButton.frame.isVisible = false
             cancelWaterButton.icon.isVisible = false
@@ -166,9 +132,9 @@ local function phaseSet()
             startButton.title.isVisible = false
             startButton.ntr.isLocked = true
 
-            menuMusicsButton.frame.isVisible = false
-            menuMusicsButton.icon.isVisible = false
-            menuMusicsButton.ntr.isLocked = true
+            musicMenuButton.frame.isVisible = false
+            musicMenuButton.icon.isVisible = false
+            musicMenuButton.ntr.isLocked = true
 
             waterButton.frame.isVisible = true
             waterButton.icon.isVisible = true
@@ -179,8 +145,41 @@ local function phaseSet()
     end
 end
 
-local function menuMusicsLoad()
-    local selectedPot = player:getPot(player.selected.potIndex)
+local function updateLeavesMovement()
+    local leavesInner2 = background.leavesInner2
+    local leavesInner = background.leavesInner
+    local leavesOuter = background.leavesOuter
+
+    local sin = math.sin(love.timer.getTime() * 2)
+    local cos = math.cos(love.timer.getTime() * 2)
+
+    leavesInner2.x = sin
+    leavesInner2.y = sin
+
+    leavesInner.x = -cos
+    leavesInner.y = -cos
+
+    leavesOuter.x = -cos
+    leavesOuter.y = -sin
+end
+
+local function updateClock()
+    clock.time.text = player.clock:tellTime()
+end
+
+local function updateWaterLevel()
+    local pot = player.getPot(player.selected.potIndex)
+    local percent = pot.waterLevel / 2
+
+    local areaWidth = waterLevel.meter.width - 8
+    local areaX = waterLevel.meter.x + 4
+
+    local x = areaX + areaWidth * percent
+    waterLevel.indicator.x = x - waterLevel.indicator.width / 2
+end
+
+local function musicMenuLoad()
+    local selectedPot = player.getSelectedPot()
 
     if selectedPot.music then
         player.selected.musicIndex = selectedPot.music.musicIndex
@@ -188,65 +187,119 @@ local function menuMusicsLoad()
     end
 end
 
+local function enabledWaterMode(bool)
+    potsMenuButton.frame.isVisible = not bool
+    potsMenuButton.icon.isVisible = not bool
+    potsMenuButton.ntr.isLocked = bool
+
+    moreMenuButton.frame.isVisible = not bool
+    moreMenuButton.icon.isVisible = not bool
+    moreMenuButton.ntr.isLocked = bool
+
+    waterButton.frame.isVisible = not bool
+    waterButton.icon.isVisible = not bool
+    waterButton.ntr.isLocked = bool
+
+    wateringButton.frame.isVisible = bool
+    wateringButton.icon.isVisible = bool
+    wateringButton.ntr.isLocked = not bool
+
+    cancelWaterButton.frame.isVisible = bool
+    cancelWaterButton.icon.isVisible = bool
+    cancelWaterButton.ntr.isLocked = not bool
+
+    if bool then
+        watering.trigger()
+    else
+        watering.cancel()
+    end
+end
+
 main.event:add('update', function (dt)
-    phaseSet()
+    rectifyFromPhase()
+    updateLeavesMovement()
+    updateClock()
     updateWaterLevel()
-    updateWateringLevel()
 
-    clock.time.text = player.clock:tellTime()
+    if player.phase == enums.index.phase.peri then
+        watering.update(dt)
 
-    if menuPotsButton.ntr.isClicked then
-        main:toggleLockOnly()
-        sysntf:getGroup(2):toggle()
-        sfx:emitSound('click')
+        if player.subPhase == enums.index.subPhase.simulation then
+            if waterButton.ntr.isClicked then
+                enabledWaterMode(true)
+                sfx.play('click')
+            elseif wateringButton.ntr.isClicked then
+                enabledWaterMode(false)
+                watering.stop()
+                sfx.play('waterProduction')
+            elseif cancelWaterButton.ntr.isClicked then
+                enabledWaterMode(false)
+                sfx.play('click')
+            end
+
+            if potsMenuButton.ntr.isClicked and not watering.stopped then
+                main:toggleLockOnly()
+                sysntf:getGroup(2):toggle()
+                sfx.play('click')
+            end
+        end
+
+    elseif player.phase == enums.index.phase.pre then
+        if potsMenuButton.ntr.isClicked then
+            main:toggleLockOnly()
+            sysntf:getGroup(2):toggle()
+            sfx.play('click')
+        end
     end
 
-    if menuMusicsButton.ntr.isClicked then
+    if musicMenuButton.ntr.isClicked then
+        musicMenuLoad()
         main:toggleLockOnly()
         sysntf:getGroup(3):toggle()
-        sfx:emitSound('click')
-        menuMusicsLoad()
+        sfx.play('click')
     end
 
-    if menuMoreButton.ntr.isClicked then
+    if moreMenuButton.ntr.isClicked then
         main:toggleLockOnly()
         sysntf:getGroup(4):toggle()
-        sfx:emitSound('click')
+        sfx.play('click')
     end
 
     if startButton.ntr.isClicked then
         main:toggleLockOnly()
         sysntf:getGroup(5):toggle()
-        sfx:emitSound('click')
-    end
-
-    if waterButton.ntr.isClicked then
-        enabledWaterMode(true)
-    end
-
-    if wateringButton.ntr.isClicked then
-        player:stopWaterMechanic()
-    end
-
-    if cancelWaterButton.ntr.isClicked then
-        enabledWaterMode(false)
+        sfx.play('click')
     end
 end)
 
 main.event:add('draw', function ()
-    love.graphics.setColor(1, 1, 1)
+    color.RGB(143, 248, 226, true)
+
+    love.graphics.rectangle('fill', 0, 0, screen.width, screen.height)
+
+    love.graphics.setColor(1, 1, 1, 1)
+
+    background.city:draw()
+    background.town:draw()
+    background.powerLines:draw()
+    background.leavesOuter:draw()
+    background.leavesInner:draw()
+    background.leavesInner2:draw()
 
     room:draw()
     pot:draw()
     leftSpeaker:draw()
     rightSpeaker:draw()
 
+    player.draw()
+
     waterLevel.meter:draw()
     waterLevel.icon:draw()
     waterLevel.indicator:draw()
 
-    wateringLevel.meter:draw()
-    wateringLevel.indicator:draw()
+    if player.phase == enums.index.phase.peri then
+        watering.draw(waterLevel)
+    end
 
     clock.image:draw()
 
@@ -257,22 +310,22 @@ main.event:add('draw', function ()
     startButton.frame:draw()
 
     color.RGB(60, 163, 112, true)
-    love.graphics.setFont(assets.font.normal)
+    love.graphics.setFont(assets.getFont('normal'))
     startButton.title:draw()
 
-    love.graphics.setFont(assets.font.small)
+    love.graphics.setFont(assets.getFont('small'))
 
-    color.conditionRGB(menuPotsButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
-    menuPotsButton.frame:draw()
-    menuPotsButton.icon:draw()
+    color.conditionRGB(potsMenuButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    potsMenuButton.frame:draw()
+    potsMenuButton.icon:draw()
 
-    color.conditionRGB(menuMusicsButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
-    menuMusicsButton.frame:draw()
-    menuMusicsButton.icon:draw()
+    color.conditionRGB(musicMenuButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    musicMenuButton.frame:draw()
+    musicMenuButton.icon:draw()
 
-    color.conditionRGB(menuMoreButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
-    menuMoreButton.frame:draw()
-    menuMoreButton.icon:draw()
+    color.conditionRGB(moreMenuButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    moreMenuButton.frame:draw()
+    moreMenuButton.icon:draw()
 
     color.conditionRGB(waterButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
     waterButton.frame:draw()
@@ -286,11 +339,7 @@ main.event:add('draw', function ()
     cancelWaterButton.frame:draw()
     cancelWaterButton.icon:draw()
 
-    love.graphics.setColor(1, 1, 1)
-
-    player:draw()
-
-    watermark:draw()
+    love.graphics.setColor(1, 1, 1, 1)
 end)
 
 return main

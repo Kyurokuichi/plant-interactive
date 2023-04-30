@@ -2,19 +2,19 @@ local clock = {
     time = 0
 }
 
-function clock:setup(duration)
-    self.time = duration
+function clock.setup(duration)
+    clock.time = duration
 end
 
-function clock:update(dt)
-    self.time = self.time - dt
+function clock.update(dt)
+    clock.time = clock.time - dt
 end
 
-function clock:tellTime()
-    local time = self.time
+function clock.tellTime()
+    local time = clock.time
 
-    local seconds = math.floor(self.time % 60)
-    local minutes = math.floor(self.time / 60)
+    local seconds = math.floor(clock.time % 60)
+    local minutes = math.floor(clock.time / 60)
 
     seconds = string.format('%02d', seconds)
     minutes = string.format('%02d', minutes)

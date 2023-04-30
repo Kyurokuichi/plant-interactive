@@ -11,90 +11,64 @@
     Josiah Garillo (Sound, Graphics)
     Luis Panambo (Sound)
 --]]
-
 local
     screen,
-    assets,
-    player,
-    sysNtf,
-    perlin
+    state
 
-function love.load(arg, unfilteredArg)
+function love.load()
     love.graphics.setDefaultFilter('linear', 'nearest')
 
-    local desiredWidth, desiredHeight = 144, 256 -- 144x256
-
     screen = require 'scripts.screen'
-    screen:initialize(desiredWidth, desiredHeight)
+    screen.initialize(144, 256)
 
-    assets = require 'scripts.assets'
-    assets:initialize()
+    state = require 'scripts.state'
+    state.initialize(
+        {
+            ['intro'] = require 'scripts.states.intro',
+            ['game'] = require 'scripts.states.game'
+        },
 
-    love.graphics.setFont(assets.font.small)
-
-    player = require 'scripts.player'
-    player:initialize()
-
-    sysNtf = require 'scripts.sysntf'
-    sysNtf:connect( require 'scripts.interfaces.main' )         -- 1
-    sysNtf:connect( require 'scripts.interfaces.menu-pots' )    -- 2
-    sysNtf:connect( require 'scripts.interfaces.menu-musics' )  -- 3
-    sysNtf:connect( require 'scripts.interfaces.menu-more' )    -- 4
-    sysNtf:connect( require 'scripts.interfaces.menu-start')    -- 5
-
-    perlin = require 'scripts.perlin'
-
-    math.randomseed(os.time())
-    perlin.generate()
-end
-
-function love.keypressed()
-    
-end
-
-function love.keyreleased()
-    
+        'game'
+    )
 end
 
 function love.mousepressed(x, y, button, isTouch, presses)
-    x, y = screen:translate(x, y)
-    sysNtf:emit('mousepressed', x, y, button, isTouch, presses)
+    x, y = screen.toScreenCoords(x, y)
+
+    state.call('mousepressed', x, y, button, isTouch, presses)
 end
 
 function love.mousereleased(x, y, button, isTouch, presses)
-    x, y = screen:translate(x, y)
-    sysNtf:emit('mousereleased', x, y, button, isTouch, presses)
+    x, y = screen.toScreenCoords(x, y)
+
+    state.call('mousereleased', x, y, button, isTouch, presses)
 end
 
-local lastDX, lastDY = 0, 0
+local lastX, lastY = 0, 0
 function love.mousemoved(x, y, dx, dy, isTouch)
-    x, y = screen:translate(x, y)
-    dx = dx - lastDX
-    dy = dy - lastDY
+    x, y = screen.toScreenCoords(x, y)
+    dx = dx - lastX
+    dy = dy - lastY
 
-    sysNtf:emit('mousemoved', x, y, dx, dy, isTouch)
+    state.call('mousemoved', x, y, dx, dy, isTouch)
+
+    lastX, lastY = x, y
 end
 
 function love.resize(width, height)
-    screen:resize(width, height)
+    screen.resize()
 end
 
 function love.update(dt)
-    player:update(dt)
-    sysNtf:emit('update', dt)
+    state.call('update', dt)
 end
 
 function love.draw()
-    screen:push()
+    screen.push()
+    state.call('draw')
+    screen.pop()
 
-    sysNtf:emit('draw')
+    screen.draw()
 
-    local mx, my = screen:translate(love.mouse.getPosition())
-    love.graphics.circle('fill', mx, my, 4)
-
-    screen:pop()
-
-    screen:draw()
-
-    sysNtf:emit('reset')
+    state.rectify()
 end

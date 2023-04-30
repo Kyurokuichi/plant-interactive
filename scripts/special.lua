@@ -4,17 +4,10 @@ local screen = require('scripts.screen')
 local sysntf = require('scripts.sysntf')
 local ntrRect = require('scripts.interface.elements.ntr-rect')
 
-assets.image.nahida = love.graphics.newImage('assets/nahida.png')
-
-assets.font.impact = love.graphics.newFont('assets/impact.ttf')
-
-assets.audio.nahida = love.audio.newSource('assets/nahida.ogg', 'stream')
-
-if not assets.video then
-    assets.video = {}
-end
-
-assets.video.grrawajg = love.graphics.newVideo('assets/grrawajg.ogv')
+assets.loadImage('nahida', 'assets/nahida.png')
+assets.loadFont('impact', 'assets/impact.ttf')
+assets.loadAudio('nahida', 'assets/nahida.ogg')
+assets.loadVideo('grrawajg', 'assets/grrawajg.ogv')
 
 local special = {
     sequences = {
@@ -22,16 +15,16 @@ local special = {
             pattern = {'up', 'up', 'down', 'down', 'left', 'right', 'left', 'right'},
             activated = false,
             funcActivated = function (self)
-                assets.audio.nahida:play()
+                assets.getAudio('nahida'):play()
             end,
             funcUpdate = function (self, dt)
 
             end,
             funcDraw = function (self)
-                if assets.audio.nahida:isPlaying() then
+                if assets.getAudio('nahida'):isPlaying() then
                     love.graphics.setColor(1, 1, 1, 1)
 
-                    local image = assets.image.nahida
+                    local image = assets.getImage('nahida')
                     love.graphics.draw(image, 0, 0, 0, screen.width/image:getWidth(), screen.height/image:getHeight())
 
                     -- Random color flicker (epilepsy warning)
@@ -42,7 +35,7 @@ local special = {
                     )
 
                     -- Ah yes classic impact font
-                    love.graphics.setFont(assets.font.impact)
+                    love.graphics.setFont(assets.getFont('impact'))
 
                     local text = 'SIKE THERE\'S NO CHEAT HAHAHA'
 
@@ -63,17 +56,16 @@ local special = {
             pattern = {'up', 'up', 'up', 'up', 'down', 'down', 'down', 'down'},
             activated = false,
             funcActivated = function (self)
-                assets.video.grrawajg:play()
+                assets.getVideo('grrawajg'):play()
             end,
             funcUpdate = function (self, dt)
 
             end,
             funcDraw = function (self)
-                if assets.video.grrawajg:isPlaying() then
+                local video = assets.getVideo('grrawajg')
+
+                if video:isPlaying() then
                     love.graphics.setColor(1, 1, 1, 1)
-
-                    local video = assets.video.grrawajg
-
                     love.graphics.draw(
                         video,
                         screen.width/2,

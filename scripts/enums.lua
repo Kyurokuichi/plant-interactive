@@ -17,7 +17,7 @@ local enums = {
             rock      = 3
         },
 
-        semiphase = {
+        subPhase = {
             countdown  = 1,
             simulation = 2
         },
@@ -47,9 +47,15 @@ local enums = {
             'rock'
         },
 
-        semiphase = {
+        subPhase = {
             'countdown',
             'simulation'
+        },
+
+        overlay = {
+            'dry',
+            'healthy',
+            'swamped'
         }
     },
 }

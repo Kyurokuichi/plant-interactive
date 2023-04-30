@@ -10,8 +10,8 @@ function love.conf(configuration)
     configuration.window.title = 'Project Growth'
     configuration.window.icon = 'assets/icon-game.png'
 
-    configuration.window.width = 288
-    configuration.window.height = 512
+    configuration.window.width = 144*2
+    configuration.window.height = 256*2
     configuration.window.minwidth = configuration.window.width
     configuration.window.minheight = configuration.window.height
 

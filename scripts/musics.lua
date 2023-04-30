@@ -11,21 +11,21 @@ local musics = {
         {
             name = 'Fur Elise',
             artist = 'Ludwig Van Beethoven',
-            audio = assets.audio.classical1,
+            audio = assets.getAudio('classical1'),
             path = 'assets/classical/Beethoven - Fur Elise.ogg',
         },
 
         {
             name = 'Moonlight Sonata 3rd Movement',
             artist = 'Ludwig Van Beethoven',
-            audio = assets.audio.classical2,
+            audio = assets.getAudio('classical2'),
             path = 'assets/classical/Beethoven - Moonlight Sonata 3rd Movement.ogg'
         },
 
         {
             name = 'Carmen Overture',
             artist = 'Alexandre Cesar Leopold Bizet',
-            audio = assets.audio.classical3,
+            audio = assets.getAudio('classical3'),
             path = 'assets/classical/Bizet - Carmen  Overture.ogg'
         },
 
@@ -33,7 +33,7 @@ local musics = {
         {
             name = 'In the Hall of the Mountain King',
             artist = 'Edvard Grieg',
-            audio = assets.audio.classical4,
+            audio = assets.getAudio('classical4'),
             path = 'assets/classical/Grieg - In the Hall of the Mountain King.ogg'
         },
 
@@ -41,7 +41,7 @@ local musics = {
         {
             name = 'Erika',
             artist = 'Herms Niel',
-            audio = assets.audio.classical5,
+            audio = assets.getAudio('classical5'),
             path = 'assets/classical/Herms Niel - Erika.ogg'
         },
 
@@ -49,7 +49,7 @@ local musics = {
         {
             name = 'The Blue Danube Waltz',
             artist = 'Johann Strauss II',
-            audio = assets.audio.classical6,
+            audio = assets.getAudio('classical6'),
             path = 'assets/classical/Johann Strauss II - The Blue Danube Waltz.ogg'
         },
 
@@ -57,28 +57,28 @@ local musics = {
         {
             name = 'Eine Kleine Nachtmusik',
             artist = 'Wolfgang Amadeus Mozart',
-            audio = assets.audio.classical7,
+            audio = assets.getAudio('classical7'),
             path = 'assets/classical/Mozart - Eine Kleine Nachtmusik.ogg'
         },
 
         {
             name = 'Can Can',
             artist = 'Jacques Offenbach',
-            audio = assets.audio.classical8,
+            audio = assets.getAudio('classical8'),
             path = 'assets/classical/Offenbach - Can Can Music.ogg'
         },
 
         {
             name = 'William Tell Overture',
             artist = 'Gioachino Rossini',
-            audio = assets.audio.classical9,
+            audio = assets.getAudio('classical9'),
             path = 'assets/classical/Rossini - William Tell Overture Final.ogg'
         },
 
         {
             name = 'Russian Dance Trepak',
             artist = 'Peter Ilyich Tchaikovsky',
-            audio = assets.audio.classical10,
+            audio = assets.getAudio('classical10'),
             path = 'assets/classical/Tchaikovsky - Nutcracker Suite  Russian Dance Trepak.ogg'
         }
     },
@@ -87,70 +87,70 @@ local musics = {
         {
             name = 'Hello',
             artist = 'Adele',
-            audio = assets.audio.ballad1,
+            audio = assets.getAudio('ballad1'),
             path = 'assets/ballad/Adele - Hello.ogg'
         },
 
         {
             name = 'Every Woman In The World',
             artist = 'Air supply',
-            audio = assets.audio.ballad2,
+            audio = assets.getAudio('ballad2'),
             path = 'assets/ballad/Air Supply - Every Woman In The World.ogg'
         },
 
         {
             name = 'The Truth Unfold',
             artist = 'BTS',
-            audio = assets.audio.ballad3,
+            audio = assets.getAudio('ballad3'),
             path = 'assets/ballad/BTS - The Truth Untold.ogg'
         },
 
         {
             name = 'My Heart Will Go On',
             artist = 'Celine Dion',
-            audio = assets.audio.ballad4,
+            audio = assets.getAudio('ballad4'),
             path = 'assets/ballad/Celine Dion - My Heart Will Go On.ogg'
         },
 
         {
             name = 'The Power Of Love',
             artist = 'Celine Dion',
-            audio = assets.audio.ballad5,
+            audio = assets.getAudio('ballad5'),
             path = 'assets/ballad/Celine Dion - The Power Of Love.ogg'
         },
 
         {
             name = 'A Thousand Years',
             artist = 'Christina Perri',
-            audio = assets.audio.ballad6,
+            audio = assets.getAudio('ballad6'),
             path = 'assets/ballad/Christina Perri - A Thousand Years.ogg'
         },
 
         {
             name = 'Cant Help Falling In Love',
             artist = 'Elvis Presley',
-            audio = assets.audio.ballad7,
+            audio = assets.getAudio('ballad7'),
             path = 'assets/ballad/Elvis Presley - Cant Help Falling In Love Audio.ogg'
         },
 
         {
             name = 'Good Old-Fashioned Lover Boy',
             artist = 'Queen',
-            audio = assets.audio.ballad8,
+            audio = assets.getAudio('ballad8'),
             path = 'assets/ballad/Queen - Good Old Fashioned Lover Boy.ogg'
         },
 
         {
             name = 'Doughnut',
             artist = 'TWICE',
-            audio = assets.audio.ballad9,
+            audio = assets.getAudio('ballad9'),
             path = 'assets/ballad/TWICE - Doughnut.ogg'
         },
 
         {
             name = 'Swear It Again',
             artist = 'Westlife',
-            audio = assets.audio.ballad10,
+            audio = assets.getAudio('ballad10'),
             path = 'assets/ballad/Westlife - Swear It Again.ogg'
         }
     },
@@ -159,70 +159,70 @@ local musics = {
         {
             name = 'Livin On A Prayer',
             artist = 'Bon Jovi',
-            audio = assets.audio.rock1,
+            audio = assets.getAudio('rock1'),
             path = 'assets/rock/Bon Jovi - Livin On A Prayer.ogg'
         },
 
         {
             name = 'You Spin Me Round (Like a Record)',
             artist = 'Dead Or Alive',
-            audio = assets.audio.rock2,
+            audio = assets.getAudio('rock2'),
             path = 'assets/rock/Dead Or Alive - You Spin Me Round Like a Record.ogg'
         },
 
         {
             name = 'Hotel California',
             artist = 'Eagles',
-            audio = assets.audio.rock3,
+            audio = assets.getAudio('rock3'),
             path = 'assets/rock/Eagles - Hotel California.ogg'
         },
 
         {
             name = 'Kashmir',
             artist = 'Led Zepelin',
-            audio = assets.audio.rock4,
+            audio = assets.getAudio('rock4'),
             path = 'assets/rock/Led Zeppelin - Kashmir.ogg'
         },
 
         {
             name = 'In The End',
             artist = 'Linkin Park',
-            audio = assets.audio.rock5,
+            audio = assets.getAudio('rock5'),
             path = 'assets/rock/Linkin Park - In The End.ogg'
         },
 
         {
             name = 'Hayloft II',
             artist = 'Mother Mother',
-            audio = assets.audio.rock6,
+            audio = assets.getAudio('rock6'),
             path = 'assets/rock/Mother Mother - Hayloft II.ogg'
         },
 
         {
             name = 'Heart-Shaped Box',
             artist = 'Nirvana',
-            audio = assets.audio.rock7,
+            audio = assets.getAudio('rock7'),
             path = 'assets/rock/Nirvana - Heartshaped Box.ogg'
         },
 
         {
             name = 'Bismarck',
             artist = 'Sabaton',
-            audio = assets.audio.rock8,
+            audio = assets.getAudio('rock8'),
             path = 'assets/rock/Sabaton - Bismarck.ogg'
         },
 
         {
             name = 'Hey Jude',
             artist = 'The Beatles',
-            audio = assets.audio.rock9,
+            audio = assets.getAudio('rock9'),
             path = 'assets/rock/The Beatles - Hey Jude.ogg'
         },
 
         {
             name = 'Embraced by the Flame',
             artist = 'UNDEAD CORPORATION',
-            audio = assets.audio.rock10,
+            audio = assets.getAudio('rock10'),
             path = 'assets/rock/UNDEAD CORPORATION - Embraced by the Flame.ogg'
         }
     },
@@ -234,10 +234,10 @@ local musics = {
     custom = {}
 }
 
-function musics:setVolume(volume)
-    for genre, value in pairs(self) do
+function musics.setVolume(volume)
+    for _, value in pairs(musics) do
         if type(value) == 'table' then
-            for index, music in ipairs(value) do
+            for _, music in ipairs(value) do
                 music.audio:setVolume(volume)
             end
         end

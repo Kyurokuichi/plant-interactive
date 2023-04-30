@@ -6,23 +6,16 @@ local plant = require 'scripts.classes.plant'
 local pot = {}
 pot.__index = pot
 
-local index = 1 -- For naming
-
 function pot.new(name)
     local newObject = {
-        name = name or index,
+        name = name,
         plant = nil,
         music = nil,
         waterLevel = 1
     }
 
     setmetatable(newObject, pot)
-
     newObject.plant = plant.new(newObject)
-
-    if newObject.name == index then
-        index = index + 1
-    end
 
     return newObject
 end
@@ -53,7 +46,7 @@ function pot:playMusic()
     self.music.audio:play()
 end
 
-function pot:setMusic(music, indexGenre, indexMusic)
+function pot:setMusic(music, indexGenre, indexMusic, index)
     if self.music == nil then
         self.music = {}
     end
@@ -74,7 +67,7 @@ function pot:setMusic(music, indexGenre, indexMusic)
             for _, table in ipairs(list) do
                 -- Finding the same table specified using table reference for comparisons
                 if music == table then
-                    self.name = tostring(genre):gsub('^%l', string.upper)
+                    self.name = index .. '. ' ..  tostring(genre):gsub('^%l', string.upper)
                     return
                 end
             end
@@ -92,7 +85,7 @@ end
 -- Returns name of the pot, health of the pot, and water level of the pot
 function pot:getInfo()
     local waterLevel = self.waterLevel
-    waterLevel = waterLevel * 100
+    waterLevel = math.floor(waterLevel * 100 + 0.5)
 
     if waterLevel >= 200 then
         waterLevel = '+200%'
@@ -103,6 +96,10 @@ function pot:getInfo()
     end
 
     return (self.name or 'No genre'), self.plant:getHealth(), waterLevel
+end
+
+function pot:getAdditionalInfo()
+    
 end
 
 

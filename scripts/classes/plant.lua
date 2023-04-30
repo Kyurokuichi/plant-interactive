@@ -3,7 +3,8 @@ local perlin = require 'scripts.perlin'
 local assets = require 'scripts.assets'
 
 -- General Properties
-local constantGrowth = 0.5
+local constantGrowth = 0.1
+local bonusGrowthRate = 0.5
 local sampleThreshold = 0.01
 
 -- Plant Properties
@@ -50,6 +51,8 @@ function plant.new(pot)
         _timeLast = 0,
         _sampleSum = 0,
         _sampleCount = 0,
+
+        dataHeight = {}
     }
 
     return setmetatable(newObject, plant)
@@ -58,7 +61,7 @@ end
 function plant:getHealth()
     local waterLevel = self.pot.waterLevel
 
-    if waterLevel < (0.7) or waterLevel > (1.3) then
+    if waterLevel < (1-0.3) or waterLevel > (1+0.3) then
         return enums.key.health[2]
     else
         return enums.key.health[1]
@@ -231,20 +234,25 @@ function plant:update(dt)
     local pot = self.pot
 
     if self._time > 1 then
-
-        pot.waterLevel = pot.waterLevel - 0.01
+        pot.waterLevel = pot.waterLevel - 0.005
+        pot.waterLevel = math.min(pot.waterLevel, 2)
+        pot.waterLevel = math.max(pot.waterLevel, 0)
 
         local average = self._sampleSum / self._sampleCount * 10
 
         -- Growth Algorithm 
 
         local constant = constantGrowth
-        local loudness = 2 * 1024^(-(average-1)^4)
-        local health   = (pot.waterLevel-1)^2 + 1
+        local loudness = bonusGrowthRate * 1024^(-(average-1)^4)
+        local health   = -(pot.waterLevel-1)^2 + 1
 
         local growth   = health * (constant + loudness)
 
         self:updatePlant(dt, growth)
+
+
+        self.height = self:getHeight()
+        self.dataHeight[#self.dataHeight+1] = self.height
 
         self._sampleSum = 0
         self._sampleCount = 0
@@ -342,6 +350,16 @@ function plant:draw()
             oy
         )
     end
+end
+
+function plant:getHeight()
+    local height = 0
+
+    for index, internode in ipairs(self.internodes) do
+        height = height + math.abs(internode.by - internode.ay) * (internode.lengthCurrent/internode.length)
+    end
+
+    return height
 end
 
 return plant

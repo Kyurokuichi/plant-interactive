@@ -1,53 +1,54 @@
 local assets = require 'scripts.assets'
-local enums  = require 'scripts.enums'
-local player = require 'scripts.player'
+local enums = require 'scripts.enums'
 
 local overlay = {
-    overlay = nil,
+    current = nil,
 
     dry = {
-        image = assets.image.overlayDry,
+        image = assets.getImage('overlayDry'),
         x = -6,
-        y = 12
+        y = 12,
     },
+
     healthy = {
-        image = assets.image.overlayHealthy,
+        image = assets.getImage('overlayHealthy'),
         x = -2,
         y = -2
     },
+
     swamped = {
-        image = assets.image.overlaySwamped,
+        image = assets.getImage('overlaySwamped'),
         x = 6,
-        y = 17
+        y = 17,
     }
 }
 
-function overlay:draw()
-    local pot = player:getSelectedPot()
+function overlay.update(pot)
     local waterLevel = pot.waterLevel
+    local health
 
-    local areaOfHealthy = 0.3
-
-    local image, x, y
-
-    if waterLevel > (1+areaOfHealthy) then
-        image = self.swamped.image
-        x = self.swamped.x
-        y = self.swamped.y
-    elseif waterLevel < (1-areaOfHealthy) then
-        image = self.dry.image
-        x = self.dry.x
-        y = self.dry.y
+    if waterLevel < (1-0.3) then
+        health = enums.index.overlay.dry
+    elseif waterLevel > (1+0.3) then
+        health = enums.index.overlay.swamped
     else
-        image = self.healthy.image
-        x = self.healthy.x
-        y = self.healthy.y
+        health = enums.index.overlay.healthy
     end
 
+    health = enums.key.overlay[health]
+
+    if overlay.current ~= health then
+        overlay.current = health
+    end
+end
+
+function overlay.draw()
+    local current = overlay[overlay.current]
+
     love.graphics.draw(
-        image,
-        x,
-        y
+        current.image,
+        current.x,
+        current.y
     )
 end
 

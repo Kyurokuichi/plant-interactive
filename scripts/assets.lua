@@ -1,109 +1,167 @@
-local assets = {}
+local assets = {
+    image = {},
+    font = {},
+    audio = {},
+    video = {}
+}
 
-function assets:initialize()
-    self.initialize = nil
+local function loadImage(name, path)
+    assets.image[name] = love.graphics.newImage(path)
+end
 
-    self.image = {}
+local function loadFont(name, path, size)
+    assets.font[name] = love.graphics.newFont(path, size)
+end
 
-    -- Sprites (objects, backgrounds)
-    self.image.backgroundRoom       = love.graphics.newImage('assets/room.png')
-    self.image.pot                  = love.graphics.newImage('assets/pot.png')
-    self.image.leftSpeaker          = love.graphics.newImage('assets/speaker_left.png')
-    self.image.rightSpeaker         = love.graphics.newImage('assets/speaker_right.png')
-    self.image.clock                = love.graphics.newImage('assets/clock.png')
-    self.image.waterLevel           = love.graphics.newImage('assets/water_meter.png')
-    self.image.meterIndicator       = love.graphics.newImage('assets/meter_indicator.png')
-    self.image.wateringLevel        = love.graphics.newImage('assets/watering_meter.png')
-    self.image.meterIndicatorLong  = love.graphics.newImage('assets/meter_indicator_long.png')
+local function loadAudio(name, path, type)
+    assets.audio[name] = love.audio.newSource(path, type or 'stream')
+end
 
-    -- Overlays (Design)
-    self.image.overlayDry           = love.graphics.newImage('assets/overlay-dry.png')
-    self.image.overlayHealthy       = love.graphics.newImage('assets/overlay-healthy.png')
-    self.image.overlaySwamped       = love.graphics.newImage('assets/overlay-swamped.png')
+local function loadVideo(name, path)
+    assets.video[name] = love.graphics.newVideo(path)
+end
 
-    -- For plant
-    self.image.internode            = love.graphics.newImage('assets/plant-internode.png')
-    self.image.leaf                 = love.graphics.newImage('assets/plant-leaf.png')
+function assets.loadLeast()
+    loadImage('einsteinSquad', 'assets/einstein-squad.png')
+end
+
+function assets.loadAll()
+    -- Sprite Objects
+    loadImage('backgroundRoom'    , 'assets/room.png')
+    loadImage('pot'               , 'assets/pot.png')
+    loadImage('leftSpeaker'       , 'assets/speaker_left.png')
+    loadImage('rightSpeaker'      , 'assets/speaker_right.png')
+    loadImage('clock'             , 'assets/clock.png')
+    loadImage('waterLevel'        , 'assets/water_meter.png')
+    loadImage('meterIndicator'    , 'assets/meter_indicator.png')
+    loadImage('wateringLevel'     , 'assets/watering_meter.png')
+    loadImage('meterIndicatorLong', 'assets/meter_indicator_long.png')
+
+    -- Background
+    loadImage('backgroundCity'        , 'assets/background-city.png')
+    loadImage('backgroundTown'        , 'assets/background-town.png')
+    loadImage('backgroundPowerLines'  , 'assets/background-power_lines.png')
+    loadImage('backgroundLeavesInner' , 'assets/background-leaves_inner.png')
+    loadImage('backgroundLeavesInner2', 'assets/background-leaves_inner_2.png')
+    loadImage('backgroundLeavesOuter' , 'assets/background-leaves_outer.png')
+
+    -- Overlay Designs
+    loadImage('overlayDry'    , 'assets/overlay-dry.png')
+    loadImage('overlayHealthy', 'assets/overlay-healthy.png')
+    loadImage('overlaySwamped', 'assets/overlay-swamped.png')
+
+    -- Plant Images
+    loadImage('internode', 'assets/plant-internode.png')
+    loadImage('leaf'     , 'assets/plant-leaf.png')
 
     -- Frames
-    self.image.frameButton1         = love.graphics.newImage('assets/frame-button_1.png')
-    self.image.frameButton2         = love.graphics.newImage('assets/frame-button_2.png')
-    self.image.frameButton3         = love.graphics.newImage('assets/frame-button_3.png')
-    self.image.frameButton4         = love.graphics.newImage('assets/frame-button_4.png')
-    self.image.frameButton5         = love.graphics.newImage('assets/frame-button_5.png')
-    self.image.frameButton6         = love.graphics.newImage('assets/frame-button_6.png')
-    self.image.frameWindow1         = love.graphics.newImage('assets/frame-window_1.png')
+    loadImage('frameButton1', 'assets/frame-button_1.png')
+    loadImage('frameButton2', 'assets/frame-button_2.png')
+    loadImage('frameButton3', 'assets/frame-button_3.png')
+    loadImage('frameButton4', 'assets/frame-button_4.png')
+    loadImage('frameButton5', 'assets/frame-button_5.png')
+    loadImage('frameButton6', 'assets/frame-button_6.png')
+    loadImage('frameButton7', 'assets/frame-button_7.png')
+    loadImage('frameWindow1', 'assets/frame-window_1.png')
+    loadImage('frameWindow2', 'assets/frame-window_2.png')
+
+    -- For results menu
+    loadImage('tvAntenna', 'assets/tv-antenna.png')
+    loadImage('tvSpeaker', 'assets/tv-speaker.png')
+    loadImage('tvScreen' , 'assets/tv-screen.png')
+    loadImage('tvRadio'  , 'assets/tv-radio.png')
+    loadImage('tvStand'  , 'assets/tv-stand.png')
 
     -- Icons
-    self.image.iconMenuPots         = love.graphics.newImage('assets/icon-menu_pots.png')
-    self.image.iconMenuMusics       = love.graphics.newImage('assets/icon-menu_musics.png')
-    self.image.iconMenuMore         = love.graphics.newImage('assets/icon-menu_more.png')
-    self.image.iconAdd              = love.graphics.newImage('assets/icon-add.png')
-    self.image.iconBack             = love.graphics.newImage('assets/icon-back.png')
-    self.image.iconClose            = love.graphics.newImage('assets/icon-close.png')
-    self.image.iconGame             = love.graphics.newImage('assets/icon-game.png')
-    self.image.iconIndicatorVolume  = love.graphics.newImage('assets/icon-indicator_volume.png')
-    self.image.iconleftArrowSmall   = love.graphics.newImage('assets/icon-left_arrow_small.png')
-    self.image.iconleftArrow        = love.graphics.newImage('assets/icon-left_arrow.png')
-    self.image.iconPot              = love.graphics.newImage('assets/icon-pot.png')
-    self.image.iconPreview          = love.graphics.newImage('assets/icon-preview.png')
-    self.image.iconRemove           = love.graphics.newImage('assets/icon-remove.png')
-    self.image.iconRightArrowSmall  = love.graphics.newImage('assets/icon-right_arrow_small.png')
-    self.image.iconRightArrow       = love.graphics.newImage('assets/icon-right_arrow.png')
-    self.image.iconWaterMeter       = love.graphics.newImage('assets/icon-water_meter.png')
-    self.image.iconWatering         = love.graphics.newImage('assets/icon-watering.png')
-    self.image.iconCheck            = love.graphics.newImage('assets/icon-check.png')
-
-    self.font = {}
+    loadImage('iconMenuPots'       , 'assets/icon-menu_pots.png')
+    loadImage('iconMenuMusics'     , 'assets/icon-menu_musics.png')
+    loadImage('iconMenuMore'       , 'assets/icon-menu_more.png')
+    loadImage('iconAdd'            , 'assets/icon-add.png')
+    loadImage('iconBack'           , 'assets/icon-back.png')
+    loadImage('iconClose'          , 'assets/icon-close.png')
+    loadImage('iconGame'           , 'assets/icon-game.png')
+    loadImage('iconIndicatorVolume', 'assets/icon-indicator_volume.png')
+    loadImage('iconleftArrowSmall' , 'assets/icon-left_arrow_small.png')
+    loadImage('iconleftArrow'      , 'assets/icon-left_arrow.png')
+    loadImage('iconPot'            , 'assets/icon-pot.png')
+    loadImage('iconPreview'        , 'assets/icon-preview.png')
+    loadImage('iconRemove'         , 'assets/icon-remove.png')
+    loadImage('iconRightArrowSmall', 'assets/icon-right_arrow_small.png')
+    loadImage('iconRightArrow'     , 'assets/icon-right_arrow.png')
+    loadImage('iconWaterMeter'     , 'assets/icon-water_meter.png')
+    loadImage('iconWatering'       , 'assets/icon-watering.png')
+    loadImage('iconCheck'          , 'assets/icon-check.png')
+    loadImage('iconRetxit'         , 'assets/icon-retxit.png')
+    loadImage('iconRetry'          , 'assets/icon-retry.png')
+    loadImage('iconExit'           , 'assets/icon-exit.png')
 
     -- Fonts
-    self.font.small     = love.graphics.newFont('assets/font.ttf', 8)
-    self.font.normal    = love.graphics.newFont('assets/font.ttf', 16)
-    self.font.medium    = love.graphics.newFont('assets/font.ttf', 24)
-    self.font.large     = love.graphics.newFont('assets/font.ttf', 32)
-
-    self.audio = {}
+    loadFont('small' , 'assets/font.ttf', 8)
+    loadFont('normal', 'assets/font.ttf', 16)
+    loadFont('medium', 'assets/font.ttf', 24)
+    loadFont('large' , 'assets/font.ttf', 32)
 
     -- SFX
-    assets.audio.sfxClick       = love.audio.newSource('assets/sfx-click.ogg', 'stream')
+    loadAudio('sfxClick'   , 'assets/sfx-click.ogg')
+    loadAudio('sfxWarning' , 'assets/sfx-warning.ogg')
+    loadAudio('sfxWatering', 'assets/sfx-water_production.ogg')
 
-    -- Musics
-    assets.audio.classical1     = love.audio.newSource('assets/classical/Beethoven - Fur Elise.ogg', 'stream')
-    assets.audio.classical2     = love.audio.newSource('assets/classical/Beethoven - Moonlight Sonata 3rd Movement.ogg', 'stream')
-    assets.audio.classical3     = love.audio.newSource('assets/classical/Bizet - Carmen  Overture.ogg', 'stream')
-    assets.audio.classical4     = love.audio.newSource('assets/classical/Grieg - In the Hall of the Mountain King.ogg', 'stream')
-    assets.audio.classical5     = love.audio.newSource('assets/classical/Herms Niel - Erika.ogg', 'stream')
-    assets.audio.classical6     = love.audio.newSource('assets/classical/Johann Strauss II - The Blue Danube Waltz.ogg', 'stream')
-    assets.audio.classical7     = love.audio.newSource('assets/classical/Mozart - Eine Kleine Nachtmusik.ogg', 'stream')
-    assets.audio.classical8     = love.audio.newSource('assets/classical/Offenbach - Can Can Music.ogg', 'stream')
-    assets.audio.classical9     = love.audio.newSource('assets/classical/Rossini - William Tell Overture Final.ogg', 'stream')
-    assets.audio.classical10    = love.audio.newSource('assets/classical/Tchaikovsky - Nutcracker Suite  Russian Dance Trepak.ogg', 'stream')
+    -- Classical Musics
+    loadAudio('classical1' , 'assets/classical/Beethoven - Fur Elise.ogg')
+    loadAudio('classical2' , 'assets/classical/Beethoven - Moonlight Sonata 3rd Movement.ogg')
+    loadAudio('classical3' , 'assets/classical/Bizet - Carmen  Overture.ogg')
+    loadAudio('classical4' , 'assets/classical/Grieg - In the Hall of the Mountain King.ogg')
+    loadAudio('classical5' , 'assets/classical/Herms Niel - Erika.ogg' )
+    loadAudio('classical6' , 'assets/classical/Johann Strauss II - The Blue Danube Waltz.ogg')
+    loadAudio('classical7' , 'assets/classical/Mozart - Eine Kleine Nachtmusik.ogg')
+    loadAudio('classical8' , 'assets/classical/Offenbach - Can Can Music.ogg')
+    loadAudio('classical9' , 'assets/classical/Rossini - William Tell Overture Final.ogg')
+    loadAudio('classical10', 'assets/classical/Tchaikovsky - Nutcracker Suite  Russian Dance Trepak.ogg')
 
-    assets.audio.ballad1        = love.audio.newSource('assets/ballad/Adele - Hello.ogg', 'stream')
-    assets.audio.ballad2        = love.audio.newSource('assets/ballad/Air Supply - Every Woman In The World.ogg', 'stream')
-    assets.audio.ballad3        = love.audio.newSource('assets/ballad/BTS - The Truth Untold.ogg', 'stream')
-    assets.audio.ballad4        = love.audio.newSource('assets/ballad/Celine Dion - My Heart Will Go On.ogg', 'stream')
-    assets.audio.ballad5        = love.audio.newSource('assets/ballad/Celine Dion - The Power Of Love.ogg', 'stream')
-    assets.audio.ballad6        = love.audio.newSource('assets/ballad/Christina Perri - A Thousand Years.ogg', 'stream')
-    assets.audio.ballad7        = love.audio.newSource('assets/ballad/Elvis Presley - Cant Help Falling In Love.ogg', 'stream')
-    assets.audio.ballad8        = love.audio.newSource('assets/ballad/Queen - Good Old Fashioned Lover Boy.ogg', 'stream')
-    assets.audio.ballad9        = love.audio.newSource('assets/ballad/TWICE - Doughnut.ogg', 'stream')
-    assets.audio.ballad10       = love.audio.newSource('assets/ballad/Westlife - Swear It Again.ogg', 'stream')
+    -- Ballad Musics
+    loadAudio('ballad1' , 'assets/ballad/Adele - Hello.ogg')
+    loadAudio('ballad2' , 'assets/ballad/Air Supply - Every Woman In The World.ogg')
+    loadAudio('ballad3' , 'assets/ballad/BTS - The Truth Untold.ogg')
+    loadAudio('ballad4' , 'assets/ballad/Celine Dion - My Heart Will Go On.ogg')
+    loadAudio('ballad5' , 'assets/ballad/Celine Dion - The Power Of Love.ogg')
+    loadAudio('ballad6' , 'assets/ballad/Christina Perri - A Thousand Years.ogg')
+    loadAudio('ballad7' , 'assets/ballad/Elvis Presley - Cant Help Falling In Love.ogg')
+    loadAudio('ballad8' , 'assets/ballad/Queen - Good Old Fashioned Lover Boy.ogg')
+    loadAudio('ballad9' , 'assets/ballad/TWICE - Doughnut.ogg')
+    loadAudio('ballad10', 'assets/ballad/Westlife - Swear It Again.ogg')
 
-    assets.audio.rock1          = love.audio.newSource('assets/rock/Bon Jovi - Livin On A Prayer.ogg', 'stream')
-    assets.audio.rock2          = love.audio.newSource('assets/rock/Dead Or Alive - You Spin Me Round Like a Record.ogg', 'stream')
-    assets.audio.rock3          = love.audio.newSource('assets/rock/Eagles - Hotel California.ogg', 'stream')
-    assets.audio.rock4          = love.audio.newSource('assets/rock/Led Zeppelin - Kashmir.ogg', 'stream')
-    assets.audio.rock5          = love.audio.newSource('assets/rock/Linkin Park - In The End.ogg', 'stream')
-    assets.audio.rock6          = love.audio.newSource('assets/rock/Mother Mother - Hayloft II.ogg', 'stream')
-    assets.audio.rock7          = love.audio.newSource('assets/rock/Nirvana - Heartshaped Box.ogg', 'stream')
-    assets.audio.rock8          = love.audio.newSource('assets/rock/Sabaton - Bismarck.ogg', 'stream')
-    assets.audio.rock9          = love.audio.newSource('assets/rock/The Beatles - Hey Jude.ogg', 'stream')
-    assets.audio.rock10         = love.audio.newSource('assets/rock/UNDEAD CORPORATION - Embraced by the Flame.ogg', 'stream')
+    -- Rock Musics
+    loadAudio('rock1' , 'assets/rock/Bon Jovi - Livin On A Prayer.ogg')
+    loadAudio('rock2' , 'assets/rock/Dead Or Alive - You Spin Me Round Like a Record.ogg')
+    loadAudio('rock3' , 'assets/rock/Eagles - Hotel California.ogg')
+    loadAudio('rock4' , 'assets/rock/Led Zeppelin - Kashmir.ogg')
+    loadAudio('rock5' , 'assets/rock/Linkin Park - In The End.ogg')
+    loadAudio('rock6' , 'assets/rock/Mother Mother - Hayloft II.ogg')
+    loadAudio('rock7' , 'assets/rock/Nirvana - Heartshaped Box.ogg')
+    loadAudio('rock8' , 'assets/rock/Sabaton - Bismarck.ogg')
+    loadAudio('rock9' , 'assets/rock/The Beatles - Hey Jude.ogg')
+    loadAudio('rock10', 'assets/rock/UNDEAD CORPORATION - Embraced by the Flame.ogg')
+end
 
-    self.video = {}
+assets.loadImage = loadImage
+assets.loadFont = loadFont
+assets.loadAudio = loadAudio
+assets.loadVideo = loadVideo
 
+function assets.getImage(name)
+    return assets.image[name]
+end
 
+function assets.getFont(name)
+    return assets.font[name]
+end
+
+function assets.getAudio(name)
+    return assets.audio[name]
+end
+
+function assets.getVideo(name)
+    return assets.video[name]
 end
 
 return assets

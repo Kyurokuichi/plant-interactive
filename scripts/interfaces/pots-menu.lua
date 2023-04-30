@@ -1,60 +1,83 @@
--- Modules
-local assets = require 'scripts.assets'
-local color  = require 'scripts.interface.color'
+-- General
+local assets  = require 'scripts.assets'
+local screen = require 'scripts.screen'
 local sysntf = require 'scripts.sysntf'
-local enums  = require 'scripts.enums'
 local player = require 'scripts.player'
-local sfx    = require 'scripts.sfx'
-
--- Classes
-local drwImage      = require 'scripts.interface.elements.drw-image'
-local drwFrame      = require 'scripts.interface.elements.drw-frame'
-local drwText       = require 'scripts.interface.elements.drw-text'
-local drwTextScroll = require 'scripts.interface.elements.drw-textscroll'
-local ntrRect       = require 'scripts.interface.elements.ntr-rect'
-
-local menuPots = require('scripts.interface.group').new(false, true)
-
-local window = drwFrame.new(assets.image.frameWindow1, 26, 26, 92, 204)
+local enums = require 'scripts.enums'
+local color = require 'scripts.color'
+local sfx = require 'scripts.sfx'
 local overlay = require 'scripts.overlay'
-local title = drwText.new('Pots Selection', 26, 26, 92, 8)
-menuPots:connect(window)
-menuPots:connect(overlay)
-menuPots:connect(title)
 
+-- Interface classes
+local drwImage = require 'scripts.interface.elements.drw-image'
+local drwFrame = require 'scripts.interface.elements.drw-frame'
+local drwText = require 'scripts.interface.elements.drw-text'
+local drwTextScroll = require 'scripts.interface.elements.drw-textscroll'
+local ntrRect = require 'scripts.interface.elements.ntr-rect'
+
+local potsMenu = require('scripts.interface.group').new(false, true)
+
+local window = drwFrame.new(assets.getImage('frameWindow1'), 26, 26, 92, 204)
+local title = drwText.new('Pots Selection', 26, 26, 92, 8)
+
+-- Buttons
 local backButton = {
-    frame = drwFrame.new(assets.image.frameButton3, 35, 203, 38, 22),
-    icon  = drwImage.new(assets.image.iconBack, 43, 203),
-    ntr   = ntrRect.new(35, 203, 38, 22)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 35, 203, 38, 22),
+    icon = drwImage.new(assets.getImage('iconBack'), 43, 203),
+    ntr = ntrRect.new(35, 203, 38, 22)
 }
 local addButton = {
-    frame = drwFrame.new(assets.image.frameButton4, 0, 0, 82, 14),
-    icon  = drwImage.new(assets.image.iconAdd, 0, 0),
-    ntr   = ntrRect.new(0, 0, 82, 14)
+    frame = drwFrame.new(assets.getImage('frameButton4'), 0, 0, 82, 14),
+    icon = drwImage.new(assets.getImage('iconAdd'), 0, 0),
+    ntr = ntrRect.new(0, 0, 82, 14)
 }
 local removeButton = {
-    frame = drwFrame.new(assets.image.frameButton3, 87, 203, 22, 22),
-    icon  = drwImage.new(assets.image.iconRemove, 87, 203),
-    ntr   = ntrRect.new(87, 203, 22, 22)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 87, 203, 22, 22),
+    icon = drwImage.new(assets.getImage('iconRemove'), 87, 203),
+    ntr = ntrRect.new(87, 203, 22, 22)
 }
 local cancelButton = {
-    frame = drwFrame.new(assets.image.frameButton3, 53, 203, 38, 22),
-    icon  = drwImage.new(assets.image.iconClose, 61, 203),
-    ntr   = ntrRect.new(53, 203, 38, 22)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 53, 203, 38, 22),
+    icon = drwImage.new(assets.getImage('iconClose'), 61, 203),
+    ntr = ntrRect.new(53, 203, 38, 22)
 }
 cancelButton.frame.isVisible = false
 cancelButton.icon.isVisible = false
 cancelButton.ntr.isLocked = true
 
-menuPots:connect(backButton)
-menuPots:connect(addButton)
-menuPots:connect(removeButton)
-menuPots:connect(cancelButton)
+potsMenu:connect(window)
+potsMenu:connect(title)
 
-local currentPhase = nil
+potsMenu:connect(backButton)
+potsMenu:connect(addButton)
+potsMenu:connect(removeButton)
+potsMenu:connect(cancelButton)
+
+local list = {}
+local listActive = 0
+
+for index = 1, 10, 1 do
+    local x = 31
+    local y = 44 + 26 * (index - 1)
+
+    list[index] = {
+        isActive = false,
+        frame = drwFrame.new(assets.getImage('frameButton1'), x, y, 82, 14),
+        icon  = drwImage.new(assets.getImage('iconPot'), x, y),
+        name  = drwText.new(nil, x+18, y-1, 63, 8),
+        info  = drwTextScroll.new(nil, x+18, y+7, 63, 8, 1, 1, true),
+        ntr   = ntrRect.new(x, y, 82, 14)
+    }
+
+    list[index].name:setAlign('left')
+
+    potsMenu:connect(list[index])
+end
+
 local isOpened = false
+local currentPhase = nil
 
-local function phaseSet()
+local function rectifyFromPhase()
     if currentPhase ~= player.phase then
         if player.phase == enums.index.phase.pre then
             addButton.frame.isVisible = true
@@ -107,28 +130,7 @@ local function phaseSet()
     end
 end
 
-local list = {}
-local listActive = 6
-
-for index = 1, 6 do
-    local x = 31
-    local y = 44 + 26 * (index - 1)
-
-    list[index] = {
-        isActive = false,
-        frame = drwFrame.new(assets.image.frameButton1, x, y, 82, 14),
-        icon  = drwImage.new(assets.image.iconPot, x, y),
-        name  = drwText.new(nil, x+18, y-1, 63, 8),
-        info  = drwTextScroll.new(nil, x+18, y+7, 63, 8, 1, 1, true),
-        ntr   = ntrRect.new(x, y, 82, 14)
-    }
-
-    list[index].name:setAlign('left')
-
-    menuPots:connect(list[index])
-end
-
-local function setElementActive(element, bool)
+local function setListElementActive(element, bool)
     element.isActive = bool
     element.frame.isVisible = bool
     element.icon.isVisible  = bool
@@ -179,7 +181,7 @@ local function reIndexList()
     local count = 0
 
     for index, element in ipairs(list) do
-        local pot = player:getPot(index)
+        local pot = player.getPot(index)
 
         if pot ~= nil then
             count = count + 1
@@ -191,9 +193,9 @@ local function reIndexList()
 
             element.info.lerp.time = 0
 
-            setElementActive(element, true)
+            setListElementActive(element, true)
         else
-            setElementActive(element, false)
+            setListElementActive(element, false)
         end
     end
 
@@ -209,34 +211,39 @@ end
 
 local function returnMain()
     sysntf:getGroup(1):toggleLockOnly()
-    menuPots:toggle()
+    potsMenu:toggle()
     isOpened = false
 end
 
 local function updateList()
     for index, element in ipairs(list) do
         if element.isActive then
+            local name, health, waterLvl = player.getPot(index):getInfo()
+
+            element.name.text = name
+            element.info:setText('Status: ' .. health .. ' Water Lvl: ' .. waterLvl)
+
             if element.ntr.isClicked then
 
                 if cancelButton.ntr.isLocked then
-                    sfx:emitSound('click')
-
                     local oldPotIndex = player.selected.potIndex
                     player.selected.potIndex = index
 
                     if player.phase == enums.index.phase.peri then
-                        player:getPot(oldPotIndex).music.audio:setVolume(0)
-                        player:getPot(player.selected.potIndex).music.audio:setVolume(player.settings.musicVolume)
+                        player.getPot(oldPotIndex).music.audio:setVolume(0)
+                        player.getPot(player.selected.potIndex).music.audio:setVolume(player.configuration.musicVolume)
                     end
 
                     returnMain()
-                else
-                    sfx:emitSound('click')
+                    sfx.play('click')
 
+                else
                     if player.selected.potIndex == index then
                         print('cannot delete selected pot')
+
+                        sfx.play('warning')
                     else
-                        local tableReference = player:getPot(player.selected.potIndex)
+                        local tableReference = player.getPot(player.selected.potIndex)
 
                         table.remove(player.pots, index)
 
@@ -245,6 +252,10 @@ local function updateList()
                                 player.selected.potIndex = indexPot
                             end
                         end
+
+                        sfx.play('click')
+
+                        break
                     end
                 end
             end
@@ -266,20 +277,25 @@ local function drawList()
     end
 end
 
-menuPots.event:add('update', function (dt)
-    phaseSet()
+potsMenu.event:add('update', function (dt)
+    rectifyFromPhase()
 
     if backButton.ntr.isClicked then
-        sfx:emitSound('click')
         returnMain()
+        sfx.play('click')
     end
 
     if removeButton.ntr.isClicked then
-        sfx:emitSound('click')
         enableRemoveMode(true)
+        sfx.play('click')
     elseif cancelButton.ntr.isClicked then
-        sfx:emitSound('click')
         enableRemoveMode(false)
+        sfx.play('click')
+    end
+
+    if addButton.ntr.isClicked then
+        player.addPot()
+        sfx.play('click')
     end
 
     if listActive ~= #player.pots or not isOpened then
@@ -290,21 +306,16 @@ menuPots.event:add('update', function (dt)
         end
     end
 
-    if addButton.ntr.isClicked then
-        sfx:emitSound('click')
-        player:addPot()
-    end
-
     updateList()
 end)
 
-menuPots.event:add('draw', function ()
-    love.graphics.setColor(1, 1, 1)
+potsMenu.event:add('draw', function ()
+    love.graphics.setColor(1, 1, 1, 1)
 
-    love.graphics.setFont(assets.font.small)
+    love.graphics.setFont(assets.getFont('small'))
 
     window:draw()
-    overlay:draw()
+    overlay.draw()
 
     color.RGB(60, 163, 112, true)
     title:draw()
@@ -327,7 +338,7 @@ menuPots.event:add('draw', function ()
 
     drawList()
 
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.setColor(1, 1, 1, 1)
 end)
 
-return menuPots
+return potsMenu

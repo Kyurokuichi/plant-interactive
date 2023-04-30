@@ -1,67 +1,67 @@
--- Modules
-local assets = require 'scripts.assets'
-local color  = require 'scripts.interface.color'
+-- General
+local assets  = require 'scripts.assets'
+local screen = require 'scripts.screen'
 local sysntf = require 'scripts.sysntf'
 local player = require 'scripts.player'
 local musics = require 'scripts.musics'
-local enums  = require 'scripts.enums'
-local sfx    = require 'scripts.sfx'
+local enums = require 'scripts.enums'
+local color = require 'scripts.color'
+local sfx = require 'scripts.sfx'
+local overlay = require 'scripts.overlay'
 
--- Classes
-local drwImage      = require 'scripts.interface.elements.drw-image'
-local drwFrame      = require 'scripts.interface.elements.drw-frame'
-local drwText       = require 'scripts.interface.elements.drw-text'
+-- Interface classes
+local drwImage = require 'scripts.interface.elements.drw-image'
+local drwFrame = require 'scripts.interface.elements.drw-frame'
+local drwText = require 'scripts.interface.elements.drw-text'
 local drwTextScroll = require 'scripts.interface.elements.drw-textscroll'
-local ntrRect       = require 'scripts.interface.elements.ntr-rect'
+local ntrRect = require 'scripts.interface.elements.ntr-rect'
 
-local menuMusics = require('scripts.interface.group').new(false, true)
+local musicMenu = require('scripts.interface.group').new(false, true)
 
-local window = drwFrame.new(assets.image.frameWindow1, 26, 26, 92, 204)
-local overlay = drwImage.new(assets.image.overlayHealthy, -2, -2)
+local window = drwFrame.new(assets.getImage('frameWindow1'), 26, 26, 92, 204)
 local title = drwText.new('Music Selection', 26, 26, 92, 8)
-menuMusics:connect(window)
-menuMusics:connect(overlay)
-menuMusics:connect(title)
 
 local genreIndicator      = {
-    frame = drwFrame.new(assets.image.frameButton3, 49, 43, 46, 6),
-    name  = drwText.new(nil, 49, 42, 46, 8)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 49, 43, 46, 6),
+    name = drwText.new(nil, 49, 42, 46, 8)
 }
 local previousGenreButton = {
-    frame = drwFrame.new(assets.image.frameButton3, 31, 43, 6, 6),
-    icon  = drwImage.new(assets.image.iconleftArrowSmall, 31, 43),
-    ntr   = ntrRect.new(31, 43, 6, 6)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 31, 43, 6, 6),
+    icon = drwImage.new(assets.getImage('iconleftArrowSmall'), 31, 43),
+    ntr = ntrRect.new(31, 43, 6, 6)
 }
 local nextGenreButton     = {
-    frame = drwFrame.new(assets.image.frameButton3, 107, 43, 6, 6),
-    icon  = drwImage.new(assets.image.iconRightArrowSmall, 107, 43),
-    ntr   = ntrRect.new(107, 43, 6, 6)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 107, 43, 6, 6),
+    icon = drwImage.new(assets.getImage('iconRightArrowSmall'), 107, 43),
+    ntr = ntrRect.new(107, 43, 6, 6)
 }
-local pageIndicator       = drwText.new('Page ? of ?', 26, 188, 92, 8)
-local backButton          = {
-    frame = drwFrame.new(assets.image.frameButton3, 31, 203, 22, 22),
-    icon  = drwImage.new(assets.image.iconBack, 31, 203),
-    ntr   = ntrRect.new(31, 203, 22, 22)
+local pageIndicator = drwText.new('Page ? of ?', 26, 188, 92, 8)
+local backButton = {
+    frame = drwFrame.new(assets.getImage('frameButton3'), 31, 203, 22, 22),
+    icon = drwImage.new(assets.getImage('iconBack'), 31, 203),
+    ntr = ntrRect.new(31, 203, 22, 22)
 }
 local previousPageButton  = {
-    frame = drwFrame.new(assets.image.frameButton3, 65, 203, 18, 22),
-    icon  = drwImage.new(assets.image.iconleftArrow, 63, 203),
-    ntr   = ntrRect.new(65, 203, 18, 22)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 65, 203, 18, 22),
+    icon = drwImage.new(assets.getImage('iconleftArrow'), 63, 203),
+    ntr = ntrRect.new(65, 203, 18, 22)
 }
 local nextPageButton      = {
-    frame = drwFrame.new(assets.image.frameButton3, 95, 203, 18, 22),
-    icon  = drwImage.new(assets.image.iconRightArrow, 93, 203),
-    ntr   = ntrRect.new(95, 203, 18, 22)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 95, 203, 18, 22),
+    icon = drwImage.new(assets.getImage('iconRightArrow'), 93, 203),
+    ntr = ntrRect.new(95, 203, 18, 22)
 }
-menuMusics:connect(genreIndicator)
-menuMusics:connect(previousGenreButton)
-menuMusics:connect(nextGenreButton)
-menuMusics:connect(pageIndicator)
-menuMusics:connect(backButton)
-menuMusics:connect(previousPageButton)
-menuMusics:connect(nextPageButton)
 
-local isOpened = false
+musicMenu:connect(window)
+musicMenu:connect(title)
+
+musicMenu:connect(genreIndicator)
+musicMenu:connect(previousGenreButton)
+musicMenu:connect(nextGenreButton)
+musicMenu:connect(pageIndicator)
+musicMenu:connect(backButton)
+musicMenu:connect(previousPageButton)
+musicMenu:connect(nextPageButton)
 
 local list = {}
 local listActive = 5
@@ -82,10 +82,12 @@ for index = 1, 5 do
         previewNtr   = ntrRect.new(x+5, y+4, 6, 6)
     }
 
-    menuMusics:connect(list[index])
+    musicMenu:connect(list[index])
 end
 
-local function setElementActive(element, bool)
+local isOpened = false
+
+local function setListElementActive(element, bool)
     element.isActive               = bool
     element.frame.isVisible        = bool
     element.previewFrame.isVisible = bool
@@ -114,9 +116,9 @@ local function reIndexList()
             element.name.lerp.time = 0
             element.artist.lerp.time = 0
 
-            setElementActive(element, true)
+            setListElementActive(element, true)
         else
-            setElementActive(element, false)
+            setListElementActive(element, false)
         end
     end
 
@@ -179,7 +181,7 @@ local function setMusic()
     local genre = musics[enums.key.genre[player.selected.musicGenre]]
     local music = genre[player.selected.musicIndex]
 
-    player:getPot(player.selected.potIndex):setMusic(music, player.selected.musicGenre, player.selected.musicIndex)
+    player.getPot(player.selected.potIndex):setMusic(music, player.selected.musicGenre, player.selected.musicIndex, player.selected.potIndex)
 
     player.selected.musicGenre = nil
     player.selected.musicIndex = nil
@@ -190,10 +192,10 @@ local function updateList()
         if element.isActive then
             if element.previewNtr.isClicked then
                 preview(element.index)
-                sfx:emitSound('click')
+                sfx.play('click')
             elseif element.ntr.isClicked then
                 selectMusic(element.index)
-                sfx:emitSound('click')
+                sfx.play('click')
             end
         end
     end
@@ -268,36 +270,36 @@ end
 
 local function returnMain()
     sysntf:getGroup(1):toggleLockOnly()
-    menuMusics:toggle()
+    musicMenu:toggle()
     isOpened = false
     stopPreview()
     setMusic()
 end
 
-menuMusics.event:add('update', function (dt)
+musicMenu.event:add('update', function (dt)
     if backButton.ntr.isClicked then
-        sfx:emitSound('click')
         returnMain()
+        sfx.play('click')
     end
 
     local oldGenre = player.selected.genre
 
     if nextGenreButton.ntr.isClicked then
-        sfx:emitSound('click')
         changeGenre(true)
+        sfx.play('click')
     elseif previousGenreButton.ntr.isClicked then
-        sfx:emitSound('click')
         changeGenre(false)
+        sfx.play('click')
     end
 
     local oldPageNumber = player.selected.page
 
     if nextPageButton.ntr.isClicked then
-        sfx:emitSound('click')
         changePage(true)
+        sfx.play('click')
     elseif previousPageButton.ntr.isClicked then
-        sfx:emitSound('click')
         changePage(false)
+        sfx.play('click')
     end
 
     if player.selected.page ~= oldPageNumber or player.selected.genre ~= oldGenre or not isOpened then
@@ -313,8 +315,10 @@ menuMusics.event:add('update', function (dt)
     updateList()
 end)
 
-menuMusics.event:add('draw', function ()
-    love.graphics.setColor(1, 1, 1)
+musicMenu.event:add('draw', function ()
+    love.graphics.setColor(1, 1, 1, 1)
+
+    love.graphics.setFont(assets.getFont('small'))
 
     window:draw()
     overlay:draw()
@@ -323,6 +327,7 @@ menuMusics.event:add('draw', function ()
     genreIndicator.name:draw()
 
     color.RGB(60, 163, 112, true)
+
     title:draw()
     pageIndicator:draw()
 
@@ -347,7 +352,8 @@ menuMusics.event:add('draw', function ()
     nextPageButton.icon:draw()
 
     drawList()
-    love.graphics.setColor(1, 1, 1)
+
+    love.graphics.setColor(1, 1, 1, 1)
 end)
 
-return menuMusics
+return musicMenu
