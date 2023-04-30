@@ -43,12 +43,12 @@ Audio:
 - [/] Some basic stuffs
 - [/] Growth algorithm
 - [/] Algorithm testing
-- [ ] Image Assets (UIs, objects, background, etc.)
+- [/] Image Assets (UIs, objects, background, etc.)
 - [/] Music Assets (rock, ballad, classical)
 - [ ] SFX Assets (click, pop, warn, etc. sounds)
 - [/] UI system implementation
 - [ ] Implementation of functional UI based from concept
-- [ ] Game mechanics implementation
+- [/] Game mechanics implementation
 
 # Version history
 * version 1.0 (current)
