@@ -1,11 +1,15 @@
 local
-    assets,
-    player,
-    perlin,
-    sysntf,
     screen,
+    assets,
+    sysntf,
+    hint,
+    sfx,
+    color,
+    player,
     cursor,
-    sfx
+    perlin,
+    letterboxQuad,
+    letterboxImage
 
 local game = {}
 
@@ -15,6 +19,10 @@ function game.load()
     assets.loadAll()
 
     screen = require 'scripts.screen'
+
+    letterboxImage = assets.getImage('backgroundLetterBox')
+    letterboxImage:setWrap('repeat', 'repeat')
+    letterboxQuad = love.graphics.newQuad(0, 0, love.graphics.getWidth(), love.graphics.getHeight(), letterboxImage:getWidth(), letterboxImage:getHeight())
 
     love.graphics.setFont(assets.getFont('small'))
 
@@ -28,24 +36,44 @@ function game.load()
     player.initialize()
 
     sysntf = require 'scripts.sysntf'
-    sysntf:connect(require 'scripts.interfaces.main')
-    sysntf:connect(require 'scripts.interfaces.pots-menu')
-    sysntf:connect(require 'scripts.interfaces.music-menu')
-    sysntf:connect(require 'scripts.interfaces.more-menu')
-    sysntf:connect(require 'scripts.interfaces.start-menu')
-    sysntf:connect(require 'scripts.interfaces.result-menu.init')
+    sysntf:connect(require 'scripts.interfaces.main')             -- 1
+    sysntf:connect(require 'scripts.interfaces.pots-menu')        -- 2
+    sysntf:connect(require 'scripts.interfaces.music-menu')       -- 3
+    sysntf:connect(require 'scripts.interfaces.more-menu')        -- 4
+    sysntf:connect(require 'scripts.interfaces.start-menu')       -- 5
+    sysntf:connect(require 'scripts.interfaces.result-menu.init') -- 6
 
     cursor = require 'scripts.cursor'
+
+    color = require 'scripts.color'
+
+    hint = require 'scripts.hint'
+    hint.initialize()
 end
 
 function game.update(dt)
+    -- Constantly updating letter box size (may not be a problem on affecting performance)
+    letterboxQuad:setViewport(0, 0, love.graphics.getWidth(), love.graphics.getHeight(), letterboxImage:getWidth(), letterboxImage:getHeight())
+
     player.update(dt)
     sysntf:emit('update', dt)
+    hint.update(dt)
     cursor.update(dt)
 end
 
 function game.draw()
+    screen.pop()
+
+    love.graphics.draw(letterboxImage, letterboxQuad, 0, 0)
+
+    screen.push(true)
+
     sysntf:emit('draw')
+
+    --color.RGB(255, 107, 151, true)
+    hint.draw()
+    --love.graphics.setColor(1, 1, 1)
+
     sysntf:reset()
     cursor.draw()
 end

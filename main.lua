@@ -10,13 +10,24 @@
     Evo Pasculado aka Yonichi4161 (Lead developer, Scripter, Graphics)
     Josiah Garillo (Sound, Graphics)
     Luis Panambo (Sound)
+
+    Version history:
+    version 1.0 ; First release
+    version 2.0 ; To be release (polished verson, patches, & new features)
 --]]
+
 local
     screen,
-    state
+    state,
+
+    lastMX,
+    lastMY
 
 function love.load()
-    love.graphics.setDefaultFilter('linear', 'nearest')
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    -- Forces the game on portrait mode (uncomment when release)
+    --love.window.setMode(2, 1)
 
     screen = require 'scripts.screen'
     screen.initialize(144, 256)
@@ -24,12 +35,14 @@ function love.load()
     state = require 'scripts.state'
     state.initialize(
         {
-            ['intro'] = require 'scripts.states.intro',
-            ['game'] = require 'scripts.states.game'
+            ['intro'] = require 'scripts.states.intro', -- Splash screen when the app is opened
+            ['game'] = require 'scripts.states.game' -- Actual interactive game
         },
 
         'game'
     )
+
+    lastMX, lastMY = 0, 0
 end
 
 function love.mousepressed(x, y, button, isTouch, presses)
@@ -44,15 +57,14 @@ function love.mousereleased(x, y, button, isTouch, presses)
     state.call('mousereleased', x, y, button, isTouch, presses)
 end
 
-local lastX, lastY = 0, 0
 function love.mousemoved(x, y, dx, dy, isTouch)
     x, y = screen.toScreenCoords(x, y)
-    dx = dx - lastX
-    dy = dy - lastY
+    dx = dx - lastMX
+    dy = dy - lastMY
 
     state.call('mousemoved', x, y, dx, dy, isTouch)
 
-    lastX, lastY = x, y
+    lastMX, lastMY = x, y
 end
 
 function love.resize(width, height)
@@ -65,9 +77,10 @@ end
 
 function love.draw()
     screen.push()
-    state.call('draw')
-    screen.pop()
 
+    state.call('draw')
+
+    screen.pop()
     screen.draw()
 
     state.rectify()

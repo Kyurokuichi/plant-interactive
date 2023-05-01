@@ -167,6 +167,7 @@ local function selectMusic(index)
     if player.selected.musicGenre == player.selected.genre and player.selected.musicIndex == index then
         player.selected.musicGenre = nil
         player.selected.musicIndex = nil
+        player.getSelectedPot():setMusic(nil)
     else
         player.selected.musicGenre = player.selected.genre
         player.selected.musicIndex = index

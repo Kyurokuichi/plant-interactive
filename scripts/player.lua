@@ -2,6 +2,8 @@ local enums = require 'scripts.enums'
 local overlay = require 'scripts.overlay'
 local clock = require 'scripts.clock'
 local sysntf = require 'scripts.sysntf'
+local hint = require 'scripts.hint'
+local sfx = require 'scripts.sfx'
 
 -- Classes
 local pot = require 'scripts.classes.pot'
@@ -9,7 +11,11 @@ local pot = require 'scripts.classes.pot'
 local player = {
     phase = {},
     subPhase = {},
+
     pots = nil,
+
+    alert = false,
+    needAttentionPots = {},
 
     clock = clock,
 
@@ -21,10 +27,6 @@ local player = {
 
         page = nil,
         genre = nil
-    },
-
-    count = {
-        needAttentionPots = 0
     },
 
     configuration = {
@@ -69,10 +71,19 @@ end
 function player.loadSimulation()
     -- Check pot if has assigned music
 
+    local failed = false
+
     for index, pot in ipairs(player.pots) do
         if not pot:hasMusic() then
-            return false
+            local name, _, __ = pot:getInfo()
+
+            hint.add('Pot named "' .. name .. '" doesn\'t have selected music')
+            failed = true
         end
+    end
+
+    if failed then
+        return
     end
 
     player.phase = enums.index.phase.peri
@@ -85,12 +96,15 @@ function player.loadSimulation()
 end
 
 function player.update(dt)
+    local clock = player.clock
+
     if player.phase == enums.index.phase.peri then
-        player.clock.update(dt)
+        clock.update(dt)
 
         if player.subPhase == enums.index.subPhase.countdown then
-            if player.clock.time < 0 then
-                player.clock.setup(7)
+            if clock.ranOut then
+                clock.setup(7)
+
                 player.subPhase = enums.index.subPhase.simulation
 
                 for index, pot in ipairs(player.pots) do
@@ -102,12 +116,27 @@ function player.update(dt)
                 end
             end
         elseif player.subPhase == enums.index.subPhase.simulation then
-            
-            for _, pot in ipairs(player.pots) do
+            player.alert = false
+
+            for index, pot in ipairs(player.pots) do
                 pot:update(dt)
+
+                if pot.needAttention then
+                    player.alert = true
+
+                    if not player.needAttentionPots[index] then
+                        local name, _, __ = pot:getInfo()
+
+                        player.needAttentionPots[index] = true
+                        hint.add('Pot named "' .. name .. '" needs your attention')
+                        sfx.play('warning2')
+                    end
+                else
+                    player.needAttentionPots[index] = false
+                end
             end
-            
-            if player.clock.time < 0 then
+
+            if clock.ranOut then
                 player.phase = enums.index.phase.post
 
                 for index, group in ipairs(sysntf.groups) do
@@ -128,7 +157,7 @@ function player.update(dt)
             end
         else
             player.subPhase = enums.index.subPhase.countdown
-            player.clock.setup(5)
+            clock.setup(5)
         end
     end
 

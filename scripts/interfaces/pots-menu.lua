@@ -7,6 +7,7 @@ local enums = require 'scripts.enums'
 local color = require 'scripts.color'
 local sfx = require 'scripts.sfx'
 local overlay = require 'scripts.overlay'
+local hint = require 'scripts.hint'
 
 -- Interface classes
 local drwImage = require 'scripts.interface.elements.drw-image'
@@ -239,8 +240,7 @@ local function updateList()
 
                 else
                     if player.selected.potIndex == index then
-                        print('cannot delete selected pot')
-
+                        hint.add('Cannot delete selected pot')
                         sfx.play('warning')
                     else
                         local tableReference = player.getPot(player.selected.potIndex)

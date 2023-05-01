@@ -6,7 +6,7 @@ local player = require 'scripts.player'
 local enums = require 'scripts.enums'
 local color = require 'scripts.color'
 local sfx = require 'scripts.sfx'
-
+local hint = require 'scripts.hint'
 local watering = require 'scripts.watering'
 
 -- Interface classes

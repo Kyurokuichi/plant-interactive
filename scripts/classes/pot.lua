@@ -11,7 +11,8 @@ function pot.new(name)
         name = name,
         plant = nil,
         music = nil,
-        waterLevel = 1
+        waterLevel = 0,
+        needAttention = false
     }
 
     setmetatable(newObject, pot)
@@ -22,6 +23,14 @@ end
 
 function pot:update(dt)
     self.plant:update(dt)
+
+    local health = self.plant:getHealth()
+
+    if health == enums.key.health[enums.index.health.healthy] then
+        self.needAttention = false
+    else
+        self.needAttention = true
+    end
 end
 
 function pot:draw()
@@ -49,6 +58,12 @@ end
 function pot:setMusic(music, indexGenre, indexMusic, index)
     if self.music == nil then
         self.music = {}
+    end
+
+    if music == nil then
+        self.name = nil
+        self.music = nil
+        return
     end
 
     -- Set the music table values of pot

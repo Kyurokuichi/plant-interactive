@@ -57,7 +57,7 @@ startMenu.event:add('update', function (dt)
             sfx.play('warning')
         else
             returnMain()
-            sfx.play('click')
+            sfx.play('confirm')
         end
     end
 end)

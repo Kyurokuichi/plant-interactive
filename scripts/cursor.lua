@@ -1,15 +1,13 @@
+local color = require 'scripts.color'
+
 local cursor = {
     trails = {},
 
-    trailMaxWidth = 4,
+    trailMaxWidth = 6,
     trailMaxLength = 8,
     trailDuration = 0.03,
     trailTimer = 0,
 }
-
-local function lerp(a, b, t)
-    return a + (b - a) * t
-end
 
 function cursor.trail(x, y)
     table.insert(cursor.trails, 1, y)
@@ -39,37 +37,25 @@ function cursor.draw()
     local function getTrailWidth(index)
         return (#cursor.trails - (index + 1)) / #cursor.trails
     end
-    
-    love.graphics.setColor((207/255), (255/255), (112/255))
+
+    color.RGB(207, 255, 112, true)
 
     if cursor.trails[1] then
         local width = cursor.trailMaxWidth * getTrailWidth(1)
-        love.graphics.circle(
-            'fill',
-            cursor.trails[1],
-            cursor.trails[2],
-            width/2
-        )
+
+        love.graphics.circle('fill', cursor.trails[1], cursor.trails[2], width/2)
     end
 
     for index = #cursor.trails-1, 3, -2 do
         local shade = getTrailWidth(index)
         local width = cursor.trailMaxWidth * shade
 
+        color.RGBA(207, 255, 112, shade * 255, true)
+
         love.graphics.setLineWidth(width)
-        love.graphics.setColor((207/255), (255/255), (112/255), shade)
-        love.graphics.line(
-            cursor.trails[index-2],
-            cursor.trails[index-1],
-            cursor.trails[index],
-            cursor.trails[index+1]
-        )
-        love.graphics.circle(
-            'fill',
-            cursor.trails[index],
-            cursor.trails[index+1],
-            width/2
-        )
+
+        love.graphics.line(cursor.trails[index-2], cursor.trails[index-1], cursor.trails[index], cursor.trails[index+1])
+        love.graphics.circle('fill', cursor.trails[index], cursor.trails[index+1], width/2)
     end
 
     love.graphics.setColor(1, 1, 1)

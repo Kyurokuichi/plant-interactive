@@ -228,8 +228,8 @@ local musics = {
     },
 
     -- Special [to be implement]
-    meme = {},
-    weeb = {},
+    --meme = {},
+    --weeb = {},
 
     custom = {}
 }

@@ -51,8 +51,13 @@ function drwTextScroll:setDimensions(width, height, font)
 
         local textWidth = love.graphics.getFont():getWidth(self.text)
 
-        self.lerp.a = self.x
-        self.lerp.b = self.x - textWidth + self.width
+        if self.lerp.b == self.x then
+            self.lerp.a = self.x - textWidth + self.width
+            self.lerp.b = self.x
+        else
+            self.lerp.a = self.x
+            self.lerp.b = self.x - textWidth + self.width
+        end
     end
 end
 
@@ -62,8 +67,13 @@ function drwTextScroll:setText(text)
 
         local textWidth = love.graphics.getFont():getWidth(self.text)
 
-        self.lerp.a = self.x
-        self.lerp.b = self.x - textWidth + self.width
+        if self.lerp.b == self.x then
+            self.lerp.a = self.x - textWidth + self.width
+            self.lerp.b = self.x
+        else
+            self.lerp.a = self.x
+            self.lerp.b = self.x - textWidth + self.width
+        end
     end
 end
 

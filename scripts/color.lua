@@ -93,7 +93,7 @@ function color.lerpRGBA(ra, ga, ba, aa, rb, gb, bb, ab, time, setColor)
 end
 
 -- https://love2d.org/wiki/HSV_color
-function color.hsv(h, s, v)
+function color.HSV(h, s, v)
     if s <= 0 then
         return v, v, v
     end

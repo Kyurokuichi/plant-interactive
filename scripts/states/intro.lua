@@ -39,6 +39,8 @@ function intro.load()
     wobbleTime = 0
     wobbleSpeed = 0
 
+    logoRotation = 0
+
     trailsA = {}
     trailsB = {}
 
@@ -93,7 +95,7 @@ function intro.draw()
     local logoX = screen.width/2 + distance * cos
     local logoY = screen.height/2 + distance * sin
     local logoScale = logoScale
-    local logoRotation = -logoRotation
+    local logoRotation_ = -logoRotation
     local logoOX = logoImage:getWidth()/2
     local logoOY = logoImage:getHeight()/2
 
@@ -101,7 +103,7 @@ function intro.draw()
         trailsA[#trailsA+1] = {
             x = logoX,
             y = logoY,
-            rotation = logoRotation,
+            rotation = logoRotation_,
             scale = logoScale,
 
             red = math.random(0, 255) / 255,
@@ -132,7 +134,7 @@ function intro.draw()
         logoImage,
         logoX,
         logoY,
-        logoRotation,
+        logoRotation_,
         logoScale,
         logoScale,
         logoOX,

@@ -1,3 +1,10 @@
+--[[
+    Assets Module
+
+    This is the module for loading assets to be use in the game
+    (Sprites, UIs stuffs, SFX, etc.)
+--]]
+
 local assets = {
     image = {},
     font = {},
@@ -32,10 +39,6 @@ function assets.loadAll()
     loadImage('leftSpeaker'       , 'assets/speaker_left.png')
     loadImage('rightSpeaker'      , 'assets/speaker_right.png')
     loadImage('clock'             , 'assets/clock.png')
-    loadImage('waterLevel'        , 'assets/water_meter.png')
-    loadImage('meterIndicator'    , 'assets/meter_indicator.png')
-    loadImage('wateringLevel'     , 'assets/watering_meter.png')
-    loadImage('meterIndicatorLong', 'assets/meter_indicator_long.png')
 
     -- Background
     loadImage('backgroundCity'        , 'assets/background-city.png')
@@ -44,15 +47,29 @@ function assets.loadAll()
     loadImage('backgroundLeavesInner' , 'assets/background-leaves_inner.png')
     loadImage('backgroundLeavesInner2', 'assets/background-leaves_inner_2.png')
     loadImage('backgroundLeavesOuter' , 'assets/background-leaves_outer.png')
+    loadImage('backgroundLetterBox'   , 'assets/background-letterbox.png')
 
-    -- Overlay Designs
-    loadImage('overlayDry'    , 'assets/overlay-dry.png')
-    loadImage('overlayHealthy', 'assets/overlay-healthy.png')
-    loadImage('overlaySwamped', 'assets/overlay-swamped.png')
+    -- Water meter
+    loadImage('waterLevel'        , 'assets/water_meter.png')
+    loadImage('meterIndicator'    , 'assets/meter_indicator.png')
+    --loadImage('wateringLevel'     , 'assets/watering_meter.png')
+    --loadImage('meterIndicatorLong', 'assets/meter_indicator_long.png')
 
     -- Plant Images
     loadImage('internode', 'assets/plant-internode.png')
     loadImage('leaf'     , 'assets/plant-leaf.png')
+
+    -- Menus Overlay Designs
+    loadImage('overlayDry'    , 'assets/overlay-dry.png')
+    loadImage('overlayHealthy', 'assets/overlay-healthy.png')
+    loadImage('overlaySwamped', 'assets/overlay-swamped.png')
+
+    -- Results Menu Designs
+    loadImage('tvAntenna', 'assets/tv-antenna.png')
+    loadImage('tvSpeaker', 'assets/tv-speaker.png')
+    loadImage('tvScreen' , 'assets/tv-screen.png')
+    loadImage('tvRadio'  , 'assets/tv-radio.png')
+    loadImage('tvStand'  , 'assets/tv-stand.png')
 
     -- Frames
     loadImage('frameButton1', 'assets/frame-button_1.png')
@@ -64,13 +81,6 @@ function assets.loadAll()
     loadImage('frameButton7', 'assets/frame-button_7.png')
     loadImage('frameWindow1', 'assets/frame-window_1.png')
     loadImage('frameWindow2', 'assets/frame-window_2.png')
-
-    -- For results menu
-    loadImage('tvAntenna', 'assets/tv-antenna.png')
-    loadImage('tvSpeaker', 'assets/tv-speaker.png')
-    loadImage('tvScreen' , 'assets/tv-screen.png')
-    loadImage('tvRadio'  , 'assets/tv-radio.png')
-    loadImage('tvStand'  , 'assets/tv-stand.png')
 
     -- Icons
     loadImage('iconMenuPots'       , 'assets/icon-menu_pots.png')
@@ -94,6 +104,7 @@ function assets.loadAll()
     loadImage('iconRetxit'         , 'assets/icon-retxit.png')
     loadImage('iconRetry'          , 'assets/icon-retry.png')
     loadImage('iconExit'           , 'assets/icon-exit.png')
+    loadImage('iconWarn'           , 'assets/icon-warn.png')
 
     -- Fonts
     loadFont('small' , 'assets/font.ttf', 8)
@@ -102,9 +113,12 @@ function assets.loadAll()
     loadFont('large' , 'assets/font.ttf', 32)
 
     -- SFX
-    loadAudio('sfxClick'   , 'assets/sfx-click.ogg')
-    loadAudio('sfxWarning' , 'assets/sfx-warning.ogg')
-    loadAudio('sfxWatering', 'assets/sfx-water_production.ogg')
+    loadAudio('sfxClick'          , 'assets/sfx-click.ogg')
+    loadAudio('sfxConfirm'        , 'assets/sfx-confirm.ogg')
+    loadAudio('sfxWarning'        , 'assets/sfx-warning.ogg')
+    loadAudio('sfxWarning2'       , 'assets/sfx-warning_2.ogg')
+    loadAudio('sfxWater'          , 'assets/sfx-water.ogg')
+    loadAudio('sfxWaterProduction', 'assets/sfx-water_production.ogg')
 
     -- Classical Musics
     loadAudio('classical1' , 'assets/classical/Beethoven - Fur Elise.ogg')
