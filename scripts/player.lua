@@ -103,7 +103,7 @@ function player.update(dt)
 
         if player.subPhase == enums.index.subPhase.countdown then
             if clock.ranOut then
-                clock.setup(7)
+                clock.setup(30)
 
                 player.subPhase = enums.index.subPhase.simulation
 

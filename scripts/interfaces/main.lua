@@ -80,6 +80,8 @@ local cancelWaterButton = {
     ntr   = ntrRect.new(85, 216, 22, 22)
 }
 
+local alertIcon = drwImage.new(assets.getImage('iconWarn'), 43, 208)
+
 main:connect(background)
 main:connect(room)
 main:connect(pot)
@@ -97,6 +99,8 @@ main:connect(musicMenuButton)
 main:connect(waterButton)
 main:connect(wateringButton)
 main:connect(cancelWaterButton)
+
+main:connect(alertIcon)
 
 local currentPhase = nil
 
@@ -125,6 +129,8 @@ local function rectifyFromPhase()
             cancelWaterButton.frame.isVisible = false
             cancelWaterButton.icon.isVisible = false
             cancelWaterButton.ntr.isLocked = true
+
+            alertIcon.isVisible = false
 
             require 'scripts.special'
         elseif player.phase == enums.index.phase.peri then
@@ -242,6 +248,12 @@ main.event:add('update', function (dt)
                 sysntf:getGroup(2):toggle()
                 sfx.play('click')
             end
+
+            if player.alert and potsMenuButton.frame.isVisible then
+                alertIcon.isVisible = true
+            else
+                alertIcon.isVisible = false
+            end
         end
 
     elseif player.phase == enums.index.phase.pre then
@@ -338,6 +350,10 @@ main.event:add('draw', function ()
     color.conditionRGB(cancelWaterButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
     cancelWaterButton.frame:draw()
     cancelWaterButton.icon:draw()
+
+    if player.phase == enums.index.phase.peri then
+        alertIcon:draw()
+    end
 
     love.graphics.setColor(1, 1, 1, 1)
 end)

@@ -70,6 +70,7 @@ function assets.loadAll()
     loadImage('tvScreen' , 'assets/tv-screen.png')
     loadImage('tvRadio'  , 'assets/tv-radio.png')
     loadImage('tvStand'  , 'assets/tv-stand.png')
+    loadImage('graph'    , 'assets/graph.png')
 
     -- Frames
     loadImage('frameButton1', 'assets/frame-button_1.png')

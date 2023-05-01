@@ -11,7 +11,7 @@ function pot.new(name)
         name = name,
         plant = nil,
         music = nil,
-        waterLevel = 0,
+        waterLevel = 1,
         needAttention = false
     }
 
@@ -24,12 +24,10 @@ end
 function pot:update(dt)
     self.plant:update(dt)
 
-    local health = self.plant:getHealth()
-
-    if health == enums.key.health[enums.index.health.healthy] then
-        self.needAttention = false
-    else
+    if self.waterLevel < (1-0.3) then
         self.needAttention = true
+    else
+        self.needAttention = false
     end
 end
 

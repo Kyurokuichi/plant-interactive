@@ -72,6 +72,16 @@ local leaderboardInfo = {
     rank = {}
 }
 
+local graphInfo = {
+    title = drwText.new('Graph O\' Pots', 36, 69, 72, 8, 'center'),
+    name = drwText.new(nil, 36, 80, 72, 8, 'center'),
+    indicator = drwImage.new(assets.getImage('graph'), 35, 90),
+    graph = love.graphics.newCanvas(69, 45),
+    yText = drwText.new(nil, 40, 90, 32, 8, 'left'),
+    info = drwTextScroll.new(nil, 36, 141, 72, 8, 1, 1, true),
+    page = drwText.new(nil, 36, 150, 72, 8)
+}
+
 resultMenu:connect(window)
 resultMenu:connect(title)
 
@@ -110,6 +120,84 @@ local function drawLeaderboardInfo()
     end
 end
 
+local selectedGraphIndex = 1
+local graphInfoUpdated = false
+
+local function changeGraphInfo()
+    local pot = player.getPot(selectedGraphIndex)
+
+    local name, health, waterLevel = pot:getInfo()
+    local height = math.floor(pot.plant:getHeight())
+
+    graphInfo.page.text = 'Page ' .. selectedGraphIndex .. ' of ' .. #player.pots
+    graphInfo.name.text = name
+    graphInfo.info:setText('Health: ' .. health .. ', Water Lvl: ' .. waterLevel .. ', Height: ' .. height .. 'px')
+
+    graphInfo.yText.text = height .. 'px'
+
+    love.graphics.setCanvas(graphInfo.graph)
+
+    love.graphics.clear()
+
+    local dataHeight = pot.plant.dataHeight
+
+    love.graphics.setColor(1, 1, 1)
+
+    for index, data in ipairs(dataHeight) do
+        data = math.floor(data)
+
+        local barX = graphInfo.graph:getWidth() * (index / (#dataHeight+1))
+        local barWidth = math.abs(barX -graphInfo.graph:getWidth() * ((index+1) / (#dataHeight+1)) )
+        local barHeight = graphInfo.graph:getHeight() * (data / height)
+
+        local barY = graphInfo.graph:getHeight() - barHeight
+
+        love.graphics.rectangle('fill', barX, barY, barWidth, barHeight)
+    end
+
+    love.graphics.setCanvas(nil)
+end
+
+local function changePageGraphInfo(next)
+    if not next then
+        selectedGraphIndex = (selectedGraphIndex-1-1) % #player.pots + 1
+    else
+        selectedGraphIndex = (selectedGraphIndex-1+1) % #player.pots + 1
+    end
+
+    graphInfoUpdated = false
+end
+
+local function updateGraphInfo(dt)
+    if not graphInfoUpdated then
+        graphInfoUpdated = true
+        changeGraphInfo()
+    end
+
+    if nextButton.ntr.isClicked then
+        changePageGraphInfo(true)
+    elseif previousButton.ntr.isClicked then
+        changePageGraphInfo(false)
+    end
+
+    if switchNextMenu.ntr.isClicked or switchPreviousMenu.ntr.isClicked then
+        selectedGraphIndex = 1
+    end
+
+    graphInfo.info:update(dt)
+end
+
+local function drawGraphInfo()
+    graphInfo.indicator:draw()
+    love.graphics.draw(graphInfo.graph, 40, 90) -- graph
+
+    graphInfo.title:draw()
+    graphInfo.yText:draw()
+    graphInfo.name:draw()
+    graphInfo.info:draw()
+    graphInfo.page:draw()
+end
+
 local info = {
     {
         update = nil,
@@ -118,6 +206,10 @@ local info = {
     {
         update = updateLeaderboardInfo,
         draw = drawLeaderboardInfo
+    },
+    {
+        update = updateGraphInfo,
+        draw = drawGraphInfo
     }
 }
 local infoIndex = 1
@@ -162,6 +254,10 @@ local function rankPot()
 
     topInfo.name.text = player.getPot(potRank[1]).name
     topInfo.height.text = 'Height: ' .. math.floor(player.getPot(potRank[1]).plant.height)
+
+    for index, value in ipairs(player.getPot(potRank[1]).plant.dataHeight) do
+        print(index, value, 'data')
+    end
 
     local ox = 36
     local oy = 82
