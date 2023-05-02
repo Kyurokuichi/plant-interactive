@@ -53,7 +53,6 @@ startMenu.event:add('update', function (dt)
         local status = player.loadSimulation()
 
         if not status then
-            print('cannot start the game')
             sfx.play('warning')
         else
             returnMain()

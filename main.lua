@@ -25,10 +25,9 @@ local
     touchID
 
 function love.load()
-    love.graphics.setDefaultFilter('nearest', 'nearest')
-
     -- Forces the game on portrait mode (uncomment when release)
     --love.window.setMode(1, 2)
+    love.graphics.setDefaultFilter('nearest', 'nearest')
 
     screen = require 'scripts.screen'
     screen.initialize(144, 256)
@@ -46,7 +45,7 @@ function love.load()
     lastMX, lastMY = 0, 0
 end
 
-if love.system.getOS() == 'android' then
+if love.system.getOS() == 'Android' then
     function love.touchpressed(id, x, y, dx, dy, pressure)
         if not touchID then
             touchID = id

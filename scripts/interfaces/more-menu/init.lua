@@ -45,9 +45,14 @@ local SFXVolume = {
     ntr = ntrRect.new(31, 130, 82, 6)
 }
 local aboutButton = {
-    frame = drwFrame.new(assets.getImage('frameButton3'), 53, 167, 38, 14),
-    icon = drwImage.new(assets.getImage('iconAbout'), 53, 167),
-    ntr = ntrRect.new(53, 167, 38, 14)
+    frame = drwFrame.new(assets.getImage('frameButton3'), 69, 163, 38, 14),
+    icon = drwImage.new(assets.getImage('iconAbout'), 69, 163),
+    ntr = ntrRect.new(69, 163, 38, 14)
+}
+local restartButton = {
+    frame = drwFrame.new(assets.getImage('frameButton3'), 37, 163, 14, 14),
+    icon = drwImage.new(assets.getImage('iconRestart'), 37, 163),
+    ntr = ntrRect.new(37, 163, 14, 14)
 }
 
 local about = require 'scripts.interfaces.more-menu.about'
@@ -60,6 +65,7 @@ moreMenu:connect(masterVolume)
 moreMenu:connect(musicVolume)
 moreMenu:connect(SFXVolume)
 moreMenu:connect(aboutButton)
+moreMenu:connect(restartButton)
 
 moreMenu:connect(about)
 
@@ -100,7 +106,6 @@ end
 
 local function updateButtons()
     if aboutButton.ntr.isClicked then
-        print('a')
         about:toggle()
         sfx.play('click')
     end
@@ -108,6 +113,10 @@ local function updateButtons()
     if backButton.ntr.isClicked then
         returnMain()
         sfx.play('click')
+    end
+
+    if restartButton.ntr.isClicked then
+        love.event.quit('restart')
     end
 
     do
@@ -187,6 +196,10 @@ moreMenu.event:add('draw', function ()
     color.conditionRGB(aboutButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     aboutButton.frame:draw()
     aboutButton.icon:draw()
+
+    color.conditionRGB(restartButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    restartButton.frame:draw()
+    restartButton.icon:draw()
 
     love.graphics.setColor(1, 1, 1, 1)
 end)

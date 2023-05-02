@@ -4,7 +4,7 @@ local cursor = {
     trails = {},
 
     trailMaxWidth = 6,
-    trailMaxLength = 8,
+    trailMaxLength = 14,
     trailDuration = 0.03,
     trailTimer = 0,
 }

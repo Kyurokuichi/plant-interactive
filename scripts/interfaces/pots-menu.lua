@@ -103,8 +103,6 @@ local function rectifyFromPhase()
             backButton.ntr.height = 22
 
         elseif player.phase == enums.index.phase.peri then
-            print('a')
-
             addButton.frame.isVisible = false
             addButton.icon.isVisible = false
             addButton.ntr.isLocked = true

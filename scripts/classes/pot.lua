@@ -40,9 +40,7 @@ function pot:initialize()
     local music = self.music
 
     -- Set loop when the selected music is less than 7 mins (which is the intended simulation time)
-    if music.audio:getDuration('seconds') < (7*60) then
-        music.audio:setLooping(true)
-    end
+    music.audio:setLooping(true)
 
     -- Load the sound data for use of algorithm
     self.music.data = love.sound.newSoundData(music.path)

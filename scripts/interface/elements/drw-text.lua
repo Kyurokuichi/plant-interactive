@@ -12,6 +12,7 @@ function drwText.new(text, x, y, width, height, align)
         height = height or 0,
 
         alignment = align or 'center',
+        alignCenterY = true,
 
         isVisible = true,
 
@@ -28,10 +29,18 @@ function drwText:draw()
     local textWidth     = love.graphics.getFont():getWidth(self.text)
     local textHeight    = love.graphics.getFont():getHeight() * math.ceil(textWidth / self.width)
 
+    local y
+
+    if self.alignCenterY then
+        y = self.y + (self.height - textHeight)/2
+    else
+        y = self.y
+    end
+
     love.graphics.printf(
         self.text,
         self.x,
-        self.y + (self.height - textHeight)/2,
+        y,
         self.width,
         self.alignment
     )

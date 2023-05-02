@@ -247,7 +247,7 @@ local function rankPot()
         local potA = player.getPot(a)
         local potB = player.getPot(b)
 
-        print(potA.plant:getHeight(), potB.plant:getHeight(), potA.plant:getHeight() > potB.plant:getHeight())
+        --print(potA.plant:getHeight(), potB.plant:getHeight(), potA.plant:getHeight() > potB.plant:getHeight())
 
         return potA.plant:getHeight() > potB.plant:getHeight()
     end)
@@ -255,16 +255,16 @@ local function rankPot()
     topInfo.name.text = player.getPot(potRank[1]).name
     topInfo.height.text = 'Height: ' .. math.floor(player.getPot(potRank[1]).plant.height)
 
-    for index, value in ipairs(player.getPot(potRank[1]).plant.dataHeight) do
-        print(index, value, 'data')
-    end
+    --for index, value in ipairs(player.getPot(potRank[1]).plant.dataHeight) do
+        --print(index, value, 'data')
+    --end
 
     local ox = 36
     local oy = 82
 
     for index, no in ipairs(potRank) do
         local pot = player.getPot(no)
-        print(index, no, pot.plant.height)
+        --print(index, no, pot.plant.height)
 
         local x = ox
         local y = oy + 12 * (index-1)
@@ -333,23 +333,23 @@ resultMenu.event:add('draw', function ()
 
     drawInfo()
 
-    color.conditionRGB(switchNextMenu.ntr.isCursorHovering and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(switchNextMenu.ntr.isHoldingClick and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
     switchNextMenu.frame:draw()
     switchNextMenu.icon:draw()
 
-    color.conditionRGB(switchPreviousMenu.ntr.isCursorHovering and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(switchPreviousMenu.ntr.isHoldingClick and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
     switchPreviousMenu.frame:draw()
     switchPreviousMenu.icon:draw()
 
-    color.conditionRGB(retxitButton.ntr.isCursorHovering and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(retxitButton.ntr.isHoldingClick and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
     retxitButton.frame:draw()
     retxitButton.icon:draw()
 
-    color.conditionRGB(nextButton.ntr.isCursorHovering and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(nextButton.ntr.isHoldingClick and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
     nextButton.frame:draw()
     nextButton.icon:draw()
 
-    color.conditionRGB(previousButton.ntr.isCursorHovering and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(previousButton.ntr.isHoldingClick and retxitMenu.isLocked, 0.5, 0.5, 0.5, 1, 1, 1, true)
     previousButton.frame:draw()
     previousButton.icon:draw()
 

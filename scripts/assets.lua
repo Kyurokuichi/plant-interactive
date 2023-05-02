@@ -9,7 +9,8 @@ local assets = {
     image = {},
     font = {},
     audio = {},
-    video = {}
+    video = {},
+    allLoaded = false
 }
 
 local function loadImage(name, path)
@@ -33,6 +34,12 @@ function assets.loadLeast()
 end
 
 function assets.loadAll()
+    if not assets.allLoaded then
+        assets.allLoaded = true
+    else
+        return
+    end
+
     -- Sprite Objects
     loadImage('backgroundRoom'    , 'assets/room.png')
     loadImage('pot'               , 'assets/pot.png')
@@ -107,6 +114,7 @@ function assets.loadAll()
     loadImage('iconExit'           , 'assets/icon-exit.png')
     loadImage('iconWarn'           , 'assets/icon-warn.png')
     loadImage('iconAbout'          , 'assets/icon-about.png')
+    loadImage('iconRestart'          , 'assets/icon-restart.png')
 
     -- Fonts
     loadFont('small' , 'assets/font.ttf', 8)

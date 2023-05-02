@@ -234,7 +234,7 @@ function plant:update(dt)
     local pot = self.pot
 
     if self._time > 1 then
-        pot.waterLevel = pot.waterLevel - 0.005
+        pot.waterLevel = pot.waterLevel - 0.008
         pot.waterLevel = math.min(pot.waterLevel, 2)
         pot.waterLevel = math.max(pot.waterLevel, 0)
 
@@ -271,16 +271,22 @@ function plant:update(dt)
                 sample = 0
 
                 for index = 1, channels do
-                    sample = sample + math.abs(data:getSample(
-                        audio:tell('samples'), index
-                    ))
+                    local audioSample = data:getSample(audio:tell('samples'), index)
+
+                    audioSample = math.max(audioSample, 0)
+                    audioSample = math.min(audioSample, music.audio:getDuration('samples'))
+
+                    sample = sample + math.abs(audioSample)
                 end
 
                 sample = sample / channels
             else
-                sample = math.abs(data:getSample(
-                    audio:tell('samples')
-                ))
+                local audioSample = data:getSample(audio:tell('samples'))
+
+                audioSample = math.max(audioSample, 0)
+                audioSample = math.min(audioSample, music.audio:getDuration('samples'))
+
+                sample = math.abs(audioSample)
             end
 
             self._sampleSum = self._sampleSum + sample
