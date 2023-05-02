@@ -7,19 +7,19 @@ function love.conf(configuration)
     configuration.window.icon = 'assets/icon-game.png'
 
     -- Uncomment when development
-    ---[[
+    --[[
         configuration.console = true -- For debugging (will disable when release)
         configuration.window.width = 144*2
         configuration.window.height = 256*2
-    ---]]
+    --]]
 
     -- Uncomment when release (and also remove development code part)
-    --[[
+    ---[[
 
     -- Swaps the resolution dimension from "width x height" to "height x width" in order to make the game in portrait mode
     configuration.window.width, configuration.window.height = configuration.window.height, configuration.window.width
 
-    --]]
+    ---]]
 
     configuration.window.minwidth = configuration.window.width
     configuration.window.minheight = configuration.window.height
