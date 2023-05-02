@@ -1,0 +1,80 @@
+"filename", "language", "Lua", "Markdown", "comment", "blank", "total"
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\conf.lua", "Lua", -13, 0, -2, -4, -19
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\main.lua", "Lua", -96, 0, -2, -25, -123
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\assets.lua", "Lua", -121, 0, -11, -22, -154
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\classes\plant.lua", "Lua", -271, 0, -7, -71, -349
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\classes\pot.lua", "Lua", -70, 0, -13, -26, -109
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\clock.lua", "Lua", -19, 0, 0, -8, -27
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\color.lua", "Lua", -99, 0, -7, -19, -125
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\cursor.lua", "Lua", -64, 0, 0, -14, -78
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\enums.lua", "Lua", -53, 0, 0, -10, -63
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\check.lua", "Lua", -25, 0, -4, -14, -43
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-frame.lua", "Lua", -83, 0, -11, -31, -125
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-image.lua", "Lua", -34, 0, -1, -9, -44
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-text.lua", "Lua", -36, 0, 0, -14, -50
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\drw-textscroll.lua", "Lua", -96, 0, -2, -34, -132
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\elements\ntr-rect.lua", "Lua", -63, 0, -4, -22, -89
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\enums.lua", "Lua", -40, 0, 0, -5, -45
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\event.lua", "Lua", -61, 0, -7, -20, -88
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\group.lua", "Lua", -99, 0, -21, -27, -147
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\signal.lua", "Lua", -39, 0, -4, -10, -53
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interface\system.lua", "Lua", -61, 0, -6, -17, -84
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\main.lua", "Lua", -221, 0, -6, -57, -284
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\more-menu.lua", "Lua", -134, 0, -4, -38, -176
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\music-menu.lua", "Lua", -283, 0, -4, -72, -359
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\pots-menu.lua", "Lua", -266, 0, -3, -73, -342
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\interfaces\start-menu.lua", "Lua", -67, 0, -2, -18, -87
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\musics.lua", "Lua", -204, 0, -3, -40, -247
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\overlay.lua", "Lua", -44, 0, 0, -11, -55
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\perlin.lua", "Lua", -84, 0, -17, -22, -123
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\player.lua", "Lua", -118, 0, -3, -37, -158
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\screen.lua", "Lua", -86, 0, -2, -24, -112
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\sfx.lua", "Lua", -24, 0, 0, -8, -32
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\special.lua", "Lua", -171, 0, -5, -44, -220
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\state.lua", "Lua", -47, 0, -2, -14, -63
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\states\game.lua", "Lua", -49, 0, -1, -15, -65
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\states\intro.lua", "Lua", -110, 0, -2, -31, -143
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\sysntf.lua", "Lua", -2, 0, -1, 0, -3
+"c:\Users\Administrator\Documents\Works\plant-interactive final revision\scripts\watering.lua", "Lua", -11, 0, -2, -7, -20
+"c:\Users\Administrator\Documents\Works\plant-interactive\README.md", "Markdown", 0, 53, 0, 11, 64
+"c:\Users\Administrator\Documents\Works\plant-interactive\conf.lua", "Lua", 12, 0, 9, 6, 27
+"c:\Users\Administrator\Documents\Works\plant-interactive\main.lua", "Lua", 91, 0, 4, 35, 130
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\assets.lua", "Lua", 139, 0, 17, 26, 182
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\classes\plant.lua", "Lua", 281, 0, 7, 77, 365
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\classes\pot.lua", "Lua", 83, 0, 9, 27, 119
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\clock.lua", "Lua", 31, 0, 0, 11, 42
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\color.lua", "Lua", 99, 0, 7, 19, 125
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\cursor.lua", "Lua", 47, 0, 0, 17, 64
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\enums.lua", "Lua", 53, 0, 0, 10, 63
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\hint.lua", "Lua", 48, 0, 0, 14, 62
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\check.lua", "Lua", 25, 0, 4, 14, 43
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\elements\drw-frame.lua", "Lua", 83, 0, 11, 31, 125
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\elements\drw-image.lua", "Lua", 34, 0, 1, 9, 44
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\elements\drw-text.lua", "Lua", 36, 0, 0, 14, 50
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\elements\drw-textscroll.lua", "Lua", 107, 0, 2, 34, 143
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\elements\ntr-rect.lua", "Lua", 63, 0, 4, 22, 89
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\enums.lua", "Lua", 40, 0, 0, 5, 45
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\event.lua", "Lua", 61, 0, 7, 20, 88
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\group.lua", "Lua", 99, 0, 21, 27, 147
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\signal.lua", "Lua", 39, 0, 4, 10, 53
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interface\system.lua", "Lua", 61, 0, 6, 17, 84
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interfaces\main.lua", "Lua", 282, 0, 6, 73, 361
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interfaces\more-menu.lua", "Lua", 135, 0, 2, 38, 175
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interfaces\music-menu.lua", "Lua", 286, 0, 2, 72, 360
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interfaces\pots-menu.lua", "Lua", 268, 0, 3, 73, 344
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interfaces\result-menu\init.lua", "Lua", 274, 0, 6, 79, 359
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interfaces\result-menu\retxit-menu.lua", "Lua", 63, 0, 3, 20, 86
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\interfaces\start-menu.lua", "Lua", 67, 0, 2, 18, 87
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\musics.lua", "Lua", 202, 0, 5, 40, 247
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\overlay.lua", "Lua", 44, 0, 0, 11, 55
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\perlin.lua", "Lua", 84, 0, 17, 22, 123
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\player.lua", "Lua", 156, 0, 2, 49, 207
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\screen.lua", "Lua", 86, 0, 2, 24, 112
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\sfx.lua", "Lua", 28, 0, 0, 8, 36
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\special.lua", "Lua", 171, 0, 5, 44, 220
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\state.lua", "Lua", 47, 0, 2, 14, 63
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\states\game.lua", "Lua", 66, 0, 4, 24, 94
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\states\intro.lua", "Lua", 111, 0, 2, 32, 145
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\sysntf.lua", "Lua", 2, 0, 1, 0, 3
+"c:\Users\Administrator\Documents\Works\plant-interactive\scripts\watering.lua", "Lua", 80, 0, 3, 23, 106
+"Total", "-", 620, 53, 21, 207, 901

@@ -130,7 +130,7 @@ local musics = {
             name = 'Cant Help Falling In Love',
             artist = 'Elvis Presley',
             audio = assets.getAudio('ballad7'),
-            path = 'assets/ballad/Elvis Presley - Cant Help Falling In Love Audio.ogg'
+            path = 'assets/ballad/Elvis Presley - Cant Help Falling In Love.ogg'
         },
 
         {

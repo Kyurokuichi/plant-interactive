@@ -266,7 +266,7 @@ end
 local function drawList()
     for index, element in ipairs(list) do
         if element.isActive then
-            color.conditionRGB(element.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+            color.conditionRGB(element.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
             element.frame:draw()
 
             color.conditionRGB(player.selected.potIndex == index, 0.5, 0.5, 0.5, 1, 1, 1, true)
@@ -320,19 +320,19 @@ potsMenu.event:add('draw', function ()
     color.RGB(60, 163, 112, true)
     title:draw()
 
-    color.conditionRGB(backButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(backButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     backButton.frame:draw()
     backButton.icon:draw()
 
-    color.conditionRGB(removeButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(removeButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     removeButton.frame:draw()
     removeButton.icon:draw()
 
-    color.conditionRGB(addButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(addButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     addButton.frame:draw()
     addButton.icon:draw()
 
-    color.conditionRGB(cancelButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(cancelButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     cancelButton.frame:draw()
     cancelButton.icon:draw()
 

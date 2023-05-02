@@ -22,28 +22,46 @@ local window = drwFrame.new(assets.getImage('frameWindow1'), 26, 26, 92, 204)
 local title = drwText.new('More', 26, 26, 92, 8)
 
 local backButton = {
-    frame = drwFrame.new(assets.image.frameButton3, 53, 203, 38, 22),
-    icon = drwImage.new(assets.image.iconBack, 61, 203),
+    frame = drwFrame.new(assets.getImage('frameButton3'), 53, 203, 38, 22),
+    icon = drwImage.new(assets.getImage('iconBack'), 61, 203),
     ntr = ntrRect.new(53, 203, 38, 22)
 }
 local masterVolume = {
     title = drwText.new('Master Volume', 26, 39, 98, 8),
-    frame = drwFrame.new(assets.image.frameButton3, 31, 58, 82, 6),
-    indicator = drwImage.new(assets.image.iconIndicatorVolume, 31, 58),
+    frame = drwFrame.new(assets.getImage('frameButton3'), 31, 58, 82, 6),
+    indicator = drwImage.new(assets.getImage('iconIndicatorVolume'), 31, 58),
     ntr = ntrRect.new(31, 58, 82, 6)
 }
 local musicVolume = {
     title = drwText.new('Music Volume', 26, 75, 98, 8),
-    frame = drwFrame.new(assets.image.frameButton3, 31, 94, 82, 6),
-    indicator = drwImage.new(assets.image.iconIndicatorVolume, 31, 94),
+    frame = drwFrame.new(assets.getImage('frameButton3'), 31, 94, 82, 6),
+    indicator = drwImage.new(assets.getImage('iconIndicatorVolume'), 31, 94),
     ntr = ntrRect.new(31, 94, 82, 6)
 }
 local SFXVolume = {
     title = drwText.new('SFX Volume', 26, 111, 98, 8),
-    frame = drwFrame.new(assets.image.frameButton3, 31, 130, 82, 6),
-    indicator = drwImage.new(assets.image.iconIndicatorVolume, 31, 130),
+    frame = drwFrame.new(assets.getImage('frameButton3'), 31, 130, 82, 6),
+    indicator = drwImage.new(assets.getImage('iconIndicatorVolume'), 31, 130),
     ntr = ntrRect.new(31, 130, 82, 6)
 }
+local aboutButton = {
+    frame = drwFrame.new(assets.getImage('frameButton3'), 53, 167, 38, 14),
+    icon = drwImage.new(assets.getImage('iconAbout'), 53, 167),
+    ntr = ntrRect.new(53, 167, 38, 14)
+}
+
+local about = require 'scripts.interfaces.more-menu.about'
+
+moreMenu:connect(window)
+moreMenu:connect(title)
+
+moreMenu:connect(backButton)
+moreMenu:connect(masterVolume)
+moreMenu:connect(musicVolume)
+moreMenu:connect(SFXVolume)
+moreMenu:connect(aboutButton)
+
+moreMenu:connect(about)
 
 local isOpened = false
 
@@ -54,14 +72,6 @@ local function setupVolume(element)
     element.indicator.y = element.frame.y + element.frame.height/2
     element.indicator.y = element.indicator.y - element.indicator.height/2
 end
-
-moreMenu:connect(window)
-moreMenu:connect(title)
-
-moreMenu:connect(backButton)
-moreMenu:connect(masterVolume)
-moreMenu:connect(musicVolume)
-moreMenu:connect(SFXVolume)
 
 local function returnMain()
     sysntf:getGroup(1):toggleLockOnly()
@@ -89,6 +99,12 @@ local function updateVolume(element)
 end
 
 local function updateButtons()
+    if aboutButton.ntr.isClicked then
+        print('a')
+        about:toggle()
+        sfx.play('click')
+    end
+
     if backButton.ntr.isClicked then
         returnMain()
         sfx.play('click')
@@ -123,7 +139,10 @@ local function updateButtons()
 end
 
 moreMenu.event:add('update', function (dt)
-    updateButtons()
+
+    if about.isLocked then
+        updateButtons()
+    end
 
     if not isOpened then
         setupVolume(masterVolume)
@@ -149,25 +168,25 @@ moreMenu.event:add('draw', function ()
     musicVolume.title:draw()
     masterVolume.title:draw()
 
-    color.conditionRGB(backButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(backButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     backButton.frame:draw()
     backButton.icon:draw()
 
-    color.conditionRGB(backButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
-    backButton.frame:draw()
-    backButton.icon:draw()
-
-    color.conditionRGB(masterVolume.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(masterVolume.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     masterVolume.frame:draw()
     masterVolume.indicator:draw()
 
-    color.conditionRGB(musicVolume.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(musicVolume.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     musicVolume.frame:draw()
     musicVolume.indicator:draw()
 
-    color.conditionRGB(SFXVolume.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(SFXVolume.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     SFXVolume.frame:draw()
     SFXVolume.indicator:draw()
+
+    color.conditionRGB(aboutButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    aboutButton.frame:draw()
+    aboutButton.icon:draw()
 
     love.graphics.setColor(1, 1, 1, 1)
 end)

@@ -206,7 +206,7 @@ local function drawList()
     for index, element in ipairs(list) do
         if element.isActive then
             color.conditionRGB(
-                (element.ntr.isCursorHovering and not element.previewNtr.isCursorHovering) or (player.selected.genre == player.selected.musicGenre and player.selected.musicIndex == element.index),
+                (element.ntr.isHoldingClick and not element.previewNtr.isHoldingClick) or (player.selected.genre == player.selected.musicGenre and player.selected.musicIndex == element.index),
                 0.5, 0.5, 0.5,
                 1, 1, 1,
                 true
@@ -215,7 +215,7 @@ local function drawList()
             element.frame:draw()
 
             color.conditionRGB(
-                element.previewNtr.isCursorHovering or player.selected.previewIndex == element.index,
+                element.previewNtr.isHoldingClick or player.selected.previewIndex == element.index,
                 0.5, 0.5, 0.5,
                 1, 1, 1,
                 true
@@ -332,23 +332,23 @@ musicMenu.event:add('draw', function ()
     title:draw()
     pageIndicator:draw()
 
-    color.conditionRGB(previousGenreButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(previousGenreButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     previousGenreButton.frame:draw()
     previousGenreButton.icon:draw()
 
-    color.conditionRGB(nextGenreButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(nextGenreButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     nextGenreButton.frame:draw()
     nextGenreButton.icon:draw()
 
-    color.conditionRGB(backButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(backButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     backButton.frame:draw()
     backButton.icon:draw()
 
-    color.conditionRGB(previousPageButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(previousPageButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     previousPageButton.frame:draw()
     previousPageButton.icon:draw()
 
-    color.conditionRGB(nextPageButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(nextPageButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     nextPageButton.frame:draw()
     nextPageButton.icon:draw()
 

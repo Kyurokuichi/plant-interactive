@@ -106,6 +106,7 @@ function assets.loadAll()
     loadImage('iconRetry'          , 'assets/icon-retry.png')
     loadImage('iconExit'           , 'assets/icon-exit.png')
     loadImage('iconWarn'           , 'assets/icon-warn.png')
+    loadImage('iconAbout'          , 'assets/icon-about.png')
 
     -- Fonts
     loadFont('small' , 'assets/font.ttf', 8)

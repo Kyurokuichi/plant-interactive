@@ -17,6 +17,8 @@ local ntrRect = require 'scripts.interface.elements.ntr-rect'
 
 local main = require('scripts.interface.group').new(true, false)
 
+local watermark = drwText.new('Made by A07-12 STEM-S2-3 Grp 1', 0, 246, 144, 8)
+
 local background = {
     city = drwImage.new(assets.getImage('backgroundCity'), 0, 0),
     town = drwImage.new(assets.getImage('backgroundTown'), 0, 0),
@@ -81,6 +83,8 @@ local cancelWaterButton = {
 }
 
 local alertIcon = drwImage.new(assets.getImage('iconWarn'), 43, 208)
+
+main:connect(watermark)
 
 main:connect(background)
 main:connect(room)
@@ -318,7 +322,7 @@ main.event:add('draw', function ()
     color.RGB(255, 107, 151, true)
     clock.time:draw()
 
-    color.conditionRGB(startButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(startButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     startButton.frame:draw()
 
     color.RGB(60, 163, 112, true)
@@ -327,27 +331,27 @@ main.event:add('draw', function ()
 
     love.graphics.setFont(assets.getFont('small'))
 
-    color.conditionRGB(potsMenuButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(potsMenuButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     potsMenuButton.frame:draw()
     potsMenuButton.icon:draw()
 
-    color.conditionRGB(musicMenuButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(musicMenuButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     musicMenuButton.frame:draw()
     musicMenuButton.icon:draw()
 
-    color.conditionRGB(moreMenuButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(moreMenuButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     moreMenuButton.frame:draw()
     moreMenuButton.icon:draw()
 
-    color.conditionRGB(waterButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(waterButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     waterButton.frame:draw()
     waterButton.icon:draw()
 
-    color.conditionRGB(wateringButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(wateringButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     wateringButton.frame:draw()
     wateringButton.icon:draw()
 
-    color.conditionRGB(cancelWaterButton.ntr.isCursorHovering, 0.5, 0.5, 0.5, 1, 1, 1, true)
+    color.conditionRGB(cancelWaterButton.ntr.isHoldingClick, 0.5, 0.5, 0.5, 1, 1, 1, true)
     cancelWaterButton.frame:draw()
     cancelWaterButton.icon:draw()
 
@@ -356,6 +360,8 @@ main.event:add('draw', function ()
     end
 
     love.graphics.setColor(1, 1, 1, 1)
+
+    watermark:draw()
 end)
 
 return main

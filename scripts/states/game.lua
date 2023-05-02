@@ -39,7 +39,7 @@ function game.load()
     sysntf:connect(require 'scripts.interfaces.main')             -- 1
     sysntf:connect(require 'scripts.interfaces.pots-menu')        -- 2
     sysntf:connect(require 'scripts.interfaces.music-menu')       -- 3
-    sysntf:connect(require 'scripts.interfaces.more-menu')        -- 4
+    sysntf:connect(require 'scripts.interfaces.more-menu.init')   -- 4
     sysntf:connect(require 'scripts.interfaces.start-menu')       -- 5
     sysntf:connect(require 'scripts.interfaces.result-menu.init') -- 6
 

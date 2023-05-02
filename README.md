@@ -45,7 +45,7 @@ Audio:
 - [x] Algorithm testing
 - [x] Image Assets (UIs, objects, background, etc.)
 - [x] Music Assets (rock, ballad, classical)
-- [ ] SFX Assets (click, pop, warn, etc. sounds)
+- [x] SFX Assets (click, pop, warn, etc. sounds)
 - [x] UI system implementation
 - [ ] Implementation of functional UI based from concept
 - [x] Game mechanics implementation
