@@ -264,6 +264,8 @@ function plant:update(dt)
         local data = music.data
         
         if audio:isPlaying() then -- fail safe feature
+
+            --[[
             local sample
             local channels = audio:getChannelCount()
 
@@ -288,8 +290,20 @@ function plant:update(dt)
 
                 sample = math.abs(audioSample)
             end
+            --]]
 
-            self._sampleSum = self._sampleSum + sample
+            -- ^^^ Commented this code part because of a bug which caused getting an out of range sample
+
+            local currentSample = audio:tell('samples')
+
+            -- Clamp sample
+            currentSample = math.min(currentSample, music.audio:getDuration('samples')
+            currentSample = math.max(0, currentSample)
+
+             local audioSample = data:getSample (currentSample)
+             audioSample = math.abs(audioSample)
+
+            self._sampleSum = self._sampleSum + audioSample
             self._sampleCount = self._sampleCount + 1
 
             self._time = self._time + dt
